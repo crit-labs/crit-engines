@@ -1,0 +1,28 @@
+# Whitelist: only engine source is tracked. Anything else in the working tree
+# (builds, binaries, models, logs, scratch) stays local by default.
+/*
+!/.gitignore
+!/LICENSE
+!/README.md
+!/*/
+
+# Inside an engine folder (<name>/) only these are tracked.
+/*/*
+!/*/engine/
+!/*/THIRD_PARTY.md
+!/*/LICENSES.txt
+
+# Never tracked anywhere, even inside engine/.
+evidence/
+build/
+__pycache__/
+*.pyc
+*.o
+*.a
+*.so
+*.dll
+*.exe
+*.safetensors
+*.gguf
+*.bin
+*.log
