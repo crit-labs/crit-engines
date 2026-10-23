@@ -7,8 +7,8 @@ crit candidate.
 crit-hub is where to read about them: every engine's README there states its model, design,
 measured results, checks and limits, and how to build it and open chat, and its `engine.json` pins
 the commit of this repository that holds its source. Start from crit-hub's
-[browse/](https://github.com/crit-labs/crit-hub/blob/main/browse/README.md), then build from the
-commit the engine pins.
+[engines/](https://github.com/crit-labs/crit-hub/tree/main/engines), then build from the commit the
+engine pins.
 
 ## Layout
 
