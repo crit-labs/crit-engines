@@ -5,7 +5,7 @@ listed in [crit-hub](https://github.com/crit-labs/crit-hub). Each one was export
 crit candidate.
 
 crit-hub is where to read about them: every engine's README there states its model, design,
-measured results, checks and limits, and how to build it and open chat, and its `engine.json` pins
+measured results, checks and limits, and how to build it and open chat, and its `card.yaml` pins
 the commit of this repository that holds its source. Start from crit-hub's
 [engines/](https://github.com/crit-labs/crit-hub/tree/main/engines), then build from the commit the
 engine pins.
