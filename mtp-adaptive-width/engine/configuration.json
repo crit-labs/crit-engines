@@ -1,0 +1,42 @@
+{
+  "conv_kernel": true,
+  "draft_start": 3,
+  "draft_width": 8,
+  "draft_widths": [
+    2,
+    3,
+    4,
+    6,
+    8
+  ],
+  "drafter": "checkpoint MTP layer (model_mtp.safetensors), re-encoded FP8 E4M3 per output channel at load (draft-only); its KV cache FP8 scaled per position and head",
+  "fp16_acc_mlp": false,
+  "fp8_prompt_attn": false,
+  "fp8_prompt_gdn": true,
+  "fp8_prompt_mlp": true,
+  "graphs": true,
+  "mlp_rows": 4096,
+  "mtp_fp8": true,
+  "prefill_chunk": 4096,
+  "recon": {
+    "chat_template": {
+      "name": "default",
+      "sha256": "12827f24b742ea4e80cdc12dbcf9622227056b9f797252a3149263d4f9aaadce"
+    },
+    "sampling": {
+      "do_sample": true,
+      "temperature": 1.0,
+      "top_k": 20,
+      "top_p": 0.95
+    },
+    "stop_strings": [],
+    "stop_token_ids": [
+      248046,
+      248044
+    ],
+    "template_variables": {
+      "enable_thinking": false
+    }
+  },
+  "speculative": true
+}
