@@ -1,0 +1,22 @@
+{
+  "kv_cache": "int8",
+  "prefill_chunk": 2048,
+  "prefill_gemm_attn": "fp16_acc",
+  "prefill_gemm_down": "fp16_acc",
+  "prefill_gemm_mlp": "fp8",
+  "prefill_int8_qk": true,
+  "recon": {
+    "chat_template": {
+      "name": "default",
+      "sha256": "f2b1e2a1be25d277e8c903a2aa4d69ca5fd8a0fcb37d4792088e72426df5b91c"
+    },
+    "sampling": {},
+    "stop_strings": [],
+    "stop_token_ids": [
+      166101
+    ],
+    "template_variables": {
+      "enable_thinking": false
+    }
+  }
+}
