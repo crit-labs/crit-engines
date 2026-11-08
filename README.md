@@ -4,6 +4,9 @@ The source of the inference engines built with [crit](https://github.com/crit-la
 listed in [crit-hub](https://github.com/crit-labs/crit-hub). Each one was exported from a sealed
 crit candidate.
 
+The engines built before crit's plugin architecture (adapter engines, which crit no longer installs or
+serves) were removed; they are rebuilt as plugin packages and return here as they are exported.
+
 crit-hub is where to read about them: every engine's README there states its model, design,
 measured results, checks and limits, and how to build it and open chat, and its `card.yaml` pins
 the commit of this repository that holds its source. Start from crit-hub's
