@@ -1,0 +1,123 @@
+{
+  "schema": "crit-plugin-v1",
+  "id": "qwen35-model",
+  "title": "Qwen3.5-layout hybrid decoder (Qwen3.8-27B): gated-delta and gated-attention layers, SwiGLU MLPs, the checkpoint's MTP draft layer",
+  "fills": [
+    "model"
+  ],
+  "needs": [
+    [
+      "model_type:qwen3_5",
+      "model_type:qwen3_5_text"
+    ]
+  ],
+  "provides": [
+    "draft:head",
+    "draft:head-device"
+  ],
+  "requires": [
+    "recurrence",
+    "norms",
+    "embeddings"
+  ],
+  "devices": [
+    "cuda"
+  ],
+  "options": {
+    "concurrency": {
+      "type": "int",
+      "default": 4,
+      "min": 2,
+      "max": 16
+    },
+    "max_pending": {
+      "type": "int",
+      "default": 2,
+      "min": 1,
+      "max": 16
+    },
+    "context": {
+      "type": "int",
+      "default": 4096,
+      "min": 64,
+      "max": 1048576
+    },
+    "kv_extra": {
+      "type": "int",
+      "default": 8192,
+      "min": 0,
+      "max": 262144
+    },
+    "prefill_chunk": {
+      "type": "int",
+      "default": 2048,
+      "min": 64,
+      "max": 16384
+    },
+    "width": {
+      "type": "int",
+      "default": 3,
+      "min": 0,
+      "max": 8
+    },
+    "rounds": {
+      "type": "bool",
+      "default": true
+    },
+    "kv": {
+      "type": "choice",
+      "default": "fp8",
+      "choices": [
+        "fp8",
+        "bf16"
+      ]
+    },
+    "mtp_encode": {
+      "type": "choice",
+      "default": "none",
+      "choices": [
+        "none",
+        "fp8",
+        "nvfp4"
+      ]
+    },
+    "logit_rows": {
+      "type": "int",
+      "default": 256,
+      "min": 1,
+      "max": 4096
+    },
+    "prompt_graphs": {
+      "type": "bool",
+      "default": true
+    },
+    "prompt_buckets": {
+      "type": "str",
+      "default": "16,64,128,512"
+    },
+    "draft_head": {
+      "type": "choice",
+      "default": "shared",
+      "choices": [
+        "shared",
+        "nvfp4",
+        "fp8"
+      ]
+    },
+    "widths": {
+      "type": "str",
+      "default": ""
+    },
+    "width_policy": {
+      "type": "choice",
+      "default": "fixed",
+      "choices": [
+        "fixed",
+        "step",
+        "rate"
+      ]
+    }
+  },
+  "entry": "plugin.py:create",
+  "tests": "tests"
+}
