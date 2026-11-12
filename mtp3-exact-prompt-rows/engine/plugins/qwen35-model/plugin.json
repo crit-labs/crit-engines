@@ -1,0 +1,168 @@
+{
+  "schema": "crit-plugin-v1",
+  "id": "qwen35-model",
+  "title": "Qwen3.5-layout hybrid dense decoder (gated delta + gated attention) over crit's device plugins",
+  "description": "A Qwen3_5ForConditionalGeneration (or Qwen3_5ForCausalLM) checkpoint's language model: gated-delta layers (the causal convolution and the delta rule in the recurrence slot), gated full-attention layers (partial rotary positions, keys and values in the kv_cache slot's pool, attention by the attention slot, a sigmoid output gate), a dense SwiGLU MLP, every matrix as stored (bf16, fp8 per channel, nvfp4) in the projections slot, the embedding rows in the embeddings slot, norms, rotary positions and gated products in the norms slot. Decode rows run through Core's captured rounds (greedy and sampled), prompt chunks and the rest through step(); every step of many sequences is one batch, each row's bits its own.",
+  "fills": [
+    "model"
+  ],
+  "needs": [
+    [
+      "model_type:qwen3_5",
+      "model_type:qwen3_5_text"
+    ]
+  ],
+  "requires": [
+    "recurrence",
+    "norms",
+    "embeddings"
+  ],
+  "devices": [
+    "cuda"
+  ],
+  "options": {
+    "concurrency": {
+      "type": "int",
+      "default": 4,
+      "min": 2,
+      "max": 64,
+      "description": "requests decoding at once (Core's max_concurrency); each holds one recurrent state (about 151 MB on the 27B)"
+    },
+    "pending": {
+      "type": "int",
+      "default": 2,
+      "min": 0,
+      "max": 64,
+      "description": "Core's max_pending"
+    },
+    "prefill_chunk": {
+      "type": "int",
+      "default": 512,
+      "min": 16,
+      "max": 4096,
+      "description": "prompt tokens a step takes of one request; at most the recurrence's exact_rows keeps every prompt row on the exact scan"
+    },
+    "context": {
+      "type": "int",
+      "default": 4096,
+      "min": 16,
+      "max": 1048576,
+      "description": "the context served when the loader names none"
+    },
+    "kv_margin": {
+      "type": "int",
+      "default": 8192,
+      "min": 0,
+      "max": 262144,
+      "description": "KV pool tokens beyond the served context, for requests beside the longest one"
+    },
+    "kv": {
+      "type": "choice",
+      "default": "auto",
+      "choices": [
+        "auto",
+        "bf16",
+        "fp8",
+        "fp8:row"
+      ],
+      "description": "KV page precision: auto takes fp8 with the checkpoint's static k_scale / v_scale where it stores them (its kv_cache_scheme), else bf16"
+    },
+    "rounds": {
+      "type": "bool",
+      "default": true,
+      "description": "decode rows through Core's captured rounds (native rounds); false: every row through step()"
+    },
+    "activations_mib": {
+      "type": "int",
+      "default": 768,
+      "min": 0,
+      "max": 16384,
+      "description": "MiB planned on the device for a step's activations and scoring temporaries"
+    },
+    "mtp": {
+      "type": "bool",
+      "default": false,
+      "description": "the checkpoint's MTP layer as the device draft head (with a drafter in the selection)"
+    },
+    "width": {
+      "type": "int",
+      "default": 3,
+      "min": 1,
+      "max": 8,
+      "description": "the widest round's drafts"
+    },
+    "widths": {
+      "type": "str",
+      "default": "",
+      "description": "comma-separated round widths the width policy chooses among (the widest always one)"
+    },
+    "width_policy": {
+      "type": "choice",
+      "default": "fixed",
+      "choices": [
+        "fixed",
+        "step",
+        "rate"
+      ],
+      "description": "crit_plugins.rounds width policy"
+    },
+    "mtp_encode": {
+      "type": "choice",
+      "default": "bf16",
+      "choices": [
+        "bf16",
+        "fp8",
+        "nvfp4"
+      ],
+      "description": "draft-only re-encoding of the MTP layer's matrices"
+    },
+    "mtp_kv": {
+      "type": "choice",
+      "default": "bf16",
+      "choices": [
+        "bf16",
+        "fp8:row"
+      ],
+      "description": "the MTP layer's KV pages"
+    },
+    "draft_head": {
+      "type": "choice",
+      "default": "shared",
+      "choices": [
+        "shared",
+        "fp8",
+        "nvfp4"
+      ],
+      "description": "the draft steps' lm_head: the target's (shared) or a draft-only copy re-encoded"
+    },
+    "kernel_tuning": {
+      "type": "str",
+      "default": "",
+      "description": "a folder beside this plugin holding crit kernels sweep tables (<kernel>.json) the engine's kernels build with; empty: CRIT_KERNEL_TUNING or the kernels' default knobs"
+    },
+    "prompt_buckets": {
+      "type": "str",
+      "default": "",
+      "description": "comma-separated token counts of captured prompt chunks (crit_plugins.prompt_graphs); empty: every chunk eager"
+    },
+    "draft_head_slices": {
+      "type": "int",
+      "default": 8,
+      "min": 1,
+      "max": 64,
+      "description": "row slices of a re-encoded draft head (draft_head fp8 or nvfp4)"
+    },
+    "release_below_mib": {
+      "type": "int",
+      "default": 640,
+      "min": 0,
+      "max": 16384,
+      "description": "MiB of free device memory under which torch's cached blocks go back when a prompt or a score ends (crit_plugins.device.release_cached_under)"
+    }
+  },
+  "entry": "plugin.py:create",
+  "provides": [
+    "draft:head",
+    "draft:head-device"
+  ]
+}
