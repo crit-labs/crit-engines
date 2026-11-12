@@ -1,0 +1,640 @@
+{
+ "schema": "crit-kernel-tuning-v1",
+ "kernel": "mma-rows",
+ "structures": {
+  "decode-tile": {
+   "configs": [
+    {
+     "GROUPS": 1,
+     "SPF": 0,
+     "SPLITS": 0,
+     "SW": 0,
+     "WARPS": 4
+    },
+    {
+     "GROUPS": 1,
+     "SPF": 0,
+     "SPLITS": 1,
+     "SW": 0,
+     "WARPS": 1
+    },
+    {
+     "GROUPS": 1,
+     "SPF": 1,
+     "SPLITS": 1,
+     "SW": 8,
+     "WARPS": 1
+    },
+    {
+     "GROUPS": 1,
+     "SPF": 0,
+     "SPLITS": 2,
+     "SW": 4,
+     "WARPS": 1
+    },
+    {
+     "GROUPS": 1,
+     "SPF": 0,
+     "SPLITS": 1,
+     "SW": 8,
+     "WARPS": 1
+    },
+    {
+     "GROUPS": 1,
+     "SPF": 1,
+     "SPLITS": 3,
+     "SW": 8,
+     "WARPS": 1
+    },
+    {
+     "GROUPS": 1,
+     "SPF": 0,
+     "SPLITS": 3,
+     "SW": 4,
+     "WARPS": 1
+    },
+    {
+     "GROUPS": 1,
+     "SPF": 1,
+     "SPLITS": 4,
+     "SW": 8,
+     "WARPS": 4
+    },
+    {
+     "GROUPS": 1,
+     "SPF": 1,
+     "SPLITS": 1,
+     "SW": 4,
+     "WARPS": 1
+    },
+    {
+     "GROUPS": 1,
+     "SPF": 0,
+     "SPLITS": 4,
+     "SW": 0,
+     "WARPS": 4
+    },
+    {
+     "GROUPS": 1,
+     "SPF": 0,
+     "SPLITS": 4,
+     "SW": 8,
+     "WARPS": 4
+    },
+    {
+     "GROUPS": 1,
+     "SPF": 0,
+     "SPLITS": 24,
+     "SW": 0,
+     "WARPS": 2
+    },
+    {
+     "GROUPS": 1,
+     "SPF": 0,
+     "SPLITS": 24,
+     "SW": 4,
+     "WARPS": 2
+    }
+   ],
+   "table": [
+    {
+     "key": {
+      "weights": 0,
+      "N": 34816,
+      "K": 5120
+     },
+     "rows": [
+      1,
+      8
+     ],
+     "config": 1
+    },
+    {
+     "key": {
+      "weights": 0,
+      "N": 34816,
+      "K": 5120
+     },
+     "rows": [
+      9,
+      64
+     ],
+     "config": 2
+    },
+    {
+     "key": {
+      "weights": 0,
+      "N": 5120,
+      "K": 17408
+     },
+     "rows": [
+      1,
+      64
+     ],
+     "config": 3
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 16384,
+      "K": 5120
+     },
+     "rows": [
+      1,
+      2
+     ],
+     "config": 1
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 16384,
+      "K": 5120
+     },
+     "rows": [
+      3,
+      8
+     ],
+     "config": 2
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 16384,
+      "K": 5120
+     },
+     "rows": [
+      9,
+      64
+     ],
+     "config": 4
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 5120,
+      "K": 6144
+     },
+     "rows": [
+      1,
+      1
+     ],
+     "config": 5
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 5120,
+      "K": 6144
+     },
+     "rows": [
+      2,
+      2
+     ],
+     "config": 6
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 5120,
+      "K": 6144
+     },
+     "rows": [
+      3,
+      64
+     ],
+     "config": 5
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 14336,
+      "K": 5120
+     },
+     "rows": [
+      1,
+      1
+     ],
+     "config": 1
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 14336,
+      "K": 5120
+     },
+     "rows": [
+      2,
+      8
+     ],
+     "config": 2
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 14336,
+      "K": 5120
+     },
+     "rows": [
+      9,
+      64
+     ],
+     "config": 4
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 34816,
+      "K": 5120
+     },
+     "rows": [
+      1,
+      64
+     ],
+     "config": 1
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 5120,
+      "K": 17408
+     },
+     "rows": [
+      1,
+      64
+     ],
+     "config": 7
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 248320,
+      "K": 5120
+     },
+     "rows": [
+      1,
+      2
+     ],
+     "config": 2
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 248320,
+      "K": 5120
+     },
+     "rows": [
+      3,
+      4
+     ],
+     "config": 1
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 248320,
+      "K": 5120
+     },
+     "rows": [
+      5,
+      8
+     ],
+     "config": 2
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 248320,
+      "K": 5120
+     },
+     "rows": [
+      9,
+      64
+     ],
+     "config": 8
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 5120,
+      "K": 10240
+     },
+     "rows": [
+      1,
+      2
+     ],
+     "config": 9
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 5120,
+      "K": 10240
+     },
+     "rows": [
+      3,
+      8
+     ],
+     "config": 7
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 5120,
+      "K": 10240
+     },
+     "rows": [
+      9,
+      64
+     ],
+     "config": 10
+    },
+    {
+     "key": {
+      "weights": 3,
+      "N": 96,
+      "K": 5120
+     },
+     "rows": [
+      1,
+      8
+     ],
+     "config": 11
+    },
+    {
+     "key": {
+      "weights": 3,
+      "N": 96,
+      "K": 5120
+     },
+     "rows": [
+      9,
+      64
+     ],
+     "config": 12
+    }
+   ]
+  },
+  "prompt-tile": {
+   "configs": [
+    {
+     "PT": 64,
+     "PW": 8
+    },
+    {
+     "PT": 32,
+     "PW": 4
+    },
+    {
+     "PT": 64,
+     "PW": 4
+    }
+   ],
+   "table": [
+    {
+     "key": {
+      "weights": 0,
+      "N": 34816,
+      "K": 5120
+     },
+     "rows": [
+      1,
+      1048576
+     ],
+     "config": 0
+    },
+    {
+     "key": {
+      "weights": 0,
+      "N": 5120,
+      "K": 17408
+     },
+     "rows": [
+      1,
+      64
+     ],
+     "config": 1
+    },
+    {
+     "key": {
+      "weights": 0,
+      "N": 5120,
+      "K": 17408
+     },
+     "rows": [
+      65,
+      1048576
+     ],
+     "config": 0
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 16384,
+      "K": 5120
+     },
+     "rows": [
+      1,
+      64
+     ],
+     "config": 0
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 16384,
+      "K": 5120
+     },
+     "rows": [
+      65,
+      1048576
+     ],
+     "config": 2
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 5120,
+      "K": 6144
+     },
+     "rows": [
+      1,
+      64
+     ],
+     "config": 1
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 5120,
+      "K": 6144
+     },
+     "rows": [
+      65,
+      512
+     ],
+     "config": 0
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 5120,
+      "K": 6144
+     },
+     "rows": [
+      513,
+      1048576
+     ],
+     "config": 2
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 14336,
+      "K": 5120
+     },
+     "rows": [
+      1,
+      64
+     ],
+     "config": 1
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 14336,
+      "K": 5120
+     },
+     "rows": [
+      65,
+      1048576
+     ],
+     "config": 2
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 34816,
+      "K": 5120
+     },
+     "rows": [
+      1,
+      64
+     ],
+     "config": 0
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 34816,
+      "K": 5120
+     },
+     "rows": [
+      65,
+      1048576
+     ],
+     "config": 2
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 5120,
+      "K": 17408
+     },
+     "rows": [
+      1,
+      64
+     ],
+     "config": 1
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 5120,
+      "K": 17408
+     },
+     "rows": [
+      65,
+      512
+     ],
+     "config": 0
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 5120,
+      "K": 17408
+     },
+     "rows": [
+      513,
+      1048576
+     ],
+     "config": 2
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 248320,
+      "K": 5120
+     },
+     "rows": [
+      1,
+      1048576
+     ],
+     "config": 0
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 5120,
+      "K": 10240
+     },
+     "rows": [
+      1,
+      64
+     ],
+     "config": 1
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 5120,
+      "K": 10240
+     },
+     "rows": [
+      65,
+      512
+     ],
+     "config": 0
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 5120,
+      "K": 10240
+     },
+     "rows": [
+      513,
+      1048576
+     ],
+     "config": 2
+    },
+    {
+     "key": {
+      "weights": 3,
+      "N": 96,
+      "K": 5120
+     },
+     "rows": [
+      1,
+      1048576
+     ],
+     "config": 1
+    }
+   ]
+  }
+ },
+ "source": "96bdba7b8ae342e8ecfffd7e04d5564c39012c82e12f7babc69b5860e2374356",
+ "device": "NVIDIA GeForce RTX 5090",
+ "capability": "12.0"
+}

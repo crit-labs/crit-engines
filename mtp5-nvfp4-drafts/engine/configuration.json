@@ -1,0 +1,67 @@
+{
+  "plugins": {
+    "base": {
+      "drafter": null,
+      "norms": "torch-norms",
+      "verifier": null
+    },
+    "options": {
+      "attention-state": {
+        "window": 6
+      },
+      "device-placement": {
+        "off_device": "tables."
+      },
+      "memory-table-rows": {
+        "host": true
+      },
+      "quantized-projections": {
+        "prompt_gemm": "pinned"
+      },
+      "qwen35-model": {
+        "concurrency": 4,
+        "draft_head": "nvfp4",
+        "kv_extra": 2048,
+        "mtp_encode": "nvfp4",
+        "prefill_chunk": 2048,
+        "width": 5
+      },
+      "sequential-recurrence": {
+        "exact_rows": 0
+      }
+    },
+    "use": {
+      "attention": "softmax-attention",
+      "drafter": "greedy-head-drafter",
+      "embeddings": "memory-table-rows",
+      "kv_cache": "attention-state",
+      "model": "qwen35-model",
+      "norms": "fused-norms",
+      "placement": "device-placement",
+      "projections": "quantized-projections",
+      "recurrence": "sequential-recurrence",
+      "sampler": "token-sampling",
+      "verifier": "chain-verifier"
+    }
+  },
+  "recon": {
+    "chat_template": {
+      "name": "default",
+      "sha256": "12827f24b742ea4e80cdc12dbcf9622227056b9f797252a3149263d4f9aaadce"
+    },
+    "sampling": {
+      "do_sample": true,
+      "temperature": 1.0,
+      "top_k": 20,
+      "top_p": 0.95
+    },
+    "stop_strings": [],
+    "stop_token_ids": [
+      248046,
+      248044
+    ],
+    "template_variables": {
+      "enable_thinking": false
+    }
+  }
+}

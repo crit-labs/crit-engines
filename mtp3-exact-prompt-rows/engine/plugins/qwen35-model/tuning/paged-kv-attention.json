@@ -1,0 +1,489 @@
+{
+ "schema": "crit-kernel-tuning-v1",
+ "kernel": "paged-kv-attention",
+ "structures": {
+  "split": {
+   "configs": [
+    {
+     "PARTS": 0,
+     "PIECE": 0
+    },
+    {
+     "PARTS": 64,
+     "PIECE": 16
+    },
+    {
+     "PARTS": 128,
+     "PIECE": 16
+    }
+   ],
+   "table": [
+    {
+     "key": {
+      "D": 256,
+      "DV": 256,
+      "HKV": 4,
+      "KIND": 0
+     },
+     "rows": [
+      1,
+      1048576
+     ],
+     "config": 1
+    },
+    {
+     "key": {
+      "D": 256,
+      "DV": 256,
+      "HKV": 4,
+      "KIND": 2
+     },
+     "rows": [
+      1,
+      1048576
+     ],
+     "config": 2
+    },
+    {
+     "key": {
+      "D": 256,
+      "DV": 256,
+      "HKV": 4,
+      "KIND": 3
+     },
+     "rows": [
+      1,
+      1048576
+     ],
+     "config": 0
+    }
+   ]
+  },
+  "window": {
+   "configs": [
+    {
+     "STAGES": 0,
+     "WARPS": 0
+    },
+    {
+     "STAGES": 1,
+     "WARPS": 4
+    },
+    {
+     "STAGES": 2,
+     "WARPS": 4
+    },
+    {
+     "STAGES": 2,
+     "WARPS": 0
+    },
+    {
+     "STAGES": 1,
+     "WARPS": 0
+    },
+    {
+     "STAGES": 4,
+     "WARPS": 2
+    },
+    {
+     "STAGES": 1,
+     "WARPS": 1
+    },
+    {
+     "STAGES": 3,
+     "WARPS": 0
+    },
+    {
+     "STAGES": 4,
+     "WARPS": 0
+    }
+   ],
+   "table": [
+    {
+     "key": {
+      "D": 256,
+      "DV": 256,
+      "HQ": 24,
+      "HKV": 4,
+      "PAGE": 16,
+      "KIND": 0
+     },
+     "rows": [
+      1,
+      2
+     ],
+     "config": 1
+    },
+    {
+     "key": {
+      "D": 256,
+      "DV": 256,
+      "HQ": 24,
+      "HKV": 4,
+      "PAGE": 16,
+      "KIND": 0
+     },
+     "rows": [
+      3,
+      4
+     ],
+     "config": 2
+    },
+    {
+     "key": {
+      "D": 256,
+      "DV": 256,
+      "HQ": 24,
+      "HKV": 4,
+      "PAGE": 16,
+      "KIND": 0
+     },
+     "rows": [
+      5,
+      16
+     ],
+     "config": 3
+    },
+    {
+     "key": {
+      "D": 256,
+      "DV": 256,
+      "HQ": 24,
+      "HKV": 4,
+      "PAGE": 16,
+      "KIND": 0
+     },
+     "rows": [
+      17,
+      64
+     ],
+     "config": 4
+    },
+    {
+     "key": {
+      "D": 256,
+      "DV": 256,
+      "HQ": 24,
+      "HKV": 4,
+      "PAGE": 16,
+      "KIND": 2
+     },
+     "rows": [
+      1,
+      1
+     ],
+     "config": 5
+    },
+    {
+     "key": {
+      "D": 256,
+      "DV": 256,
+      "HQ": 24,
+      "HKV": 4,
+      "PAGE": 16,
+      "KIND": 2
+     },
+     "rows": [
+      2,
+      2
+     ],
+     "config": 6
+    },
+    {
+     "key": {
+      "D": 256,
+      "DV": 256,
+      "HQ": 24,
+      "HKV": 4,
+      "PAGE": 16,
+      "KIND": 2
+     },
+     "rows": [
+      3,
+      4
+     ],
+     "config": 5
+    },
+    {
+     "key": {
+      "D": 256,
+      "DV": 256,
+      "HQ": 24,
+      "HKV": 4,
+      "PAGE": 16,
+      "KIND": 2
+     },
+     "rows": [
+      5,
+      16
+     ],
+     "config": 3
+    },
+    {
+     "key": {
+      "D": 256,
+      "DV": 256,
+      "HQ": 24,
+      "HKV": 4,
+      "PAGE": 16,
+      "KIND": 2
+     },
+     "rows": [
+      17,
+      64
+     ],
+     "config": 0
+    },
+    {
+     "key": {
+      "D": 256,
+      "DV": 256,
+      "HQ": 24,
+      "HKV": 4,
+      "PAGE": 16,
+      "KIND": 3
+     },
+     "rows": [
+      1,
+      1
+     ],
+     "config": 6
+    },
+    {
+     "key": {
+      "D": 256,
+      "DV": 256,
+      "HQ": 24,
+      "HKV": 4,
+      "PAGE": 16,
+      "KIND": 3
+     },
+     "rows": [
+      2,
+      2
+     ],
+     "config": 7
+    },
+    {
+     "key": {
+      "D": 256,
+      "DV": 256,
+      "HQ": 24,
+      "HKV": 4,
+      "PAGE": 16,
+      "KIND": 3
+     },
+     "rows": [
+      3,
+      4
+     ],
+     "config": 3
+    },
+    {
+     "key": {
+      "D": 256,
+      "DV": 256,
+      "HQ": 24,
+      "HKV": 4,
+      "PAGE": 16,
+      "KIND": 3
+     },
+     "rows": [
+      5,
+      8
+     ],
+     "config": 2
+    },
+    {
+     "key": {
+      "D": 256,
+      "DV": 256,
+      "HQ": 24,
+      "HKV": 4,
+      "PAGE": 16,
+      "KIND": 3
+     },
+     "rows": [
+      9,
+      16
+     ],
+     "config": 3
+    },
+    {
+     "key": {
+      "D": 256,
+      "DV": 256,
+      "HQ": 24,
+      "HKV": 4,
+      "PAGE": 16,
+      "KIND": 3
+     },
+     "rows": [
+      17,
+      64
+     ],
+     "config": 8
+    }
+   ]
+  },
+  "fused": {
+   "configs": [
+    {
+     "STAGES": 3,
+     "VSPLIT": 0,
+     "WARPS": 4
+    },
+    {
+     "STAGES": 3,
+     "VSPLIT": 4,
+     "WARPS": 2
+    },
+    {
+     "STAGES": 3,
+     "VSPLIT": 4,
+     "WARPS": 4
+    },
+    {
+     "STAGES": 2,
+     "VSPLIT": 1,
+     "WARPS": 4
+    },
+    {
+     "STAGES": 4,
+     "VSPLIT": 0,
+     "WARPS": 4
+    },
+    {
+     "STAGES": 3,
+     "VSPLIT": 2,
+     "WARPS": 4
+    }
+   ],
+   "table": [
+    {
+     "key": {
+      "D": 256,
+      "DV": 256,
+      "HQ": 24,
+      "HKV": 4,
+      "PAGE": 16,
+      "KIND": 0
+     },
+     "rows": [
+      1,
+      1
+     ],
+     "config": 1
+    },
+    {
+     "key": {
+      "D": 256,
+      "DV": 256,
+      "HQ": 24,
+      "HKV": 4,
+      "PAGE": 16,
+      "KIND": 0
+     },
+     "rows": [
+      2,
+      16
+     ],
+     "config": 2
+    },
+    {
+     "key": {
+      "D": 256,
+      "DV": 256,
+      "HQ": 24,
+      "HKV": 4,
+      "PAGE": 16,
+      "KIND": 0
+     },
+     "rows": [
+      17,
+      64
+     ],
+     "config": 3
+    },
+    {
+     "key": {
+      "D": 256,
+      "DV": 256,
+      "HQ": 24,
+      "HKV": 4,
+      "PAGE": 16,
+      "KIND": 2
+     },
+     "rows": [
+      1,
+      16
+     ],
+     "config": 2
+    },
+    {
+     "key": {
+      "D": 256,
+      "DV": 256,
+      "HQ": 24,
+      "HKV": 4,
+      "PAGE": 16,
+      "KIND": 2
+     },
+     "rows": [
+      17,
+      64
+     ],
+     "config": 4
+    },
+    {
+     "key": {
+      "D": 256,
+      "DV": 256,
+      "HQ": 24,
+      "HKV": 4,
+      "PAGE": 16,
+      "KIND": 3
+     },
+     "rows": [
+      1,
+      1
+     ],
+     "config": 1
+    },
+    {
+     "key": {
+      "D": 256,
+      "DV": 256,
+      "HQ": 24,
+      "HKV": 4,
+      "PAGE": 16,
+      "KIND": 3
+     },
+     "rows": [
+      2,
+      16
+     ],
+     "config": 2
+    },
+    {
+     "key": {
+      "D": 256,
+      "DV": 256,
+      "HQ": 24,
+      "HKV": 4,
+      "PAGE": 16,
+      "KIND": 3
+     },
+     "rows": [
+      17,
+      64
+     ],
+     "config": 5
+    }
+   ]
+  }
+ },
+ "source": "6f4c8cd506e0f2e9770ebaf4506d536279e2a1a831e003fc1442b3ba6c7b7696",
+ "device": "NVIDIA GeForce RTX 5090",
+ "capability": "12.0"
+}

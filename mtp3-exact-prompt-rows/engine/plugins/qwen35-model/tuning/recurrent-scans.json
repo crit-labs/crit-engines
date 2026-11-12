@@ -1,0 +1,272 @@
+{
+ "schema": "crit-kernel-tuning-v1",
+ "kernel": "recurrent-scans",
+ "structures": {
+  "delta-prefill-rb": {
+   "configs": [
+    {
+     "COLS": 64,
+     "MINB": 0,
+     "THREADS": 512
+    }
+   ],
+   "table": [
+    {
+     "key": {
+      "k_heads": 16,
+      "v_heads": 48,
+      "dk": 128,
+      "dv": 128
+     },
+     "rows": [
+      1,
+      1048576
+     ],
+     "config": 0
+    }
+   ]
+  },
+  "delta-prefill-tc": {
+   "configs": [
+    {
+     "OVERLAP": 0,
+     "STAGES": 2,
+     "WARPS": 4
+    }
+   ],
+   "table": [
+    {
+     "key": {
+      "k_heads": 16,
+      "v_heads": 48,
+      "dk": 128,
+      "dv": 128
+     },
+     "rows": [
+      1,
+      1048576
+     ],
+     "config": 0
+    }
+   ]
+  },
+  "pool-delta": {
+   "configs": [
+    {
+     "LANE_COLS": 4,
+     "MINB": 0,
+     "PREFETCH": 1,
+     "SLOTS": 1
+    },
+    {
+     "LANE_COLS": 8,
+     "MINB": 0,
+     "PREFETCH": 1,
+     "SLOTS": 4
+    },
+    {
+     "LANE_COLS": 8,
+     "MINB": 2,
+     "PREFETCH": 0,
+     "SLOTS": 2
+    },
+    {
+     "LANE_COLS": 16,
+     "MINB": 6,
+     "PREFETCH": 0,
+     "SLOTS": 1
+    },
+    {
+     "LANE_COLS": 8,
+     "MINB": 4,
+     "PREFETCH": 0,
+     "SLOTS": 1
+    },
+    {
+     "LANE_COLS": 8,
+     "MINB": 3,
+     "PREFETCH": 0,
+     "SLOTS": 1
+    },
+    {
+     "LANE_COLS": 4,
+     "MINB": 0,
+     "PREFETCH": 1,
+     "SLOTS": 4
+    }
+   ],
+   "table": [
+    {
+     "key": {
+      "k_heads": 16,
+      "v_heads": 48,
+      "dk": 128,
+      "dv": 128
+     },
+     "rows": [
+      1,
+      1
+     ],
+     "config": 1
+    },
+    {
+     "key": {
+      "k_heads": 16,
+      "v_heads": 48,
+      "dk": 128,
+      "dv": 128
+     },
+     "rows": [
+      2,
+      2
+     ],
+     "config": 2
+    },
+    {
+     "key": {
+      "k_heads": 16,
+      "v_heads": 48,
+      "dk": 128,
+      "dv": 128
+     },
+     "rows": [
+      3,
+      4
+     ],
+     "config": 3
+    },
+    {
+     "key": {
+      "k_heads": 16,
+      "v_heads": 48,
+      "dk": 128,
+      "dv": 128
+     },
+     "rows": [
+      5,
+      8
+     ],
+     "config": 4
+    },
+    {
+     "key": {
+      "k_heads": 16,
+      "v_heads": 48,
+      "dk": 128,
+      "dv": 128
+     },
+     "rows": [
+      9,
+      16
+     ],
+     "config": 5
+    },
+    {
+     "key": {
+      "k_heads": 16,
+      "v_heads": 48,
+      "dk": 128,
+      "dv": 128
+     },
+     "rows": [
+      17,
+      65535
+     ],
+     "config": 6
+    }
+   ]
+  },
+  "pool-delta-pipe": {
+   "configs": [
+    {
+     "ITEMS": 1,
+     "LANE_COLS": 8,
+     "MINB": 0,
+     "STAGES": 1
+    },
+    {
+     "ITEMS": 1,
+     "LANE_COLS": 16,
+     "MINB": 4,
+     "STAGES": 1
+    },
+    {
+     "ITEMS": 1,
+     "LANE_COLS": 8,
+     "MINB": 4,
+     "STAGES": 1
+    }
+   ],
+   "table": [
+    {
+     "key": {
+      "k_heads": 16,
+      "v_heads": 48,
+      "dk": 128,
+      "dv": 128
+     },
+     "rows": [
+      1,
+      2
+     ],
+     "config": 1
+    },
+    {
+     "key": {
+      "k_heads": 16,
+      "v_heads": 48,
+      "dk": 128,
+      "dv": 128
+     },
+     "rows": [
+      3,
+      4
+     ],
+     "config": 2
+    },
+    {
+     "key": {
+      "k_heads": 16,
+      "v_heads": 48,
+      "dk": 128,
+      "dv": 128
+     },
+     "rows": [
+      5,
+      8
+     ],
+     "config": 1
+    },
+    {
+     "key": {
+      "k_heads": 16,
+      "v_heads": 48,
+      "dk": 128,
+      "dv": 128
+     },
+     "rows": [
+      9,
+      16
+     ],
+     "config": 2
+    },
+    {
+     "key": {
+      "k_heads": 16,
+      "v_heads": 48,
+      "dk": 128,
+      "dv": 128
+     },
+     "rows": [
+      17,
+      65535
+     ],
+     "config": 1
+    }
+   ]
+  }
+ },
+ "source": "9c6b3cf6afb551b7e2e5bf4981b8b56ead7571f33123a0dd79f8be48e946be07",
+ "device": "NVIDIA GeForce RTX 5090",
+ "capability": "12.0"
+}

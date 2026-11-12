@@ -1,0 +1,127 @@
+{
+ "schema": "crit-kernel-tuning-v1",
+ "kernel": "fused-norms",
+ "structures": {
+  "rows": {
+   "configs": [
+    {
+     "ELEMENTS": 4096,
+     "SPAN": 512
+    },
+    {
+     "ELEMENTS": 2048,
+     "SPAN": 256
+    }
+   ],
+   "table": [
+    {
+     "key": {
+      "D": 128
+     },
+     "rows": [
+      1,
+      1048576
+     ],
+     "config": 1
+    },
+    {
+     "key": {
+      "D": 256
+     },
+     "rows": [
+      1,
+      1048576
+     ],
+     "config": 1
+    },
+    {
+     "key": {
+      "D": 5120
+     },
+     "rows": [
+      1,
+      1048576
+     ],
+     "config": 0
+    }
+   ]
+  },
+  "rope": {
+   "configs": [
+    {
+     "ELEMENTS": 4096,
+     "SPAN": 512
+    },
+    {
+     "ELEMENTS": 2048,
+     "SPAN": 256
+    }
+   ],
+   "table": [
+    {
+     "key": {
+      "D": 256
+     },
+     "rows": [
+      1,
+      1048576
+     ],
+     "config": 1
+    }
+   ]
+  },
+  "act-mul": {
+   "configs": [
+    {
+     "BLOCK": 1024,
+     "PDL": 0,
+     "WARPS": 4
+    },
+    {
+     "BLOCK": 1024,
+     "PDL": 2,
+     "WARPS": 2
+    }
+   ],
+   "table": [
+    {
+     "key": {
+      "N": 17408
+     },
+     "rows": [
+      1,
+      1048576
+     ],
+     "config": 1
+    }
+   ]
+  },
+  "softplus-decay": {
+   "configs": [
+    {
+     "BLOCK": 1024,
+     "WARPS": 4
+    },
+    {
+     "BLOCK": 512,
+     "WARPS": 4
+    }
+   ],
+   "table": [
+    {
+     "key": {
+      "N": 48
+     },
+     "rows": [
+      1,
+      1048576
+     ],
+     "config": 1
+    }
+   ]
+  }
+ },
+ "source": "b16e9f14f0b8c5fda19f808a570bfd47fe94e8c0e3d257ef9515e6a41f4f4406",
+ "device": "NVIDIA GeForce RTX 5090",
+ "capability": "12.0"
+}

@@ -1,0 +1,73 @@
+{
+  "plugins": {
+    "base": {
+      "drafter": null,
+      "norms": "torch-norms"
+    },
+    "options": {
+      "attention-state": {
+        "fresh_mib": 0
+      },
+      "device-placement": {
+        "off_device": "tables."
+      },
+      "memory-table-rows": {
+        "host": true
+      },
+      "quantized-projections": {
+        "activations": "bf16",
+        "decode_activations": "bf16",
+        "format": "nvfp4",
+        "fp8_activations": "bf16",
+        "gemv": "mma",
+        "prompt": "bf16",
+        "prompt_gemm": "tile"
+      },
+      "qwen35-model": {
+        "draft_head": "nvfp4",
+        "kernel_tuning": "tuning",
+        "mtp": true,
+        "mtp_encode": "fp8",
+        "mtp_kv": "fp8:row",
+        "prompt_buckets": "32,64,128,256,384,512",
+        "release_below_mib": 640,
+        "width": 3
+      },
+      "softmax-attention": {
+        "prompt_reader": "decode"
+      }
+    },
+    "use": {
+      "attention": "softmax-attention",
+      "drafter": "greedy-head-drafter",
+      "embeddings": "memory-table-rows",
+      "kv_cache": "attention-state",
+      "model": "qwen35-model",
+      "norms": "fused-norms",
+      "placement": "device-placement",
+      "projections": "quantized-projections",
+      "recurrence": "sequential-recurrence",
+      "sampler": "token-sampling"
+    }
+  },
+  "recon": {
+    "chat_template": {
+      "name": "default",
+      "sha256": "12827f24b742ea4e80cdc12dbcf9622227056b9f797252a3149263d4f9aaadce"
+    },
+    "sampling": {
+      "do_sample": true,
+      "temperature": 1.0,
+      "top_k": 20,
+      "top_p": 0.95
+    },
+    "stop_strings": [],
+    "stop_token_ids": [
+      248046,
+      248044
+    ],
+    "template_variables": {
+      "enable_thinking": false
+    }
+  }
+}
