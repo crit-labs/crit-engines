@@ -1,0 +1,78 @@
+{
+  "schema": "crit-plugin-v1",
+  "id": "gemma4-model",
+  "title": "Gemma 4 mixture-of-experts text decoder (gemma4) from a GGUF, over the device plugins",
+  "description": "Gemma 4's text decoder (Gemma4ForConditionalGeneration's language model, transformers' modeling_gemma4): 5:1 sliding-window (1024, 8 KV heads x 256, RoPE theta 1e4) and full-attention layers (2 KV heads x 512, keys and values from one projection, proportional RoPE theta 1e6 over a quarter of the pairs), query and key norms, attention scale 1, a dense GeGLU MLP beside 128 routed GeGLU experts (top 8 of a softmax router over the RMS-normed, scaled residual, renormalized, times a per-expert scale) with their own pre and post norms, a per-layer output scale, the embedding scaled by sqrt(hidden) and tied to the head, final logits soft-capped at 30. Weights read from the GGUF as stored (gguf-projections, gguf-experts) or, for the tests, from a dense state dict; KV in gemma4-attention's sliding rings and derived-key pages; every step of many sequences one batch, each prompt chunk alone and decode rows 8 at a time.",
+  "fills": [
+    "model"
+  ],
+  "needs": [
+    "model_type:gemma4"
+  ],
+  "requires": [
+    "norms",
+    "router",
+    "experts"
+  ],
+  "devices": [
+    "cuda"
+  ],
+  "options": {
+    "concurrency": {
+      "type": "int",
+      "default": 2,
+      "min": 2,
+      "max": 16
+    },
+    "prefill_chunk": {
+      "type": "int",
+      "default": 512,
+      "min": 16,
+      "max": 2048
+    },
+    "chunk_schedule": {
+      "type": "str",
+      "default": "",
+      "description": "POSITION:ROWS,...: from each position on a prompt chunk computes at most ROWS rows (prefill_chunk before)"
+    },
+    "context": {
+      "type": "int",
+      "default": 8192,
+      "min": 1024,
+      "max": 262144,
+      "description": "positions served when the loader names no context"
+    },
+    "host_experts": {
+      "type": "str",
+      "default": "",
+      "description": "comma-separated layers whose routed experts live in pinned host memory (the placement's experts.LL. groups)"
+    },
+    "workspace_mib": {
+      "type": "int",
+      "default": 768,
+      "min": 0,
+      "max": 8192,
+      "description": "device MiB planned for a step's temporaries (decoded matrices, attention blocks, logits)"
+    },
+    "reserve_mib": {
+      "type": "int",
+      "default": 1536,
+      "min": 0,
+      "max": 16384,
+      "description": "device MiB left out of the placement budget (CUDA context, the desktop, the run's headroom)"
+    },
+    "decode_graphs": {
+      "type": "bool",
+      "default": true,
+      "description": "capture the decode step per row count in CUDA graphs at load"
+    },
+    "overlap": {
+      "type": "bool",
+      "default": true,
+      "description": "run a layer's routed experts on a side stream beside its dense MLP (forked and joined inside the step, captured graphs included)"
+    }
+  },
+  "entry": "plugin.py:create",
+  "tool_format": "tool_format.py:FORMAT",
+  "reasoning_format": "tool_format.py:THINKING"
+}

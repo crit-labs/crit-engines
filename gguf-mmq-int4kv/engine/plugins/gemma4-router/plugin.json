@@ -1,0 +1,63 @@
+{
+  "schema": "crit-plugin-v1",
+  "id": "gemma4-router",
+  "title": "Top-k expert routing: the router matrix, softmax, top-k and renormalization in one CUDA kernel",
+  "description": "topk-router's rule and code (its reference) with Gemma 4's case in one kernel: route_fused takes the BF16 router inputs and the BF16 router matrix and returns each token's top experts and weights (the logits in FP32 sums, a softmax over all experts, the top by score with ties to the lower id, renormalized and scaled, times each expert's own scale) in one launch (gguf-projections' code/gguf_gemv.cu, route); capture-safe, a junk row of NaN still picking distinct experts with weight 0. Other rules, and select(logits), run topk-router's torch form.",
+  "fills": [
+    "router"
+  ],
+  "devices": [
+    "cuda",
+    "cpu"
+  ],
+  "provides": [
+    "rounds:router",
+    "prompts:router"
+  ],
+  "options": {
+    "scoring": {
+      "type": "choice",
+      "default": "softmax",
+      "choices": [
+        "softmax",
+        "sigmoid"
+      ]
+    },
+    "score_before_selection": {
+      "type": "bool",
+      "default": false
+    },
+    "renormalize": {
+      "type": "bool",
+      "default": false
+    },
+    "scaling": {
+      "type": "float",
+      "default": 1.0,
+      "min": 0.0
+    },
+    "groups": {
+      "type": "int",
+      "default": 1,
+      "min": 1
+    },
+    "selected_groups": {
+      "type": "int",
+      "default": 1,
+      "min": 1
+    },
+    "group_score_top": {
+      "type": "int",
+      "default": 1,
+      "min": 1
+    }
+  },
+  "sources": {
+    "dispatch": "../_sources/heterogeneous-expert-dispatch/code",
+    "gguf": "../gguf-projections/code"
+  },
+  "entry": "plugin.py:create",
+  "reference": [
+    "topk-router"
+  ]
+}

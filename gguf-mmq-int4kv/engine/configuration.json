@@ -1,0 +1,79 @@
+{
+  "exactness": {
+    "decode": "row-exact",
+    "prompt": "exact"
+  },
+  "plugins": {
+    "base": {
+      "norms": "torch-norms",
+      "router": "topk-router"
+    },
+    "options": {
+      "device-placement": {
+        "files": false,
+        "off_device": ""
+      },
+      "gemma4-attention": {
+        "block": 1024,
+        "dtype": "int4"
+      },
+      "gemma4-model": {
+        "chunk_schedule": "98304:256",
+        "concurrency": 2,
+        "host_experts": "",
+        "prefill_chunk": 512,
+        "reserve_mib": 1024,
+        "workspace_mib": 192
+      },
+      "gemma4-router": {
+        "renormalize": true,
+        "score_before_selection": true,
+        "scoring": "softmax"
+      },
+      "gguf-experts": {
+        "decode": "stored",
+        "prompt": "stored"
+      },
+      "gguf-projections": {
+        "chunk_mib": 16,
+        "decode": "stored",
+        "gemv_rows": 64,
+        "prompt": "stored",
+        "q8_layout": "stored"
+      }
+    },
+    "use": {
+      "attention": "gemma4-attention",
+      "experts": "gguf-experts",
+      "kv_cache": "gemma4-attention",
+      "model": "gemma4-model",
+      "norms": "gemma4-norms",
+      "placement": "device-placement",
+      "projections": "gguf-projections",
+      "router": "gemma4-router",
+      "sampler": "token-sampling"
+    }
+  },
+  "quality_mode": "speed",
+  "recon": {
+    "chat_template": {
+      "name": "default",
+      "sha256": "ae53464bf3be25802b3a5b37def7fd89667067d7577049b3b2d74c4d8de4c6d4"
+    },
+    "sampling": {
+      "do_sample": true,
+      "temperature": 1.0,
+      "top_k": 64,
+      "top_p": 0.95
+    },
+    "stop_strings": [],
+    "stop_token_ids": [
+      1,
+      106,
+      50
+    ],
+    "template_variables": {
+      "enable_thinking": false
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "schema": "crit-plugin-v1",
+  "id": "gemma4-norms",
+  "title": "One CUDA kernel per norms call for the shapes Gemma 4's step takes",
+  "description": "The norms slot as torch-norms (its reference and fallback, fused-norms' torch code), with rms_norm (rows, a weight or none, no offset or residual), rms_norm_heads, rms_norm_rope (half-split pairs from inverse frequencies, zeros leaving a pair as it is) and the tanh gelu_mul of gate|up halves each one kernel (code/norms.cu): one block a row, FP32 inside, one rounding, the sum of squares reduced in a fixed order, so a row's bits never depend on the rows beside it; capture-safe. Other calls and shapes go to torch-norms.",
+  "fills": [
+    "norms"
+  ],
+  "provides": [
+    "rounds:norms",
+    "prompts:norms",
+    "norms:fused"
+  ],
+  "devices": [
+    "cuda"
+  ],
+  "reference": [
+    "torch-norms"
+  ],
+  "sources": {
+    "norms": "../_sources/fused-norms/code",
+    "g4": "code"
+  },
+  "entry": "plugin.py:create"
+}
