@@ -1,0 +1,286 @@
+{
+ "kernel": "grouped-experts",
+ "structures": {
+  "fp4-prompt": [
+   {
+    "shape": {
+     "gate_up": 1,
+     "hidden": 2304,
+     "inter": 1152
+    },
+    "rows": 256,
+    "tuned_us": 357.536,
+    "config": {
+     "CHUNK": 256,
+     "DEPTH": 2,
+     "TILES": 1,
+     "WARPS": 8
+    },
+    "default_us": 393.248,
+    "speedup": 1.1,
+    "tuned_GBs": 1072.3,
+    "library": "FlashInfer grouped GEMM (flashinfer.grouped_mm.grouped_mm_bf16, cuDNN MoE backend) on the pass's weights widened to BF16 once, as the BF16 path's benches: no library takes grouped NVFP4 W4A4 one pass at a time",
+    "library_us": 1145.152,
+    "library_timed": "graph",
+    "paired_us": 356.448,
+    "vs_library": 3.213
+   },
+   {
+    "shape": {
+     "gate_up": 1,
+     "hidden": 2304,
+     "inter": 1152
+    },
+    "rows": 1024,
+    "tuned_us": 537.568,
+    "config": {
+     "CHUNK": 128,
+     "DEPTH": 1,
+     "TILES": 1,
+     "WARPS": 8
+    },
+    "default_us": 609.536,
+    "speedup": 1.134,
+    "tuned_GBs": 713.2,
+    "library": "FlashInfer grouped GEMM (flashinfer.grouped_mm.grouped_mm_bf16, cuDNN MoE backend) on the pass's weights widened to BF16 once, as the BF16 path's benches: no library takes grouped NVFP4 W4A4 one pass at a time",
+    "library_us": 1446.24,
+    "library_timed": "graph",
+    "paired_us": 538.688,
+    "vs_library": 2.685
+   },
+   {
+    "shape": {
+     "gate_up": 1,
+     "hidden": 2304,
+     "inter": 1152
+    },
+    "rows": 4096,
+    "tuned_us": 1576.16,
+    "config": {
+     "CHUNK": 128,
+     "DEPTH": 1,
+     "TILES": 1,
+     "WARPS": 8
+    },
+    "default_us": 1791.04,
+    "speedup": 1.136,
+    "tuned_GBs": 243.2,
+    "library": "FlashInfer grouped GEMM (flashinfer.grouped_mm.grouped_mm_bf16, cuDNN MoE backend) on the pass's weights widened to BF16 once, as the BF16 path's benches: no library takes grouped NVFP4 W4A4 one pass at a time",
+    "library_us": 5840.288,
+    "library_timed": "graph",
+    "paired_us": 1581.12,
+    "vs_library": 3.694
+   },
+   {
+    "shape": {
+     "gate_up": 0,
+     "hidden": 2304,
+     "inter": 1152
+    },
+    "rows": 256,
+    "tuned_us": 150.912,
+    "config": {
+     "CHUNK": 128,
+     "DEPTH": 2,
+     "TILES": 1,
+     "WARPS": 8
+    },
+    "default_us": 167.968,
+    "speedup": 1.113,
+    "tuned_GBs": 1274.1,
+    "library": "FlashInfer grouped GEMM (flashinfer.grouped_mm.grouped_mm_bf16, cuDNN MoE backend) on the pass's weights widened to BF16 once, as the BF16 path's benches: no library takes grouped NVFP4 W4A4 one pass at a time",
+    "library_us": 509.984,
+    "library_timed": "graph",
+    "paired_us": 151.552,
+    "vs_library": 3.365
+   },
+   {
+    "shape": {
+     "gate_up": 0,
+     "hidden": 2304,
+     "inter": 1152
+    },
+    "rows": 1024,
+    "tuned_us": 269.632,
+    "config": {
+     "CHUNK": 128,
+     "DEPTH": 1,
+     "TILES": 2,
+     "WARPS": 8
+    },
+    "default_us": 299.072,
+    "speedup": 1.109,
+    "tuned_GBs": 713.1,
+    "library": "FlashInfer grouped GEMM (flashinfer.grouped_mm.grouped_mm_bf16, cuDNN MoE backend) on the pass's weights widened to BF16 once, as the BF16 path's benches: no library takes grouped NVFP4 W4A4 one pass at a time",
+    "library_us": 665.952,
+    "library_timed": "graph",
+    "paired_us": 270.368,
+    "vs_library": 2.463
+   },
+   {
+    "shape": {
+     "gate_up": 0,
+     "hidden": 2304,
+     "inter": 1152
+    },
+    "rows": 4096,
+    "tuned_us": 789.856,
+    "config": {
+     "CHUNK": 128,
+     "DEPTH": 1,
+     "TILES": 2,
+     "WARPS": 8
+    },
+    "default_us": 880.672,
+    "speedup": 1.115,
+    "tuned_GBs": 243.4,
+    "library": "FlashInfer grouped GEMM (flashinfer.grouped_mm.grouped_mm_bf16, cuDNN MoE backend) on the pass's weights widened to BF16 once, as the BF16 path's benches: no library takes grouped NVFP4 W4A4 one pass at a time",
+    "library_us": 4217.184,
+    "library_timed": "graph",
+    "paired_us": 790.56,
+    "vs_library": 5.334
+   }
+  ],
+  "fp4-tile": [
+   {
+    "shape": {
+     "gate_up": 1,
+     "hidden": 2304,
+     "inter": 1152
+    },
+    "rows": 2048,
+    "tuned_us": 659.488,
+    "config": {
+     "STAGES": 2,
+     "TILES": 4,
+     "WM": 4,
+     "WN": 2
+    },
+    "default_us": 714.784,
+    "speedup": 1.084,
+    "tuned_GBs": 581.3,
+    "library": "FlashInfer grouped GEMM (flashinfer.grouped_mm.grouped_mm_bf16, cuDNN MoE backend) on the pass's weights widened to BF16 once, as the BF16 path's benches: no library takes grouped NVFP4 W4A4 one pass at a time",
+    "library_us": 2219.328,
+    "library_timed": "graph",
+    "paired_us": 663.616,
+    "vs_library": 3.344
+   },
+   {
+    "shape": {
+     "gate_up": 1,
+     "hidden": 2304,
+     "inter": 1152
+    },
+    "rows": 4096,
+    "tuned_us": 1136.672,
+    "config": {
+     "STAGES": 2,
+     "TILES": 4,
+     "WM": 4,
+     "WN": 2
+    },
+    "default_us": 1269.792,
+    "speedup": 1.117,
+    "tuned_GBs": 337.3,
+    "library": "FlashInfer grouped GEMM (flashinfer.grouped_mm.grouped_mm_bf16, cuDNN MoE backend) on the pass's weights widened to BF16 once, as the BF16 path's benches: no library takes grouped NVFP4 W4A4 one pass at a time",
+    "library_us": 5868.96,
+    "library_timed": "graph",
+    "paired_us": 1144.864,
+    "vs_library": 5.126
+   },
+   {
+    "shape": {
+     "gate_up": 1,
+     "hidden": 2304,
+     "inter": 1152
+    },
+    "rows": 8192,
+    "tuned_us": 2114.592,
+    "config": {
+     "STAGES": 2,
+     "TILES": 4,
+     "WM": 4,
+     "WN": 2
+    },
+    "default_us": 2374.688,
+    "speedup": 1.123,
+    "tuned_GBs": 181.3,
+    "library": "FlashInfer grouped GEMM (flashinfer.grouped_mm.grouped_mm_bf16, cuDNN MoE backend) on the pass's weights widened to BF16 once, as the BF16 path's benches: no library takes grouped NVFP4 W4A4 one pass at a time",
+    "library_us": 4571.488,
+    "library_timed": "graph",
+    "paired_us": 2177.184,
+    "vs_library": 2.1
+   },
+   {
+    "shape": {
+     "gate_up": 0,
+     "hidden": 2304,
+     "inter": 1152
+    },
+    "rows": 2048,
+    "tuned_us": 325.664,
+    "config": {
+     "STAGES": 3,
+     "TILES": 4,
+     "WM": 4,
+     "WN": 2
+    },
+    "default_us": 360.512,
+    "speedup": 1.107,
+    "tuned_GBs": 590.4,
+    "library": "FlashInfer grouped GEMM (flashinfer.grouped_mm.grouped_mm_bf16, cuDNN MoE backend) on the pass's weights widened to BF16 once, as the BF16 path's benches: no library takes grouped NVFP4 W4A4 one pass at a time",
+    "library_us": 1421.664,
+    "library_timed": "graph",
+    "paired_us": 325.664,
+    "vs_library": 4.365
+   },
+   {
+    "shape": {
+     "gate_up": 0,
+     "hidden": 2304,
+     "inter": 1152
+    },
+    "rows": 4096,
+    "tuned_us": 561.184,
+    "config": {
+     "STAGES": 2,
+     "TILES": 4,
+     "WM": 4,
+     "WN": 2
+    },
+    "default_us": 630.816,
+    "speedup": 1.124,
+    "tuned_GBs": 342.6,
+    "library": "FlashInfer grouped GEMM (flashinfer.grouped_mm.grouped_mm_bf16, cuDNN MoE backend) on the pass's weights widened to BF16 once, as the BF16 path's benches: no library takes grouped NVFP4 W4A4 one pass at a time",
+    "library_us": 4231.52,
+    "library_timed": "graph",
+    "paired_us": 563.328,
+    "vs_library": 7.512
+   },
+   {
+    "shape": {
+     "gate_up": 0,
+     "hidden": 2304,
+     "inter": 1152
+    },
+    "rows": 8192,
+    "tuned_us": 1042.464,
+    "config": {
+     "STAGES": 2,
+     "TILES": 4,
+     "WM": 4,
+     "WN": 2
+    },
+    "default_us": 1181.728,
+    "speedup": 1.134,
+    "tuned_GBs": 184.5,
+    "library": "FlashInfer grouped GEMM (flashinfer.grouped_mm.grouped_mm_bf16, cuDNN MoE backend) on the pass's weights widened to BF16 once, as the BF16 path's benches: no library takes grouped NVFP4 W4A4 one pass at a time",
+    "library_us": 2038.176,
+    "library_timed": "graph",
+    "paired_us": 1048.608,
+    "vs_library": 1.944
+   }
+  ]
+ },
+ "dropped": {}
+}

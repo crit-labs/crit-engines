@@ -1,0 +1,1474 @@
+{
+ "kernel": "mma-rows",
+ "structures": {
+  "decode-tile": [
+   {
+    "shape": {
+     "weights": 3,
+     "N": 6552,
+     "K": 2304
+    },
+    "rows": 1,
+    "tuned_us": 23.808,
+    "config": {
+     "GROUPS": 1,
+     "SPF": 0,
+     "SPLITS": 3,
+     "SW": 0,
+     "WARPS": 4
+    },
+    "default_us": 24.544,
+    "speedup": 1.031,
+    "tuned_GBs": 1268.9,
+    "library": "NVFP4: flashinfer mm_bf16_fp4 (W4A16, backend cute-dsl-native) on the stored codes, block scales in its 128 x 4 layout once, per-row inverse scale left out; BF16: cuBLAS (torch.matmul); FP8: cuBLAS on the values times row scales widened to BF16 once (no library takes FP8 weights against BF16 activations); INT4 with a zero point: torch's W4A16 INT4 group GEMM (torch._weight_int4pack_mm, tinygemm) on the same codes repacked once",
+    "library_us": 28.64,
+    "library_timed": "graph",
+    "paired_us": 24.544,
+    "vs_library": 1.167
+   },
+   {
+    "shape": {
+     "weights": 3,
+     "N": 6552,
+     "K": 2304
+    },
+    "rows": 2,
+    "tuned_us": 23.84,
+    "config": {
+     "GROUPS": 1,
+     "SPF": 0,
+     "SPLITS": 3,
+     "SW": 0,
+     "WARPS": 4
+    },
+    "default_us": 23.936,
+    "speedup": 1.004,
+    "tuned_GBs": 1267.9,
+    "library": "NVFP4: flashinfer mm_bf16_fp4 (W4A16, backend cute-dsl-native) on the stored codes, block scales in its 128 x 4 layout once, per-row inverse scale left out; BF16: cuBLAS (torch.matmul); FP8: cuBLAS on the values times row scales widened to BF16 once (no library takes FP8 weights against BF16 activations); INT4 with a zero point: torch's W4A16 INT4 group GEMM (torch._weight_int4pack_mm, tinygemm) on the same codes repacked once",
+    "library_us": 26.592,
+    "library_timed": "graph",
+    "paired_us": 24.544,
+    "vs_library": 1.083
+   },
+   {
+    "shape": {
+     "weights": 3,
+     "N": 6552,
+     "K": 2304
+    },
+    "rows": 4,
+    "tuned_us": 23.84,
+    "config": {
+     "GROUPS": 1,
+     "SPF": 0,
+     "SPLITS": 3,
+     "SW": 0,
+     "WARPS": 4
+    },
+    "default_us": 24.544,
+    "speedup": 1.03,
+    "tuned_GBs": 1269.4,
+    "library": "NVFP4: flashinfer mm_bf16_fp4 (W4A16, backend cute-dsl-native) on the stored codes, block scales in its 128 x 4 layout once, per-row inverse scale left out; BF16: cuBLAS (torch.matmul); FP8: cuBLAS on the values times row scales widened to BF16 once (no library takes FP8 weights against BF16 activations); INT4 with a zero point: torch's W4A16 INT4 group GEMM (torch._weight_int4pack_mm, tinygemm) on the same codes repacked once",
+    "library_us": 26.592,
+    "library_timed": "graph",
+    "paired_us": 24.544,
+    "vs_library": 1.083
+   },
+   {
+    "shape": {
+     "weights": 3,
+     "N": 6552,
+     "K": 2304
+    },
+    "rows": 8,
+    "tuned_us": 24.544,
+    "config": {
+     "GROUPS": 1,
+     "SPF": 0,
+     "SPLITS": 3,
+     "SW": 4,
+     "WARPS": 4
+    },
+    "default_us": 25.92,
+    "speedup": 1.056,
+    "tuned_GBs": 1235.9,
+    "library": "NVFP4: flashinfer mm_bf16_fp4 (W4A16, backend cute-dsl-native) on the stored codes, block scales in its 128 x 4 layout once, per-row inverse scale left out; BF16: cuBLAS (torch.matmul); FP8: cuBLAS on the values times row scales widened to BF16 once (no library takes FP8 weights against BF16 activations); INT4 with a zero point: torch's W4A16 INT4 group GEMM (torch._weight_int4pack_mm, tinygemm) on the same codes repacked once",
+    "library_us": 26.592,
+    "library_timed": "graph",
+    "paired_us": 24.544,
+    "vs_library": 1.083
+   },
+   {
+    "shape": {
+     "weights": 3,
+     "N": 6552,
+     "K": 2304
+    },
+    "rows": 16,
+    "tuned_us": 25.92,
+    "config": {
+     "GROUPS": 1,
+     "SPF": 0,
+     "SPLITS": 3,
+     "SW": 4,
+     "WARPS": 4
+    },
+    "default_us": 28.64,
+    "speedup": 1.105,
+    "tuned_GBs": 1175.7,
+    "library": "NVFP4: flashinfer mm_bf16_fp4 (W4A16, backend cute-dsl-native) on the stored codes, block scales in its 128 x 4 layout once, per-row inverse scale left out; BF16: cuBLAS (torch.matmul); FP8: cuBLAS on the values times row scales widened to BF16 once (no library takes FP8 weights against BF16 activations); INT4 with a zero point: torch's W4A16 INT4 group GEMM (torch._weight_int4pack_mm, tinygemm) on the same codes repacked once",
+    "library_us": 28.64,
+    "library_timed": "graph",
+    "paired_us": 26.592,
+    "vs_library": 1.077
+   },
+   {
+    "shape": {
+     "weights": 3,
+     "N": 1024,
+     "K": 2304
+    },
+    "rows": 1,
+    "tuned_us": 7.52,
+    "config": {
+     "GROUPS": 1,
+     "SPF": 0,
+     "SPLITS": 32,
+     "SW": 4,
+     "WARPS": 1
+    },
+    "default_us": 8.16,
+    "speedup": 1.085,
+    "tuned_GBs": 628.4,
+    "library": "NVFP4: flashinfer mm_bf16_fp4 (W4A16, backend cute-dsl-native) on the stored codes, block scales in its 128 x 4 layout once, per-row inverse scale left out; BF16: cuBLAS (torch.matmul); FP8: cuBLAS on the values times row scales widened to BF16 once (no library takes FP8 weights against BF16 activations); INT4 with a zero point: torch's W4A16 INT4 group GEMM (torch._weight_int4pack_mm, tinygemm) on the same codes repacked once",
+    "library_us": 10.24,
+    "library_timed": "graph",
+    "paired_us": 8.192,
+    "vs_library": 1.25
+   },
+   {
+    "shape": {
+     "weights": 3,
+     "N": 1024,
+     "K": 2304
+    },
+    "rows": 2,
+    "tuned_us": 7.52,
+    "config": {
+     "GROUPS": 1,
+     "SPF": 0,
+     "SPLITS": 32,
+     "SW": 4,
+     "WARPS": 1
+    },
+    "default_us": 8.16,
+    "speedup": 1.085,
+    "tuned_GBs": 629.2,
+    "library": "NVFP4: flashinfer mm_bf16_fp4 (W4A16, backend cute-dsl-native) on the stored codes, block scales in its 128 x 4 layout once, per-row inverse scale left out; BF16: cuBLAS (torch.matmul); FP8: cuBLAS on the values times row scales widened to BF16 once (no library takes FP8 weights against BF16 activations); INT4 with a zero point: torch's W4A16 INT4 group GEMM (torch._weight_int4pack_mm, tinygemm) on the same codes repacked once",
+    "library_us": 8.192,
+    "library_timed": "graph",
+    "paired_us": 8.192,
+    "vs_library": 1.0
+   },
+   {
+    "shape": {
+     "weights": 3,
+     "N": 1024,
+     "K": 2304
+    },
+    "rows": 4,
+    "tuned_us": 8.16,
+    "config": {
+     "GROUPS": 1,
+     "SPF": 0,
+     "SPLITS": 32,
+     "SW": 4,
+     "WARPS": 1
+    },
+    "default_us": 9.184,
+    "speedup": 1.125,
+    "tuned_GBs": 581.5,
+    "library": "NVFP4: flashinfer mm_bf16_fp4 (W4A16, backend cute-dsl-native) on the stored codes, block scales in its 128 x 4 layout once, per-row inverse scale left out; BF16: cuBLAS (torch.matmul); FP8: cuBLAS on the values times row scales widened to BF16 once (no library takes FP8 weights against BF16 activations); INT4 with a zero point: torch's W4A16 INT4 group GEMM (torch._weight_int4pack_mm, tinygemm) on the same codes repacked once",
+    "library_us": 16.384,
+    "library_timed": "graph",
+    "paired_us": 8.192,
+    "vs_library": 2.0
+   },
+   {
+    "shape": {
+     "weights": 3,
+     "N": 1024,
+     "K": 2304
+    },
+    "rows": 8,
+    "tuned_us": 9.568,
+    "config": {
+     "GROUPS": 1,
+     "SPF": 0,
+     "SPLITS": 32,
+     "SW": 4,
+     "WARPS": 1
+    },
+    "default_us": 10.208,
+    "speedup": 1.067,
+    "tuned_GBs": 498.7,
+    "library": "NVFP4: flashinfer mm_bf16_fp4 (W4A16, backend cute-dsl-native) on the stored codes, block scales in its 128 x 4 layout once, per-row inverse scale left out; BF16: cuBLAS (torch.matmul); FP8: cuBLAS on the values times row scales widened to BF16 once (no library takes FP8 weights against BF16 activations); INT4 with a zero point: torch's W4A16 INT4 group GEMM (torch._weight_int4pack_mm, tinygemm) on the same codes repacked once",
+    "library_us": 16.384,
+    "library_timed": "graph",
+    "paired_us": 10.24,
+    "vs_library": 1.6
+   },
+   {
+    "shape": {
+     "weights": 3,
+     "N": 1024,
+     "K": 2304
+    },
+    "rows": 16,
+    "tuned_us": 11.552,
+    "config": {
+     "GROUPS": 1,
+     "SPF": 0,
+     "SPLITS": 32,
+     "SW": 4,
+     "WARPS": 1
+    },
+    "default_us": 12.288,
+    "speedup": 1.064,
+    "tuned_GBs": 417.7,
+    "library": "NVFP4: flashinfer mm_bf16_fp4 (W4A16, backend cute-dsl-native) on the stored codes, block scales in its 128 x 4 layout once, per-row inverse scale left out; BF16: cuBLAS (torch.matmul); FP8: cuBLAS on the values times row scales widened to BF16 once (no library takes FP8 weights against BF16 activations); INT4 with a zero point: torch's W4A16 INT4 group GEMM (torch._weight_int4pack_mm, tinygemm) on the same codes repacked once",
+    "library_us": 16.384,
+    "library_timed": "graph",
+    "paired_us": 12.288,
+    "vs_library": 1.333
+   },
+   {
+    "shape": {
+     "weights": 3,
+     "N": 2304,
+     "K": 3072
+    },
+    "rows": 1,
+    "tuned_us": 13.6,
+    "config": {
+     "GROUPS": 1,
+     "SPF": 1,
+     "SPLITS": 6,
+     "SW": 4,
+     "WARPS": 2
+    },
+    "default_us": 15.616,
+    "speedup": 1.148,
+    "tuned_GBs": 1041.7,
+    "library": "NVFP4: flashinfer mm_bf16_fp4 (W4A16, backend cute-dsl-native) on the stored codes, block scales in its 128 x 4 layout once, per-row inverse scale left out; BF16: cuBLAS (torch.matmul); FP8: cuBLAS on the values times row scales widened to BF16 once (no library takes FP8 weights against BF16 activations); INT4 with a zero point: torch's W4A16 INT4 group GEMM (torch._weight_int4pack_mm, tinygemm) on the same codes repacked once",
+    "library_us": 17.472,
+    "library_timed": "graph",
+    "paired_us": 14.304,
+    "vs_library": 1.221
+   },
+   {
+    "shape": {
+     "weights": 3,
+     "N": 2304,
+     "K": 3072
+    },
+    "rows": 2,
+    "tuned_us": 13.6,
+    "config": {
+     "GROUPS": 1,
+     "SPF": 1,
+     "SPLITS": 6,
+     "SW": 4,
+     "WARPS": 2
+    },
+    "default_us": 15.456,
+    "speedup": 1.136,
+    "tuned_GBs": 1042.4,
+    "library": "NVFP4: flashinfer mm_bf16_fp4 (W4A16, backend cute-dsl-native) on the stored codes, block scales in its 128 x 4 layout once, per-row inverse scale left out; BF16: cuBLAS (torch.matmul); FP8: cuBLAS on the values times row scales widened to BF16 once (no library takes FP8 weights against BF16 activations); INT4 with a zero point: torch's W4A16 INT4 group GEMM (torch._weight_int4pack_mm, tinygemm) on the same codes repacked once",
+    "library_us": 22.496,
+    "library_timed": "graph",
+    "paired_us": 14.304,
+    "vs_library": 1.573
+   },
+   {
+    "shape": {
+     "weights": 3,
+     "N": 2304,
+     "K": 3072
+    },
+    "rows": 4,
+    "tuned_us": 14.304,
+    "config": {
+     "GROUPS": 1,
+     "SPF": 1,
+     "SPLITS": 6,
+     "SW": 4,
+     "WARPS": 2
+    },
+    "default_us": 15.712,
+    "speedup": 1.098,
+    "tuned_GBs": 992.6,
+    "library": "NVFP4: flashinfer mm_bf16_fp4 (W4A16, backend cute-dsl-native) on the stored codes, block scales in its 128 x 4 layout once, per-row inverse scale left out; BF16: cuBLAS (torch.matmul); FP8: cuBLAS on the values times row scales widened to BF16 once (no library takes FP8 weights against BF16 activations); INT4 with a zero point: torch's W4A16 INT4 group GEMM (torch._weight_int4pack_mm, tinygemm) on the same codes repacked once",
+    "library_us": 22.496,
+    "library_timed": "graph",
+    "paired_us": 14.304,
+    "vs_library": 1.573
+   },
+   {
+    "shape": {
+     "weights": 3,
+     "N": 2304,
+     "K": 3072
+    },
+    "rows": 8,
+    "tuned_us": 15.616,
+    "config": {
+     "GROUPS": 1,
+     "SPF": 1,
+     "SPLITS": 6,
+     "SW": 4,
+     "WARPS": 2
+    },
+    "default_us": 18.4,
+    "speedup": 1.178,
+    "tuned_GBs": 912.0,
+    "library": "NVFP4: flashinfer mm_bf16_fp4 (W4A16, backend cute-dsl-native) on the stored codes, block scales in its 128 x 4 layout once, per-row inverse scale left out; BF16: cuBLAS (torch.matmul); FP8: cuBLAS on the values times row scales widened to BF16 once (no library takes FP8 weights against BF16 activations); INT4 with a zero point: torch's W4A16 INT4 group GEMM (torch._weight_int4pack_mm, tinygemm) on the same codes repacked once",
+    "library_us": 22.496,
+    "library_timed": "graph",
+    "paired_us": 16.352,
+    "vs_library": 1.376
+   },
+   {
+    "shape": {
+     "weights": 3,
+     "N": 2304,
+     "K": 3072
+    },
+    "rows": 16,
+    "tuned_us": 17.664,
+    "config": {
+     "GROUPS": 1,
+     "SPF": 1,
+     "SPLITS": 6,
+     "SW": 4,
+     "WARPS": 2
+    },
+    "default_us": 21.632,
+    "speedup": 1.225,
+    "tuned_GBs": 811.1,
+    "library": "NVFP4: flashinfer mm_bf16_fp4 (W4A16, backend cute-dsl-native) on the stored codes, block scales in its 128 x 4 layout once, per-row inverse scale left out; BF16: cuBLAS (torch.matmul); FP8: cuBLAS on the values times row scales widened to BF16 once (no library takes FP8 weights against BF16 activations); INT4 with a zero point: torch's W4A16 INT4 group GEMM (torch._weight_int4pack_mm, tinygemm) on the same codes repacked once",
+    "library_us": 23.68,
+    "library_timed": "graph",
+    "paired_us": 18.432,
+    "vs_library": 1.285
+   },
+   {
+    "shape": {
+     "weights": 3,
+     "N": 128,
+     "K": 2304
+    },
+    "rows": 1,
+    "tuned_us": 5.44,
+    "config": {
+     "GROUPS": 1,
+     "SPF": 0,
+     "SPLITS": 32,
+     "SW": 8,
+     "WARPS": 1
+    },
+    "default_us": 6.144,
+    "speedup": 1.129,
+    "tuned_GBs": 109.3,
+    "library": "NVFP4: flashinfer mm_bf16_fp4 (W4A16, backend cute-dsl-native) on the stored codes, block scales in its 128 x 4 layout once, per-row inverse scale left out; BF16: cuBLAS (torch.matmul); FP8: cuBLAS on the values times row scales widened to BF16 once (no library takes FP8 weights against BF16 activations); INT4 with a zero point: torch's W4A16 INT4 group GEMM (torch._weight_int4pack_mm, tinygemm) on the same codes repacked once",
+    "library_us": 6.144,
+    "library_timed": "graph",
+    "paired_us": 6.144,
+    "vs_library": 1.0
+   },
+   {
+    "shape": {
+     "weights": 3,
+     "N": 128,
+     "K": 2304
+    },
+    "rows": 2,
+    "tuned_us": 5.44,
+    "config": {
+     "GROUPS": 1,
+     "SPF": 0,
+     "SPLITS": 32,
+     "SW": 0,
+     "WARPS": 1
+    },
+    "default_us": 6.144,
+    "speedup": 1.129,
+    "tuned_GBs": 110.2,
+    "library": "NVFP4: flashinfer mm_bf16_fp4 (W4A16, backend cute-dsl-native) on the stored codes, block scales in its 128 x 4 layout once, per-row inverse scale left out; BF16: cuBLAS (torch.matmul); FP8: cuBLAS on the values times row scales widened to BF16 once (no library takes FP8 weights against BF16 activations); INT4 with a zero point: torch's W4A16 INT4 group GEMM (torch._weight_int4pack_mm, tinygemm) on the same codes repacked once",
+    "library_us": 16.384,
+    "library_timed": "graph",
+    "paired_us": 6.144,
+    "vs_library": 2.667
+   },
+   {
+    "shape": {
+     "weights": 3,
+     "N": 128,
+     "K": 2304
+    },
+    "rows": 4,
+    "tuned_us": 5.408,
+    "config": {
+     "GROUPS": 1,
+     "SPF": 0,
+     "SPLITS": 32,
+     "SW": 0,
+     "WARPS": 1
+    },
+    "default_us": 6.144,
+    "speedup": 1.136,
+    "tuned_GBs": 112.7,
+    "library": "NVFP4: flashinfer mm_bf16_fp4 (W4A16, backend cute-dsl-native) on the stored codes, block scales in its 128 x 4 layout once, per-row inverse scale left out; BF16: cuBLAS (torch.matmul); FP8: cuBLAS on the values times row scales widened to BF16 once (no library takes FP8 weights against BF16 activations); INT4 with a zero point: torch's W4A16 INT4 group GEMM (torch._weight_int4pack_mm, tinygemm) on the same codes repacked once",
+    "library_us": 16.384,
+    "library_timed": "graph",
+    "paired_us": 6.144,
+    "vs_library": 2.667
+   },
+   {
+    "shape": {
+     "weights": 3,
+     "N": 128,
+     "K": 2304
+    },
+    "rows": 8,
+    "tuned_us": 6.144,
+    "config": {
+     "GROUPS": 1,
+     "SPF": 0,
+     "SPLITS": 32,
+     "SW": 0,
+     "WARPS": 1
+    },
+    "default_us": 7.552,
+    "speedup": 1.229,
+    "tuned_GBs": 102.3,
+    "library": "NVFP4: flashinfer mm_bf16_fp4 (W4A16, backend cute-dsl-native) on the stored codes, block scales in its 128 x 4 layout once, per-row inverse scale left out; BF16: cuBLAS (torch.matmul); FP8: cuBLAS on the values times row scales widened to BF16 once (no library takes FP8 weights against BF16 activations); INT4 with a zero point: torch's W4A16 INT4 group GEMM (torch._weight_int4pack_mm, tinygemm) on the same codes repacked once",
+    "library_us": 6.144,
+    "library_timed": "graph",
+    "paired_us": 6.144,
+    "vs_library": 1.0
+   },
+   {
+    "shape": {
+     "weights": 3,
+     "N": 128,
+     "K": 2304
+    },
+    "rows": 16,
+    "tuned_us": 9.536,
+    "config": {
+     "GROUPS": 1,
+     "SPF": 1,
+     "SPLITS": 32,
+     "SW": 8,
+     "WARPS": 1
+    },
+    "default_us": 10.24,
+    "speedup": 1.074,
+    "tuned_GBs": 70.0,
+    "library": "NVFP4: flashinfer mm_bf16_fp4 (W4A16, backend cute-dsl-native) on the stored codes, block scales in its 128 x 4 layout once, per-row inverse scale left out; BF16: cuBLAS (torch.matmul); FP8: cuBLAS on the values times row scales widened to BF16 once (no library takes FP8 weights against BF16 activations); INT4 with a zero point: torch's W4A16 INT4 group GEMM (torch._weight_int4pack_mm, tinygemm) on the same codes repacked once",
+    "library_us": 6.144,
+    "library_timed": "graph",
+    "paired_us": 10.24,
+    "vs_library": 0.6
+   },
+   {
+    "shape": {
+     "weights": 3,
+     "N": 64,
+     "K": 4608
+    },
+    "rows": 1,
+    "tuned_us": 5.504,
+    "config": {
+     "GROUPS": 1,
+     "SPF": 1,
+     "SPLITS": 24,
+     "SW": 4,
+     "WARPS": 1
+    },
+    "default_us": 6.144,
+    "speedup": 1.116,
+    "tuned_GBs": 108.9,
+    "library": "NVFP4: flashinfer mm_bf16_fp4 (W4A16, backend cute-dsl-native) on the stored codes, block scales in its 128 x 4 layout once, per-row inverse scale left out; BF16: cuBLAS (torch.matmul); FP8: cuBLAS on the values times row scales widened to BF16 once (no library takes FP8 weights against BF16 activations); INT4 with a zero point: torch's W4A16 INT4 group GEMM (torch._weight_int4pack_mm, tinygemm) on the same codes repacked once",
+    "library_us": 6.144,
+    "library_timed": "graph",
+    "paired_us": 6.144,
+    "vs_library": 1.0
+   },
+   {
+    "shape": {
+     "weights": 3,
+     "N": 64,
+     "K": 4608
+    },
+    "rows": 2,
+    "tuned_us": 5.504,
+    "config": {
+     "GROUPS": 1,
+     "SPF": 0,
+     "SPLITS": 24,
+     "SW": 0,
+     "WARPS": 1
+    },
+    "default_us": 6.144,
+    "speedup": 1.116,
+    "tuned_GBs": 110.6,
+    "library": "NVFP4: flashinfer mm_bf16_fp4 (W4A16, backend cute-dsl-native) on the stored codes, block scales in its 128 x 4 layout once, per-row inverse scale left out; BF16: cuBLAS (torch.matmul); FP8: cuBLAS on the values times row scales widened to BF16 once (no library takes FP8 weights against BF16 activations); INT4 with a zero point: torch's W4A16 INT4 group GEMM (torch._weight_int4pack_mm, tinygemm) on the same codes repacked once",
+    "library_us": 28.672,
+    "library_timed": "graph",
+    "paired_us": 6.144,
+    "vs_library": 4.667
+   },
+   {
+    "shape": {
+     "weights": 3,
+     "N": 64,
+     "K": 4608
+    },
+    "rows": 4,
+    "tuned_us": 6.144,
+    "config": {
+     "GROUPS": 1,
+     "SPF": 0,
+     "SPLITS": 24,
+     "SW": 0,
+     "WARPS": 1
+    },
+    "default_us": 8.192,
+    "speedup": 1.333,
+    "tuned_GBs": 102.1,
+    "library": "NVFP4: flashinfer mm_bf16_fp4 (W4A16, backend cute-dsl-native) on the stored codes, block scales in its 128 x 4 layout once, per-row inverse scale left out; BF16: cuBLAS (torch.matmul); FP8: cuBLAS on the values times row scales widened to BF16 once (no library takes FP8 weights against BF16 activations); INT4 with a zero point: torch's W4A16 INT4 group GEMM (torch._weight_int4pack_mm, tinygemm) on the same codes repacked once",
+    "library_us": 28.672,
+    "library_timed": "graph",
+    "paired_us": 6.144,
+    "vs_library": 4.667
+   },
+   {
+    "shape": {
+     "weights": 3,
+     "N": 64,
+     "K": 4608
+    },
+    "rows": 8,
+    "tuned_us": 8.192,
+    "config": {
+     "GROUPS": 1,
+     "SPF": 1,
+     "SPLITS": 24,
+     "SW": 4,
+     "WARPS": 1
+    },
+    "default_us": 9.6,
+    "speedup": 1.172,
+    "tuned_GBs": 81.1,
+    "library": "NVFP4: flashinfer mm_bf16_fp4 (W4A16, backend cute-dsl-native) on the stored codes, block scales in its 128 x 4 layout once, per-row inverse scale left out; BF16: cuBLAS (torch.matmul); FP8: cuBLAS on the values times row scales widened to BF16 once (no library takes FP8 weights against BF16 activations); INT4 with a zero point: torch's W4A16 INT4 group GEMM (torch._weight_int4pack_mm, tinygemm) on the same codes repacked once",
+    "library_us": 8.192,
+    "library_timed": "graph",
+    "paired_us": 8.192,
+    "vs_library": 1.0
+   },
+   {
+    "shape": {
+     "weights": 3,
+     "N": 64,
+     "K": 4608
+    },
+    "rows": 16,
+    "tuned_us": 11.616,
+    "config": {
+     "GROUPS": 1,
+     "SPF": 0,
+     "SPLITS": 24,
+     "SW": 0,
+     "WARPS": 1
+    },
+    "default_us": 14.336,
+    "speedup": 1.234,
+    "tuned_GBs": 63.6,
+    "library": "NVFP4: flashinfer mm_bf16_fp4 (W4A16, backend cute-dsl-native) on the stored codes, block scales in its 128 x 4 layout once, per-row inverse scale left out; BF16: cuBLAS (torch.matmul); FP8: cuBLAS on the values times row scales widened to BF16 once (no library takes FP8 weights against BF16 activations); INT4 with a zero point: torch's W4A16 INT4 group GEMM (torch._weight_int4pack_mm, tinygemm) on the same codes repacked once",
+    "library_us": 8.192,
+    "library_timed": "graph",
+    "paired_us": 12.288,
+    "vs_library": 0.667
+   },
+   {
+    "shape": {
+     "weights": 3,
+     "N": 2304,
+     "K": 64
+    },
+    "rows": 1,
+    "tuned_us": 3.36,
+    "config": {
+     "GROUPS": 1,
+     "SPF": 0,
+     "SPLITS": 1,
+     "SW": 0,
+     "WARPS": 4
+    },
+    "default_us": 4.096,
+    "speedup": 1.219,
+    "tuned_GBs": 89.2,
+    "library": "NVFP4: flashinfer mm_bf16_fp4 (W4A16, backend cute-dsl-native) on the stored codes, block scales in its 128 x 4 layout once, per-row inverse scale left out; BF16: cuBLAS (torch.matmul); FP8: cuBLAS on the values times row scales widened to BF16 once (no library takes FP8 weights against BF16 activations); INT4 with a zero point: torch's W4A16 INT4 group GEMM (torch._weight_int4pack_mm, tinygemm) on the same codes repacked once",
+    "library_us": 4.096,
+    "library_timed": "graph",
+    "paired_us": 4.096,
+    "vs_library": 1.0
+   },
+   {
+    "shape": {
+     "weights": 3,
+     "N": 2304,
+     "K": 64
+    },
+    "rows": 2,
+    "tuned_us": 3.36,
+    "config": {
+     "GROUPS": 1,
+     "SPF": 0,
+     "SPLITS": 1,
+     "SW": 0,
+     "WARPS": 4
+    },
+    "default_us": 4.096,
+    "speedup": 1.219,
+    "tuned_GBs": 90.6,
+    "library": "NVFP4: flashinfer mm_bf16_fp4 (W4A16, backend cute-dsl-native) on the stored codes, block scales in its 128 x 4 layout once, per-row inverse scale left out; BF16: cuBLAS (torch.matmul); FP8: cuBLAS on the values times row scales widened to BF16 once (no library takes FP8 weights against BF16 activations); INT4 with a zero point: torch's W4A16 INT4 group GEMM (torch._weight_int4pack_mm, tinygemm) on the same codes repacked once",
+    "library_us": 4.096,
+    "library_timed": "graph",
+    "paired_us": 4.096,
+    "vs_library": 1.0
+   },
+   {
+    "shape": {
+     "weights": 3,
+     "N": 2304,
+     "K": 64
+    },
+    "rows": 4,
+    "tuned_us": 3.36,
+    "config": {
+     "GROUPS": 1,
+     "SPF": 0,
+     "SPLITS": 1,
+     "SW": 0,
+     "WARPS": 4
+    },
+    "default_us": 4.096,
+    "speedup": 1.219,
+    "tuned_GBs": 93.4,
+    "library": "NVFP4: flashinfer mm_bf16_fp4 (W4A16, backend cute-dsl-native) on the stored codes, block scales in its 128 x 4 layout once, per-row inverse scale left out; BF16: cuBLAS (torch.matmul); FP8: cuBLAS on the values times row scales widened to BF16 once (no library takes FP8 weights against BF16 activations); INT4 with a zero point: torch's W4A16 INT4 group GEMM (torch._weight_int4pack_mm, tinygemm) on the same codes repacked once",
+    "library_us": 4.096,
+    "library_timed": "graph",
+    "paired_us": 4.096,
+    "vs_library": 1.0
+   },
+   {
+    "shape": {
+     "weights": 3,
+     "N": 2304,
+     "K": 64
+    },
+    "rows": 8,
+    "tuned_us": 3.232,
+    "config": {
+     "GROUPS": 1,
+     "SPF": 0,
+     "SPLITS": 1,
+     "SW": 0,
+     "WARPS": 4
+    },
+    "default_us": 4.096,
+    "speedup": 1.267,
+    "tuned_GBs": 103.0,
+    "library": "NVFP4: flashinfer mm_bf16_fp4 (W4A16, backend cute-dsl-native) on the stored codes, block scales in its 128 x 4 layout once, per-row inverse scale left out; BF16: cuBLAS (torch.matmul); FP8: cuBLAS on the values times row scales widened to BF16 once (no library takes FP8 weights against BF16 activations); INT4 with a zero point: torch's W4A16 INT4 group GEMM (torch._weight_int4pack_mm, tinygemm) on the same codes repacked once",
+    "library_us": 4.096,
+    "library_timed": "graph",
+    "paired_us": 4.096,
+    "vs_library": 1.0
+   },
+   {
+    "shape": {
+     "weights": 3,
+     "N": 2304,
+     "K": 64
+    },
+    "rows": 16,
+    "tuned_us": 3.392,
+    "config": {
+     "GROUPS": 1,
+     "SPF": 1,
+     "SPLITS": 1,
+     "SW": 4,
+     "WARPS": 4
+    },
+    "default_us": 4.096,
+    "speedup": 1.208,
+    "tuned_GBs": 109.3,
+    "library": "NVFP4: flashinfer mm_bf16_fp4 (W4A16, backend cute-dsl-native) on the stored codes, block scales in its 128 x 4 layout once, per-row inverse scale left out; BF16: cuBLAS (torch.matmul); FP8: cuBLAS on the values times row scales widened to BF16 once (no library takes FP8 weights against BF16 activations); INT4 with a zero point: torch's W4A16 INT4 group GEMM (torch._weight_int4pack_mm, tinygemm) on the same codes repacked once",
+    "library_us": 4.096,
+    "library_timed": "graph",
+    "paired_us": 4.096,
+    "vs_library": 1.0
+   },
+   {
+    "shape": {
+     "weights": 3,
+     "N": 32,
+     "K": 2304
+    },
+    "rows": 1,
+    "tuned_us": 4.096,
+    "config": {
+     "GROUPS": 1,
+     "SPF": 0,
+     "SPLITS": 32,
+     "SW": 4,
+     "WARPS": 4
+    },
+    "default_us": 4.096,
+    "speedup": 1.0,
+    "tuned_GBs": 37.1,
+    "library": "NVFP4: flashinfer mm_bf16_fp4 (W4A16, backend cute-dsl-native) on the stored codes, block scales in its 128 x 4 layout once, per-row inverse scale left out; BF16: cuBLAS (torch.matmul); FP8: cuBLAS on the values times row scales widened to BF16 once (no library takes FP8 weights against BF16 activations); INT4 with a zero point: torch's W4A16 INT4 group GEMM (torch._weight_int4pack_mm, tinygemm) on the same codes repacked once",
+    "library_us": 6.144,
+    "library_timed": "graph",
+    "paired_us": 4.096,
+    "vs_library": 1.5
+   },
+   {
+    "shape": {
+     "weights": 3,
+     "N": 32,
+     "K": 2304
+    },
+    "rows": 2,
+    "tuned_us": 4.096,
+    "config": {
+     "GROUPS": 1,
+     "SPF": 0,
+     "SPLITS": 32,
+     "SW": 4,
+     "WARPS": 4
+    },
+    "default_us": 4.096,
+    "speedup": 1.0,
+    "tuned_GBs": 38.3,
+    "library": "NVFP4: flashinfer mm_bf16_fp4 (W4A16, backend cute-dsl-native) on the stored codes, block scales in its 128 x 4 layout once, per-row inverse scale left out; BF16: cuBLAS (torch.matmul); FP8: cuBLAS on the values times row scales widened to BF16 once (no library takes FP8 weights against BF16 activations); INT4 with a zero point: torch's W4A16 INT4 group GEMM (torch._weight_int4pack_mm, tinygemm) on the same codes repacked once",
+    "library_us": 16.384,
+    "library_timed": "graph",
+    "paired_us": 4.096,
+    "vs_library": 4.0
+   },
+   {
+    "shape": {
+     "weights": 3,
+     "N": 32,
+     "K": 2304
+    },
+    "rows": 4,
+    "tuned_us": 5.408,
+    "config": {
+     "GROUPS": 1,
+     "SPF": 0,
+     "SPLITS": 32,
+     "SW": 4,
+     "WARPS": 4
+    },
+    "default_us": 6.144,
+    "speedup": 1.136,
+    "tuned_GBs": 30.7,
+    "library": "NVFP4: flashinfer mm_bf16_fp4 (W4A16, backend cute-dsl-native) on the stored codes, block scales in its 128 x 4 layout once, per-row inverse scale left out; BF16: cuBLAS (torch.matmul); FP8: cuBLAS on the values times row scales widened to BF16 once (no library takes FP8 weights against BF16 activations); INT4 with a zero point: torch's W4A16 INT4 group GEMM (torch._weight_int4pack_mm, tinygemm) on the same codes repacked once",
+    "library_us": 16.384,
+    "library_timed": "graph",
+    "paired_us": 6.144,
+    "vs_library": 2.667
+   },
+   {
+    "shape": {
+     "weights": 3,
+     "N": 32,
+     "K": 2304
+    },
+    "rows": 8,
+    "tuned_us": 6.144,
+    "config": {
+     "GROUPS": 1,
+     "SPF": 1,
+     "SPLITS": 32,
+     "SW": 8,
+     "WARPS": 4
+    },
+    "default_us": 6.144,
+    "speedup": 1.0,
+    "tuned_GBs": 30.1,
+    "library": "NVFP4: flashinfer mm_bf16_fp4 (W4A16, backend cute-dsl-native) on the stored codes, block scales in its 128 x 4 layout once, per-row inverse scale left out; BF16: cuBLAS (torch.matmul); FP8: cuBLAS on the values times row scales widened to BF16 once (no library takes FP8 weights against BF16 activations); INT4 with a zero point: torch's W4A16 INT4 group GEMM (torch._weight_int4pack_mm, tinygemm) on the same codes repacked once",
+    "library_us": 16.384,
+    "library_timed": "graph",
+    "paired_us": 6.144,
+    "vs_library": 2.667
+   },
+   {
+    "shape": {
+     "weights": 3,
+     "N": 32,
+     "K": 2304
+    },
+    "rows": 16,
+    "tuned_us": 8.192,
+    "config": {
+     "GROUPS": 1,
+     "SPF": 1,
+     "SPLITS": 32,
+     "SW": 8,
+     "WARPS": 4
+    },
+    "default_us": 10.24,
+    "speedup": 1.25,
+    "tuned_GBs": 27.1,
+    "library": "NVFP4: flashinfer mm_bf16_fp4 (W4A16, backend cute-dsl-native) on the stored codes, block scales in its 128 x 4 layout once, per-row inverse scale left out; BF16: cuBLAS (torch.matmul); FP8: cuBLAS on the values times row scales widened to BF16 once (no library takes FP8 weights against BF16 activations); INT4 with a zero point: torch's W4A16 INT4 group GEMM (torch._weight_int4pack_mm, tinygemm) on the same codes repacked once",
+    "library_us": 16.384,
+    "library_timed": "graph",
+    "paired_us": 8.192,
+    "vs_library": 2.0
+   },
+   {
+    "shape": {
+     "weights": 3,
+     "N": 200058,
+     "K": 2304
+    },
+    "rows": 1,
+    "tuned_us": 564.416,
+    "config": {
+     "GROUPS": 1,
+     "SPF": 0,
+     "SPLITS": 1,
+     "SW": 8,
+     "WARPS": 1
+    },
+    "default_us": 566.56,
+    "speedup": 1.004,
+    "tuned_GBs": 1634.0,
+    "library": "NVFP4: flashinfer mm_bf16_fp4 (W4A16, backend cute-dsl-native) on the stored codes, block scales in its 128 x 4 layout once, per-row inverse scale left out; BF16: cuBLAS (torch.matmul); FP8: cuBLAS on the values times row scales widened to BF16 once (no library takes FP8 weights against BF16 activations); INT4 with a zero point: torch's W4A16 INT4 group GEMM (torch._weight_int4pack_mm, tinygemm) on the same codes repacked once",
+    "library_us": 589.824,
+    "library_timed": "graph",
+    "paired_us": 563.168,
+    "vs_library": 1.047
+   },
+   {
+    "shape": {
+     "weights": 3,
+     "N": 200058,
+     "K": 2304
+    },
+    "rows": 2,
+    "tuned_us": 563.2,
+    "config": {
+     "GROUPS": 1,
+     "SPF": 0,
+     "SPLITS": 1,
+     "SW": 8,
+     "WARPS": 1
+    },
+    "default_us": 566.624,
+    "speedup": 1.006,
+    "tuned_GBs": 1638.3,
+    "library": "NVFP4: flashinfer mm_bf16_fp4 (W4A16, backend cute-dsl-native) on the stored codes, block scales in its 128 x 4 layout once, per-row inverse scale left out; BF16: cuBLAS (torch.matmul); FP8: cuBLAS on the values times row scales widened to BF16 once (no library takes FP8 weights against BF16 activations); INT4 with a zero point: torch's W4A16 INT4 group GEMM (torch._weight_int4pack_mm, tinygemm) on the same codes repacked once",
+    "library_us": 571.392,
+    "library_timed": "graph",
+    "paired_us": 563.168,
+    "vs_library": 1.015
+   },
+   {
+    "shape": {
+     "weights": 3,
+     "N": 200058,
+     "K": 2304
+    },
+    "rows": 4,
+    "tuned_us": 564.512,
+    "config": {
+     "GROUPS": 1,
+     "SPF": 0,
+     "SPLITS": 1,
+     "SW": 8,
+     "WARPS": 1
+    },
+    "default_us": 568.704,
+    "speedup": 1.007,
+    "tuned_GBs": 1635.9,
+    "library": "NVFP4: flashinfer mm_bf16_fp4 (W4A16, backend cute-dsl-native) on the stored codes, block scales in its 128 x 4 layout once, per-row inverse scale left out; BF16: cuBLAS (torch.matmul); FP8: cuBLAS on the values times row scales widened to BF16 once (no library takes FP8 weights against BF16 activations); INT4 with a zero point: torch's W4A16 INT4 group GEMM (torch._weight_int4pack_mm, tinygemm) on the same codes repacked once",
+    "library_us": 573.44,
+    "library_timed": "graph",
+    "paired_us": 563.168,
+    "vs_library": 1.018
+   },
+   {
+    "shape": {
+     "weights": 3,
+     "N": 200058,
+     "K": 2304
+    },
+    "rows": 8,
+    "tuned_us": 564.512,
+    "config": {
+     "GROUPS": 1,
+     "SPF": 1,
+     "SPLITS": 1,
+     "SW": 4,
+     "WARPS": 1
+    },
+    "default_us": 599.392,
+    "speedup": 1.062,
+    "tuned_GBs": 1638.8,
+    "library": "NVFP4: flashinfer mm_bf16_fp4 (W4A16, backend cute-dsl-native) on the stored codes, block scales in its 128 x 4 layout once, per-row inverse scale left out; BF16: cuBLAS (torch.matmul); FP8: cuBLAS on the values times row scales widened to BF16 once (no library takes FP8 weights against BF16 activations); INT4 with a zero point: torch's W4A16 INT4 group GEMM (torch._weight_int4pack_mm, tinygemm) on the same codes repacked once",
+    "library_us": 579.584,
+    "library_timed": "graph",
+    "paired_us": 565.216,
+    "vs_library": 1.025
+   },
+   {
+    "shape": {
+     "weights": 3,
+     "N": 200058,
+     "K": 2304
+    },
+    "rows": 16,
+    "tuned_us": 565.216,
+    "config": {
+     "GROUPS": 1,
+     "SPF": 1,
+     "SPLITS": 1,
+     "SW": 8,
+     "WARPS": 1
+    },
+    "default_us": 680.992,
+    "speedup": 1.205,
+    "tuned_GBs": 1642.5,
+    "library": "NVFP4: flashinfer mm_bf16_fp4 (W4A16, backend cute-dsl-native) on the stored codes, block scales in its 128 x 4 layout once, per-row inverse scale left out; BF16: cuBLAS (torch.matmul); FP8: cuBLAS on the values times row scales widened to BF16 once (no library takes FP8 weights against BF16 activations); INT4 with a zero point: torch's W4A16 INT4 group GEMM (torch._weight_int4pack_mm, tinygemm) on the same codes repacked once",
+    "library_us": 585.728,
+    "library_timed": "graph",
+    "paired_us": 565.216,
+    "vs_library": 1.036
+   }
+  ],
+  "prompt-tile": [
+   {
+    "shape": {
+     "weights": 3,
+     "N": 6552,
+     "K": 2304
+    },
+    "rows": 64,
+    "tuned_us": 28.64,
+    "config": {
+     "PT": 32,
+     "PW": 8
+    },
+    "default_us": 40.224,
+    "speedup": 1.404,
+    "tuned_GBs": 1093.8,
+    "library": "as decode-tile at 64 to 2,048 rows: flashinfer mm_bf16_fp4 for NVFP4, cuBLAS (torch.matmul) for BF16 and for FP8 widened to BF16 once",
+    "library_us": 24.544,
+    "library_timed": "graph",
+    "paired_us": 28.64,
+    "vs_library": 0.857
+   },
+   {
+    "shape": {
+     "weights": 3,
+     "N": 6552,
+     "K": 2304
+    },
+    "rows": 512,
+    "tuned_us": 122.208,
+    "config": {
+     "PT": 64,
+     "PW": 4
+    },
+    "default_us": 124.224,
+    "speedup": 1.016,
+    "tuned_GBs": 321.3,
+    "library": "as decode-tile at 64 to 2,048 rows: flashinfer mm_bf16_fp4 for NVFP4, cuBLAS (torch.matmul) for BF16 and for FP8 widened to BF16 once",
+    "library_us": 102.4,
+    "library_timed": "graph",
+    "paired_us": 122.88,
+    "vs_library": 0.833
+   },
+   {
+    "shape": {
+     "weights": 3,
+     "N": 6552,
+     "K": 2304
+    },
+    "rows": 2048,
+    "tuned_us": 401.44,
+    "config": {
+     "PT": 64,
+     "PW": 8
+    },
+    "default_us": 401.44,
+    "speedup": 1.0,
+    "tuned_GBs": 165.6,
+    "library": "as decode-tile at 64 to 2,048 rows: flashinfer mm_bf16_fp4 for NVFP4, cuBLAS (torch.matmul) for BF16 and for FP8 widened to BF16 once",
+    "library_us": 319.488,
+    "library_timed": "graph",
+    "paired_us": 405.536,
+    "vs_library": 0.788
+   },
+   {
+    "shape": {
+     "weights": 3,
+     "N": 1024,
+     "K": 2304
+    },
+    "rows": 64,
+    "tuned_us": 18.4,
+    "config": {
+     "PT": 32,
+     "PW": 4
+    },
+    "default_us": 40.288,
+    "speedup": 2.19,
+    "tuned_GBs": 279.6,
+    "library": "as decode-tile at 64 to 2,048 rows: flashinfer mm_bf16_fp4 for NVFP4, cuBLAS (torch.matmul) for BF16 and for FP8 widened to BF16 once",
+    "library_us": 10.24,
+    "library_timed": "graph",
+    "paired_us": 18.4,
+    "vs_library": 0.557
+   },
+   {
+    "shape": {
+     "weights": 3,
+     "N": 1024,
+     "K": 2304
+    },
+    "rows": 512,
+    "tuned_us": 26.592,
+    "config": {
+     "PT": 32,
+     "PW": 8
+    },
+    "default_us": 40.288,
+    "speedup": 1.515,
+    "tuned_GBs": 305.6,
+    "library": "as decode-tile at 64 to 2,048 rows: flashinfer mm_bf16_fp4 for NVFP4, cuBLAS (torch.matmul) for BF16 and for FP8 widened to BF16 once",
+    "library_us": 18.4,
+    "library_timed": "graph",
+    "paired_us": 26.592,
+    "vs_library": 0.692
+   },
+   {
+    "shape": {
+     "weights": 3,
+     "N": 1024,
+     "K": 2304
+    },
+    "rows": 2048,
+    "tuned_us": 85.344,
+    "config": {
+     "PT": 64,
+     "PW": 8
+    },
+    "default_us": 85.344,
+    "speedup": 1.0,
+    "tuned_GBs": 215.0,
+    "library": "as decode-tile at 64 to 2,048 rows: flashinfer mm_bf16_fp4 for NVFP4, cuBLAS (torch.matmul) for BF16 and for FP8 widened to BF16 once",
+    "library_us": 59.392,
+    "library_timed": "graph",
+    "paired_us": 86.016,
+    "vs_library": 0.69
+   },
+   {
+    "shape": {
+     "weights": 3,
+     "N": 2304,
+     "K": 3072
+    },
+    "rows": 64,
+    "tuned_us": 24.544,
+    "config": {
+     "PT": 32,
+     "PW": 4
+    },
+    "default_us": 52.288,
+    "speedup": 2.13,
+    "tuned_GBs": 604.8,
+    "library": "as decode-tile at 64 to 2,048 rows: flashinfer mm_bf16_fp4 for NVFP4, cuBLAS (torch.matmul) for BF16 and for FP8 widened to BF16 once",
+    "library_us": 24.544,
+    "library_timed": "graph",
+    "paired_us": 24.544,
+    "vs_library": 1.0
+   },
+   {
+    "shape": {
+     "weights": 3,
+     "N": 2304,
+     "K": 3072
+    },
+    "rows": 512,
+    "tuned_us": 56.672,
+    "config": {
+     "PT": 64,
+     "PW": 8
+    },
+    "default_us": 56.672,
+    "speedup": 1.0,
+    "tuned_GBs": 346.9,
+    "library": "as decode-tile at 64 to 2,048 rows: flashinfer mm_bf16_fp4 for NVFP4, cuBLAS (torch.matmul) for BF16 and for FP8 widened to BF16 once",
+    "library_us": 42.976,
+    "library_timed": "graph",
+    "paired_us": 57.312,
+    "vs_library": 0.75
+   },
+   {
+    "shape": {
+     "weights": 3,
+     "N": 2304,
+     "K": 3072
+    },
+    "rows": 2048,
+    "tuned_us": 223.264,
+    "config": {
+     "PT": 64,
+     "PW": 4
+    },
+    "default_us": 224.672,
+    "speedup": 1.006,
+    "tuned_GBs": 162.0,
+    "library": "as decode-tile at 64 to 2,048 rows: flashinfer mm_bf16_fp4 for NVFP4, cuBLAS (torch.matmul) for BF16 and for FP8 widened to BF16 once",
+    "library_us": 165.888,
+    "library_timed": "graph",
+    "paired_us": 225.312,
+    "vs_library": 0.736
+   },
+   {
+    "shape": {
+     "weights": 3,
+     "N": 128,
+     "K": 2304
+    },
+    "rows": 64,
+    "tuned_us": 17.792,
+    "config": {
+     "PT": 32,
+     "PW": 4
+    },
+    "default_us": 40.32,
+    "speedup": 2.266,
+    "tuned_GBs": 50.6,
+    "library": "as decode-tile at 64 to 2,048 rows: flashinfer mm_bf16_fp4 for NVFP4, cuBLAS (torch.matmul) for BF16 and for FP8 widened to BF16 once",
+    "library_us": 6.144,
+    "library_timed": "graph",
+    "paired_us": 18.432,
+    "vs_library": 0.333
+   },
+   {
+    "shape": {
+     "weights": 3,
+     "N": 128,
+     "K": 2304
+    },
+    "rows": 512,
+    "tuned_us": 17.76,
+    "config": {
+     "PT": 32,
+     "PW": 4
+    },
+    "default_us": 40.928,
+    "speedup": 2.305,
+    "tuned_GBs": 173.4,
+    "library": "as decode-tile at 64 to 2,048 rows: flashinfer mm_bf16_fp4 for NVFP4, cuBLAS (torch.matmul) for BF16 and for FP8 widened to BF16 once",
+    "library_us": 8.192,
+    "library_timed": "graph",
+    "paired_us": 18.4,
+    "vs_library": 0.445
+   },
+   {
+    "shape": {
+     "weights": 3,
+     "N": 128,
+     "K": 2304
+    },
+    "rows": 2048,
+    "tuned_us": 20.448,
+    "config": {
+     "PT": 32,
+     "PW": 4
+    },
+    "default_us": 40.32,
+    "speedup": 1.972,
+    "tuned_GBs": 516.0,
+    "library": "as decode-tile at 64 to 2,048 rows: flashinfer mm_bf16_fp4 for NVFP4, cuBLAS (torch.matmul) for BF16 and for FP8 widened to BF16 once",
+    "library_us": 14.304,
+    "library_timed": "graph",
+    "paired_us": 21.6,
+    "vs_library": 0.662
+   },
+   {
+    "shape": {
+     "weights": 3,
+     "N": 64,
+     "K": 4608
+    },
+    "rows": 64,
+    "tuned_us": 30.72,
+    "config": {
+     "PT": 32,
+     "PW": 4
+    },
+    "default_us": 73.728,
+    "speedup": 2.4,
+    "tuned_GBs": 38.7,
+    "library": "as decode-tile at 64 to 2,048 rows: flashinfer mm_bf16_fp4 for NVFP4, cuBLAS (torch.matmul) for BF16 and for FP8 widened to BF16 once",
+    "library_us": 6.144,
+    "library_timed": "graph",
+    "paired_us": 30.72,
+    "vs_library": 0.2
+   },
+   {
+    "shape": {
+     "weights": 3,
+     "N": 64,
+     "K": 4608
+    },
+    "rows": 512,
+    "tuned_us": 32.032,
+    "config": {
+     "PT": 32,
+     "PW": 4
+    },
+    "default_us": 73.728,
+    "speedup": 2.302,
+    "tuned_GBs": 167.8,
+    "library": "as decode-tile at 64 to 2,048 rows: flashinfer mm_bf16_fp4 for NVFP4, cuBLAS (torch.matmul) for BF16 and for FP8 widened to BF16 once",
+    "library_us": 12.256,
+    "library_timed": "graph",
+    "paired_us": 32.736,
+    "vs_library": 0.374
+   },
+   {
+    "shape": {
+     "weights": 3,
+     "N": 64,
+     "K": 4608
+    },
+    "rows": 2048,
+    "tuned_us": 32.736,
+    "config": {
+     "PT": 32,
+     "PW": 4
+    },
+    "default_us": 75.04,
+    "speedup": 2.292,
+    "tuned_GBs": 602.6,
+    "library": "as decode-tile at 64 to 2,048 rows: flashinfer mm_bf16_fp4 for NVFP4, cuBLAS (torch.matmul) for BF16 and for FP8 widened to BF16 once",
+    "library_us": 20.448,
+    "library_timed": "graph",
+    "paired_us": 32.736,
+    "vs_library": 0.625
+   },
+   {
+    "shape": {
+     "weights": 3,
+     "N": 2304,
+     "K": 64
+    },
+    "rows": 64,
+    "tuned_us": 4.096,
+    "config": {
+     "PT": 32,
+     "PW": 4
+    },
+    "default_us": 6.144,
+    "speedup": 1.5,
+    "tuned_GBs": 146.0,
+    "library": "as decode-tile at 64 to 2,048 rows: flashinfer mm_bf16_fp4 for NVFP4, cuBLAS (torch.matmul) for BF16 and for FP8 widened to BF16 once",
+    "library_us": 4.096,
+    "library_timed": "graph",
+    "paired_us": 4.096,
+    "vs_library": 1.0
+   },
+   {
+    "shape": {
+     "weights": 3,
+     "N": 2304,
+     "K": 64
+    },
+    "rows": 512,
+    "tuned_us": 6.144,
+    "config": {
+     "PT": 64,
+     "PW": 4
+    },
+    "default_us": 7.072,
+    "speedup": 1.151,
+    "tuned_GBs": 442.7,
+    "library": "as decode-tile at 64 to 2,048 rows: flashinfer mm_bf16_fp4 for NVFP4, cuBLAS (torch.matmul) for BF16 and for FP8 widened to BF16 once",
+    "library_us": 6.112,
+    "library_timed": "graph",
+    "paired_us": 6.144,
+    "vs_library": 0.995
+   },
+   {
+    "shape": {
+     "weights": 3,
+     "N": 2304,
+     "K": 64
+    },
+    "rows": 2048,
+    "tuned_us": 13.696,
+    "config": {
+     "PT": 64,
+     "PW": 4
+    },
+    "default_us": 18.4,
+    "speedup": 1.343,
+    "tuned_GBs": 729.7,
+    "library": "as decode-tile at 64 to 2,048 rows: flashinfer mm_bf16_fp4 for NVFP4, cuBLAS (torch.matmul) for BF16 and for FP8 widened to BF16 once",
+    "library_us": 10.208,
+    "library_timed": "graph",
+    "paired_us": 14.304,
+    "vs_library": 0.714
+   },
+   {
+    "shape": {
+     "weights": 3,
+     "N": 32,
+     "K": 2304
+    },
+    "rows": 64,
+    "tuned_us": 16.384,
+    "config": {
+     "PT": 32,
+     "PW": 4
+    },
+    "default_us": 38.912,
+    "speedup": 2.375,
+    "tuned_GBs": 27.3,
+    "library": "as decode-tile at 64 to 2,048 rows: flashinfer mm_bf16_fp4 for NVFP4, cuBLAS (torch.matmul) for BF16 and for FP8 widened to BF16 once",
+    "library_us": 6.144,
+    "library_timed": "graph",
+    "paired_us": 16.384,
+    "vs_library": 0.375
+   },
+   {
+    "shape": {
+     "weights": 3,
+     "N": 32,
+     "K": 2304
+    },
+    "rows": 512,
+    "tuned_us": 17.792,
+    "config": {
+     "PT": 32,
+     "PW": 4
+    },
+    "default_us": 38.912,
+    "speedup": 2.187,
+    "tuned_GBs": 142.7,
+    "library": "as decode-tile at 64 to 2,048 rows: flashinfer mm_bf16_fp4 for NVFP4, cuBLAS (torch.matmul) for BF16 and for FP8 widened to BF16 once",
+    "library_us": 8.192,
+    "library_timed": "graph",
+    "paired_us": 18.432,
+    "vs_library": 0.444
+   },
+   {
+    "shape": {
+     "weights": 3,
+     "N": 32,
+     "K": 2304
+    },
+    "rows": 2048,
+    "tuned_us": 18.4,
+    "config": {
+     "PT": 32,
+     "PW": 4
+    },
+    "default_us": 38.912,
+    "speedup": 2.115,
+    "tuned_GBs": 528.0,
+    "library": "as decode-tile at 64 to 2,048 rows: flashinfer mm_bf16_fp4 for NVFP4, cuBLAS (torch.matmul) for BF16 and for FP8 widened to BF16 once",
+    "library_us": 12.288,
+    "library_timed": "graph",
+    "paired_us": 18.4,
+    "vs_library": 0.668
+   },
+   {
+    "shape": {
+     "weights": 3,
+     "N": 200058,
+     "K": 2304
+    },
+    "rows": 64,
+    "tuned_us": 591.872,
+    "config": {
+     "PT": 64,
+     "PW": 8
+    },
+    "default_us": 591.872,
+    "speedup": 1.0,
+    "tuned_GBs": 1601.3,
+    "library": "as decode-tile at 64 to 2,048 rows: flashinfer mm_bf16_fp4 for NVFP4, cuBLAS (torch.matmul) for BF16 and for FP8 widened to BF16 once",
+    "library_us": 616.48,
+    "library_timed": "graph",
+    "paired_us": 595.968,
+    "vs_library": 1.034
+   },
+   {
+    "shape": {
+     "weights": 3,
+     "N": 200058,
+     "K": 2304
+    },
+    "rows": 512,
+    "tuned_us": 2939.936,
+    "config": {
+     "PT": 64,
+     "PW": 8
+    },
+    "default_us": 2939.936,
+    "speedup": 1.0,
+    "tuned_GBs": 384.1,
+    "library": "as decode-tile at 64 to 2,048 rows: flashinfer mm_bf16_fp4 for NVFP4, cuBLAS (torch.matmul) for BF16 and for FP8 widened to BF16 once",
+    "library_us": 2358.272,
+    "library_timed": "graph",
+    "paired_us": 3003.424,
+    "vs_library": 0.785
+   },
+   {
+    "shape": {
+     "weights": 3,
+     "N": 200058,
+     "K": 2304
+    },
+    "rows": 2048,
+    "tuned_us": 11928.96,
+    "config": {
+     "PT": 64,
+     "PW": 8
+    },
+    "default_us": 11928.96,
+    "speedup": 1.0,
+    "tuned_GBs": 146.8,
+    "library": "as decode-tile at 64 to 2,048 rows: flashinfer mm_bf16_fp4 for NVFP4, cuBLAS (torch.matmul) for BF16 and for FP8 widened to BF16 once",
+    "library_us": 9295.904,
+    "library_timed": "graph",
+    "paired_us": 12130.336,
+    "vs_library": 0.766
+   }
+  ]
+ },
+ "dropped": {}
+}

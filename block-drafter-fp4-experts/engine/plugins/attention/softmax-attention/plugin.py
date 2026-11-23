@@ -1,0 +1,103 @@
+"""Plain attention in the attention slot: attention-state's softmax over the visible rows (implementation.py) as the
+host form. On the device (attention-state's device_attention.py) each token attends its sequence's positions up to its
+own, read where the pool keeps them: crit's paged-kv-attention kernels (a split-KV reader of decode and verify windows
+over every page type, trees and block lists included, and a prompt reader over every page type) where they load
+(FlashInfer's paged kernels over 16-bit and FP8 pages only with option flashinfer auto, a yardstick), and torch otherwise: each
+row's KV gathered and torch's scaled dot product attention, the plain path the others are tested against (option
+kernels: torch forces it). Captured rounds (rounds:attention) read through the pool's round tables. Its memory()
+declares exactly what the device form allocates when it is made."""
+from pathlib import Path
+
+from .state import device_attention
+from .state import implementation as reference
+
+KERNELS = "paged-kv-attention"
+LATENT = "latent-attention"
+
+
+class SoftmaxAttention:
+    def __init__(self, kv, device_form):
+        self.kv, self.device_form = kv, device_form
+
+    def attend(self, sequence, queries, positions, scale=None, pending=False):
+        rows = self.kv.rows(sequence, pending)
+        if len(queries) != len(positions):
+            raise ValueError("one position per query")
+        out = []
+        for query, position in zip(queries, positions):
+            visible = [(tuple(key), tuple(value)) for p, key, value in rows if p <= position]
+            if not visible:
+                raise ValueError(f"no row at or before position {position}")
+            state = reference.KVState(len(visible), len(query), len(visible[0][1]))
+            state.committed = visible
+            out.append(list(state.attend(query, scale=scale)))
+        return out
+
+    # -- the device form ---------------------------------------------------------------------------------------------------
+    def forward(self, layer, queries, pool, batch, scale=None, blocks=None, block_size=None, parents=None, lse=False,
+                sinks=None, sliding=0, latent=0, bias=None):
+        """queries [tokens][heads][dim] of a StepBatch or a RoundBatch over the pool's KV (written for this step
+        already); each token sees its sequence's positions up to its own (device_attention.DeviceAttention.forward:
+        blocks, parents, lse, sinks, sliding, latent, bias)."""
+        return self.device_form.forward(layer, queries, pool, batch, scale, blocks, block_size, parents, lse,
+                                        sinks=sinks, sliding=sliding, latent=latent, bias=bias)
+
+    def facts(self):
+        """The device form's engine facts (device_attention.DeviceAttention.facts)."""
+        return self.device_form.facts()
+
+    def exactness(self):
+        """The level the device form's rows keep (device_attention.DeviceAttention.exactness)."""
+        return self.device_form.exactness()
+
+    def close(self):
+        self.device_form.close()
+
+
+def _kernels(options):
+    """crit's kernel paged-kv-attention, which the device form reads pages with (built on this GPU with the engine's
+    tuned knobs or its defaults), or None (option kernels torch, or it does not build here)."""
+    if options["kernels"] != "auto":
+        return None
+    from crit_plugins.kernels import load_kernel
+    return load_kernel(KERNELS, folder=Path(__file__).parent)
+
+
+def _prompt_reader(options, kernels_loaded):
+    """The prompt_reader option as the device form takes it: auto follows the level the engine asks of its prompt
+    rows (device_attention.asked_prompt_reader)."""
+    return device_attention.asked_prompt_reader(options["prompt_reader"], options.get("reader", "split"),
+                                                options["flashinfer"], kernels_loaded, options.get("int8_qk", False))
+
+
+def memory(context, options):
+    """What the device form allocates when it is made (device_attention.device_memory), exactly: FlashInfer's
+    workspaces where it serves, on a CUDA engine. The split-KV reader's partials are the engine's scratch."""
+    loaded = _kernels(options) is not None
+    found, host = device_attention.device_memory(device_attention.engine_device(context), options["kernels"],
+                                                 loaded, options["workspace_mib"],
+                                                 options["flashinfer"], options["flashinfer_mib"], options["decode"],
+                                                 _prompt_reader(options, loaded))
+    return {"device": found, "host": host}
+
+
+def create(context, options, parts):
+    kernels = _kernels(options)
+    form = device_attention.DeviceAttention(kernels, options["kernels"], options["int8_qk"],
+                                            options["decode"], options["partitions"], options["piece"],
+                                            device_attention.engine_device(context), options["workspace_mib"],
+                                            options["flashinfer"], options["flashinfer_mib"],
+                                            _prompt_reader(options, kernels is not None), options["reader"],
+                                            _latent(options), scratch=getattr(context, "scratch", None))
+    return SoftmaxAttention(parts["kv_cache"], form)
+
+
+def _latent(options):
+    """A loader of crit's kernel latent-attention (built on the first latent call), or None (option kernels torch)."""
+    if options["kernels"] != "auto":
+        return None
+
+    def load():
+        from crit_plugins.kernels import load_kernel
+        return load_kernel(LATENT, folder=Path(__file__).parent)
+    return load
