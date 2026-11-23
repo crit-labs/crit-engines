@@ -1,0 +1,1359 @@
+{
+ "schema": "crit-kernel-tuning-v1",
+ "kernel": "mma-rows",
+ "structures": {
+  "decode-tile": {
+   "configs": [
+    {
+     "GROUPS": 1,
+     "SPF": 0,
+     "SPLITS": 0,
+     "SW": 0,
+     "WARPS": 4
+    },
+    {
+     "GROUPS": 1,
+     "SPF": 0,
+     "SPLITS": 3,
+     "SW": 0,
+     "WARPS": 4
+    },
+    {
+     "GROUPS": 1,
+     "SPF": 0,
+     "SPLITS": 3,
+     "SW": 4,
+     "WARPS": 4
+    },
+    {
+     "GROUPS": 1,
+     "SPF": 0,
+     "SPLITS": 32,
+     "SW": 4,
+     "WARPS": 1
+    },
+    {
+     "GROUPS": 1,
+     "SPF": 1,
+     "SPLITS": 6,
+     "SW": 4,
+     "WARPS": 2
+    },
+    {
+     "GROUPS": 1,
+     "SPF": 0,
+     "SPLITS": 32,
+     "SW": 8,
+     "WARPS": 1
+    },
+    {
+     "GROUPS": 1,
+     "SPF": 0,
+     "SPLITS": 32,
+     "SW": 0,
+     "WARPS": 1
+    },
+    {
+     "GROUPS": 1,
+     "SPF": 1,
+     "SPLITS": 32,
+     "SW": 8,
+     "WARPS": 1
+    },
+    {
+     "GROUPS": 1,
+     "SPF": 1,
+     "SPLITS": 24,
+     "SW": 4,
+     "WARPS": 1
+    },
+    {
+     "GROUPS": 1,
+     "SPF": 0,
+     "SPLITS": 24,
+     "SW": 0,
+     "WARPS": 1
+    },
+    {
+     "GROUPS": 1,
+     "SPF": 0,
+     "SPLITS": 1,
+     "SW": 0,
+     "WARPS": 4
+    },
+    {
+     "GROUPS": 1,
+     "SPF": 1,
+     "SPLITS": 1,
+     "SW": 4,
+     "WARPS": 4
+    },
+    {
+     "GROUPS": 1,
+     "SPF": 0,
+     "SPLITS": 32,
+     "SW": 4,
+     "WARPS": 4
+    },
+    {
+     "GROUPS": 1,
+     "SPF": 1,
+     "SPLITS": 32,
+     "SW": 8,
+     "WARPS": 4
+    },
+    {
+     "GROUPS": 1,
+     "SPF": 0,
+     "SPLITS": 1,
+     "SW": 8,
+     "WARPS": 1
+    },
+    {
+     "GROUPS": 1,
+     "SPF": 1,
+     "SPLITS": 1,
+     "SW": 4,
+     "WARPS": 1
+    },
+    {
+     "GROUPS": 1,
+     "SPF": 1,
+     "SPLITS": 1,
+     "SW": 8,
+     "WARPS": 1
+    },
+    {
+     "GROUPS": 1,
+     "SPF": 0,
+     "SPLITS": 0,
+     "SW": 0,
+     "WARPS": 4
+    },
+    {
+     "GROUPS": 1,
+     "SPF": 1,
+     "SPLITS": 0,
+     "SW": 4,
+     "WARPS": 2
+    },
+    {
+     "GROUPS": 1,
+     "SPF": 1,
+     "SPLITS": 0,
+     "SW": 8,
+     "WARPS": 2
+    },
+    {
+     "GROUPS": 1,
+     "SPF": 0,
+     "SPLITS": 0,
+     "SW": 4,
+     "WARPS": 2
+    },
+    {
+     "GROUPS": 1,
+     "SPF": 0,
+     "SPLITS": 0,
+     "SW": 8,
+     "WARPS": 2
+    },
+    {
+     "GROUPS": 1,
+     "SPF": 0,
+     "SPLITS": 0,
+     "SW": 0,
+     "WARPS": 4
+    },
+    {
+     "GROUPS": 1,
+     "SPF": 1,
+     "SPLITS": 1,
+     "SW": 8,
+     "WARPS": 1
+    },
+    {
+     "GROUPS": 1,
+     "SPF": 1,
+     "SPLITS": 1,
+     "SW": 4,
+     "WARPS": 1
+    },
+    {
+     "GROUPS": 1,
+     "SPF": 1,
+     "SPLITS": 0,
+     "SW": 4,
+     "WARPS": 2
+    },
+    {
+     "GROUPS": 1,
+     "SPF": 1,
+     "SPLITS": 0,
+     "SW": 8,
+     "WARPS": 2
+    },
+    {
+     "GROUPS": 1,
+     "SPF": 0,
+     "SPLITS": 0,
+     "SW": 4,
+     "WARPS": 2
+    },
+    {
+     "GROUPS": 1,
+     "SPF": 0,
+     "SPLITS": 4,
+     "SW": 4,
+     "WARPS": 2
+    },
+    {
+     "GROUPS": 1,
+     "SPF": 1,
+     "SPLITS": 4,
+     "SW": 4,
+     "WARPS": 2
+    },
+    {
+     "GROUPS": 1,
+     "SPF": 0,
+     "SPLITS": 1,
+     "SW": 4,
+     "WARPS": 1
+    },
+    {
+     "GROUPS": 1,
+     "SPF": 0,
+     "SPLITS": 4,
+     "SW": 8,
+     "WARPS": 2
+    },
+    {
+     "GROUPS": 1,
+     "SPF": 1,
+     "SPLITS": 4,
+     "SW": 8,
+     "WARPS": 2
+    },
+    {
+     "GROUPS": 1,
+     "SPF": 0,
+     "SPLITS": 0,
+     "SW": 0,
+     "WARPS": 2
+    },
+    {
+     "GROUPS": 1,
+     "SPF": 1,
+     "SPLITS": 24,
+     "SW": 4,
+     "WARPS": 1
+    },
+    {
+     "GROUPS": 1,
+     "SPF": 0,
+     "SPLITS": 24,
+     "SW": 0,
+     "WARPS": 1
+    },
+    {
+     "GROUPS": 1,
+     "SPF": 0,
+     "SPLITS": 24,
+     "SW": 8,
+     "WARPS": 1
+    },
+    {
+     "GROUPS": 1,
+     "SPF": 0,
+     "SPLITS": 24,
+     "SW": 4,
+     "WARPS": 1
+    }
+   ],
+   "table": [
+    {
+     "key": {
+      "weights": 3,
+      "N": 6552,
+      "K": 2304
+     },
+     "rows": [
+      1,
+      4
+     ],
+     "config": 1
+    },
+    {
+     "key": {
+      "weights": 3,
+      "N": 6552,
+      "K": 2304
+     },
+     "rows": [
+      5,
+      64
+     ],
+     "config": 2
+    },
+    {
+     "key": {
+      "weights": 3,
+      "N": 1024,
+      "K": 2304
+     },
+     "rows": [
+      1,
+      64
+     ],
+     "config": 3
+    },
+    {
+     "key": {
+      "weights": 3,
+      "N": 2304,
+      "K": 3072
+     },
+     "rows": [
+      1,
+      64
+     ],
+     "config": 4
+    },
+    {
+     "key": {
+      "weights": 3,
+      "N": 128,
+      "K": 2304
+     },
+     "rows": [
+      1,
+      1
+     ],
+     "config": 5
+    },
+    {
+     "key": {
+      "weights": 3,
+      "N": 128,
+      "K": 2304
+     },
+     "rows": [
+      2,
+      8
+     ],
+     "config": 6
+    },
+    {
+     "key": {
+      "weights": 3,
+      "N": 128,
+      "K": 2304
+     },
+     "rows": [
+      9,
+      64
+     ],
+     "config": 7
+    },
+    {
+     "key": {
+      "weights": 3,
+      "N": 64,
+      "K": 4608
+     },
+     "rows": [
+      1,
+      1
+     ],
+     "config": 8
+    },
+    {
+     "key": {
+      "weights": 3,
+      "N": 64,
+      "K": 4608
+     },
+     "rows": [
+      2,
+      4
+     ],
+     "config": 9
+    },
+    {
+     "key": {
+      "weights": 3,
+      "N": 64,
+      "K": 4608
+     },
+     "rows": [
+      5,
+      8
+     ],
+     "config": 8
+    },
+    {
+     "key": {
+      "weights": 3,
+      "N": 64,
+      "K": 4608
+     },
+     "rows": [
+      9,
+      64
+     ],
+     "config": 9
+    },
+    {
+     "key": {
+      "weights": 3,
+      "N": 2304,
+      "K": 64
+     },
+     "rows": [
+      1,
+      8
+     ],
+     "config": 10
+    },
+    {
+     "key": {
+      "weights": 3,
+      "N": 2304,
+      "K": 64
+     },
+     "rows": [
+      9,
+      64
+     ],
+     "config": 11
+    },
+    {
+     "key": {
+      "weights": 3,
+      "N": 32,
+      "K": 2304
+     },
+     "rows": [
+      1,
+      4
+     ],
+     "config": 12
+    },
+    {
+     "key": {
+      "weights": 3,
+      "N": 32,
+      "K": 2304
+     },
+     "rows": [
+      5,
+      64
+     ],
+     "config": 13
+    },
+    {
+     "key": {
+      "weights": 3,
+      "N": 200058,
+      "K": 2304
+     },
+     "rows": [
+      1,
+      4
+     ],
+     "config": 14
+    },
+    {
+     "key": {
+      "weights": 3,
+      "N": 200058,
+      "K": 2304
+     },
+     "rows": [
+      5,
+      8
+     ],
+     "config": 15
+    },
+    {
+     "key": {
+      "weights": 3,
+      "N": 200058,
+      "K": 2304
+     },
+     "rows": [
+      9,
+      64
+     ],
+     "config": 16
+    },
+    {
+     "key": {
+      "weights": 3,
+      "N": 8600,
+      "K": 2304
+     },
+     "rows": [
+      1,
+      1
+     ],
+     "config": 18
+    },
+    {
+     "key": {
+      "weights": 3,
+      "N": 8600,
+      "K": 2304
+     },
+     "rows": [
+      2,
+      2
+     ],
+     "config": 19
+    },
+    {
+     "key": {
+      "weights": 3,
+      "N": 8600,
+      "K": 2304
+     },
+     "rows": [
+      3,
+      4
+     ],
+     "config": 18
+    },
+    {
+     "key": {
+      "weights": 3,
+      "N": 8600,
+      "K": 2304
+     },
+     "rows": [
+      5,
+      64
+     ],
+     "config": 19
+    },
+    {
+     "key": {
+      "weights": 3,
+      "N": 1056,
+      "K": 2304
+     },
+     "rows": [
+      1,
+      1
+     ],
+     "config": 20
+    },
+    {
+     "key": {
+      "weights": 3,
+      "N": 1056,
+      "K": 2304
+     },
+     "rows": [
+      2,
+      2
+     ],
+     "config": 21
+    },
+    {
+     "key": {
+      "weights": 3,
+      "N": 1056,
+      "K": 2304
+     },
+     "rows": [
+      3,
+      4
+     ],
+     "config": 20
+    },
+    {
+     "key": {
+      "weights": 3,
+      "N": 1056,
+      "K": 2304
+     },
+     "rows": [
+      5,
+      8
+     ],
+     "config": 21
+    },
+    {
+     "key": {
+      "weights": 3,
+      "N": 1056,
+      "K": 2304
+     },
+     "rows": [
+      9,
+      64
+     ],
+     "config": 20
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 200064,
+      "K": 2304
+     },
+     "rows": [
+      1,
+      8
+     ],
+     "config": 23
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 200064,
+      "K": 2304
+     },
+     "rows": [
+      9,
+      64
+     ],
+     "config": 24
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 5120,
+      "K": 2304
+     },
+     "rows": [
+      1,
+      2
+     ],
+     "config": 25
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 5120,
+      "K": 2304
+     },
+     "rows": [
+      3,
+      8
+     ],
+     "config": 26
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 5120,
+      "K": 2304
+     },
+     "rows": [
+      9,
+      64
+     ],
+     "config": 27
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 2304,
+      "K": 3072
+     },
+     "rows": [
+      1,
+      1
+     ],
+     "config": 28
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 2304,
+      "K": 3072
+     },
+     "rows": [
+      2,
+      4
+     ],
+     "config": 29
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 2304,
+      "K": 3072
+     },
+     "rows": [
+      5,
+      8
+     ],
+     "config": 28
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 2304,
+      "K": 3072
+     },
+     "rows": [
+      9,
+      64
+     ],
+     "config": 29
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 18432,
+      "K": 2304
+     },
+     "rows": [
+      1,
+      2
+     ],
+     "config": 24
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 18432,
+      "K": 2304
+     },
+     "rows": [
+      3,
+      4
+     ],
+     "config": 30
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 18432,
+      "K": 2304
+     },
+     "rows": [
+      5,
+      64
+     ],
+     "config": 24
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 2304,
+      "K": 9216
+     },
+     "rows": [
+      1,
+      1
+     ],
+     "config": 31
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 2304,
+      "K": 9216
+     },
+     "rows": [
+      2,
+      2
+     ],
+     "config": 32
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 2304,
+      "K": 9216
+     },
+     "rows": [
+      3,
+      4
+     ],
+     "config": 31
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 2304,
+      "K": 9216
+     },
+     "rows": [
+      5,
+      64
+     ],
+     "config": 29
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 2048,
+      "K": 2304
+     },
+     "rows": [
+      1,
+      2
+     ],
+     "config": 33
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 2048,
+      "K": 2304
+     },
+     "rows": [
+      3,
+      4
+     ],
+     "config": 27
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 2048,
+      "K": 2304
+     },
+     "rows": [
+      5,
+      8
+     ],
+     "config": 25
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 2048,
+      "K": 2304
+     },
+     "rows": [
+      9,
+      64
+     ],
+     "config": 27
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 768,
+      "K": 4608
+     },
+     "rows": [
+      1,
+      1
+     ],
+     "config": 34
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 768,
+      "K": 4608
+     },
+     "rows": [
+      2,
+      2
+     ],
+     "config": 35
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 768,
+      "K": 4608
+     },
+     "rows": [
+      3,
+      4
+     ],
+     "config": 36
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 768,
+      "K": 4608
+     },
+     "rows": [
+      5,
+      64
+     ],
+     "config": 37
+    }
+   ]
+  },
+  "prompt-tile": {
+   "configs": [
+    {
+     "PT": 64,
+     "PW": 8
+    },
+    {
+     "PT": 32,
+     "PW": 8
+    },
+    {
+     "PT": 64,
+     "PW": 4
+    },
+    {
+     "PT": 32,
+     "PW": 4
+    },
+    {
+     "PT": 64,
+     "PW": 8
+    },
+    {
+     "PT": 32,
+     "PW": 8
+    },
+    {
+     "PT": 32,
+     "PW": 4
+    },
+    {
+     "PT": 64,
+     "PW": 8
+    },
+    {
+     "PT": 64,
+     "PW": 4
+    },
+    {
+     "PT": 32,
+     "PW": 4
+    }
+   ],
+   "table": [
+    {
+     "key": {
+      "weights": 3,
+      "N": 6552,
+      "K": 2304
+     },
+     "rows": [
+      1,
+      64
+     ],
+     "config": 1
+    },
+    {
+     "key": {
+      "weights": 3,
+      "N": 6552,
+      "K": 2304
+     },
+     "rows": [
+      65,
+      512
+     ],
+     "config": 2
+    },
+    {
+     "key": {
+      "weights": 3,
+      "N": 6552,
+      "K": 2304
+     },
+     "rows": [
+      513,
+      1048576
+     ],
+     "config": 0
+    },
+    {
+     "key": {
+      "weights": 3,
+      "N": 1024,
+      "K": 2304
+     },
+     "rows": [
+      1,
+      64
+     ],
+     "config": 3
+    },
+    {
+     "key": {
+      "weights": 3,
+      "N": 1024,
+      "K": 2304
+     },
+     "rows": [
+      65,
+      512
+     ],
+     "config": 1
+    },
+    {
+     "key": {
+      "weights": 3,
+      "N": 1024,
+      "K": 2304
+     },
+     "rows": [
+      513,
+      1048576
+     ],
+     "config": 0
+    },
+    {
+     "key": {
+      "weights": 3,
+      "N": 2304,
+      "K": 3072
+     },
+     "rows": [
+      1,
+      64
+     ],
+     "config": 3
+    },
+    {
+     "key": {
+      "weights": 3,
+      "N": 2304,
+      "K": 3072
+     },
+     "rows": [
+      65,
+      512
+     ],
+     "config": 0
+    },
+    {
+     "key": {
+      "weights": 3,
+      "N": 2304,
+      "K": 3072
+     },
+     "rows": [
+      513,
+      1048576
+     ],
+     "config": 2
+    },
+    {
+     "key": {
+      "weights": 3,
+      "N": 128,
+      "K": 2304
+     },
+     "rows": [
+      1,
+      1048576
+     ],
+     "config": 3
+    },
+    {
+     "key": {
+      "weights": 3,
+      "N": 64,
+      "K": 4608
+     },
+     "rows": [
+      1,
+      1048576
+     ],
+     "config": 3
+    },
+    {
+     "key": {
+      "weights": 3,
+      "N": 2304,
+      "K": 64
+     },
+     "rows": [
+      1,
+      64
+     ],
+     "config": 3
+    },
+    {
+     "key": {
+      "weights": 3,
+      "N": 2304,
+      "K": 64
+     },
+     "rows": [
+      65,
+      1048576
+     ],
+     "config": 2
+    },
+    {
+     "key": {
+      "weights": 3,
+      "N": 32,
+      "K": 2304
+     },
+     "rows": [
+      1,
+      1048576
+     ],
+     "config": 3
+    },
+    {
+     "key": {
+      "weights": 3,
+      "N": 200058,
+      "K": 2304
+     },
+     "rows": [
+      1,
+      1048576
+     ],
+     "config": 0
+    },
+    {
+     "key": {
+      "weights": 3,
+      "N": 8600,
+      "K": 2304
+     },
+     "rows": [
+      1,
+      64
+     ],
+     "config": 5
+    },
+    {
+     "key": {
+      "weights": 3,
+      "N": 8600,
+      "K": 2304
+     },
+     "rows": [
+      65,
+      1048576
+     ],
+     "config": 4
+    },
+    {
+     "key": {
+      "weights": 3,
+      "N": 1056,
+      "K": 2304
+     },
+     "rows": [
+      1,
+      64
+     ],
+     "config": 6
+    },
+    {
+     "key": {
+      "weights": 3,
+      "N": 1056,
+      "K": 2304
+     },
+     "rows": [
+      65,
+      512
+     ],
+     "config": 5
+    },
+    {
+     "key": {
+      "weights": 3,
+      "N": 1056,
+      "K": 2304
+     },
+     "rows": [
+      513,
+      1048576
+     ],
+     "config": 4
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 200064,
+      "K": 2304
+     },
+     "rows": [
+      1,
+      512
+     ],
+     "config": 8
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 200064,
+      "K": 2304
+     },
+     "rows": [
+      513,
+      1048576
+     ],
+     "config": 7
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 5120,
+      "K": 2304
+     },
+     "rows": [
+      1,
+      64
+     ],
+     "config": 9
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 5120,
+      "K": 2304
+     },
+     "rows": [
+      65,
+      1048576
+     ],
+     "config": 8
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 2304,
+      "K": 3072
+     },
+     "rows": [
+      1,
+      64
+     ],
+     "config": 9
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 2304,
+      "K": 3072
+     },
+     "rows": [
+      65,
+      512
+     ],
+     "config": 7
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 2304,
+      "K": 3072
+     },
+     "rows": [
+      513,
+      1048576
+     ],
+     "config": 8
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 18432,
+      "K": 2304
+     },
+     "rows": [
+      1,
+      64
+     ],
+     "config": 7
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 18432,
+      "K": 2304
+     },
+     "rows": [
+      65,
+      1048576
+     ],
+     "config": 8
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 2304,
+      "K": 9216
+     },
+     "rows": [
+      1,
+      64
+     ],
+     "config": 9
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 2304,
+      "K": 9216
+     },
+     "rows": [
+      65,
+      512
+     ],
+     "config": 7
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 2304,
+      "K": 9216
+     },
+     "rows": [
+      513,
+      1048576
+     ],
+     "config": 8
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 2048,
+      "K": 2304
+     },
+     "rows": [
+      1,
+      64
+     ],
+     "config": 9
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 2048,
+      "K": 2304
+     },
+     "rows": [
+      65,
+      1048576
+     ],
+     "config": 8
+    },
+    {
+     "key": {
+      "weights": 1,
+      "N": 768,
+      "K": 4608
+     },
+     "rows": [
+      1,
+      1048576
+     ],
+     "config": 9
+    }
+   ]
+  }
+ },
+ "source": "01842d12fb83f741ae46c097aa138133e1def131e5015321d6064753f1654968",
+ "device": "NVIDIA GeForce RTX 5090",
+ "capability": "12.0"
+}

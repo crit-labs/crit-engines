@@ -1,0 +1,153 @@
+{
+ "schema": "crit-kernel-tuning-v1",
+ "kernel": "grouped-experts",
+ "structures": {
+  "fp4-prompt": {
+   "configs": [
+    {
+     "CHUNK": 256,
+     "DEPTH": 2,
+     "TILES": 2,
+     "WARPS": 4
+    },
+    {
+     "CHUNK": 256,
+     "DEPTH": 2,
+     "TILES": 1,
+     "WARPS": 8
+    },
+    {
+     "CHUNK": 128,
+     "DEPTH": 1,
+     "TILES": 1,
+     "WARPS": 8
+    },
+    {
+     "CHUNK": 128,
+     "DEPTH": 2,
+     "TILES": 1,
+     "WARPS": 8
+    },
+    {
+     "CHUNK": 128,
+     "DEPTH": 1,
+     "TILES": 2,
+     "WARPS": 8
+    }
+   ],
+   "table": [
+    {
+     "key": {
+      "gate_up": 1,
+      "hidden": 2304,
+      "inter": 1152
+     },
+     "rows": [
+      1,
+      256
+     ],
+     "config": 1
+    },
+    {
+     "key": {
+      "gate_up": 1,
+      "hidden": 2304,
+      "inter": 1152
+     },
+     "rows": [
+      257,
+      1048576
+     ],
+     "config": 2
+    },
+    {
+     "key": {
+      "gate_up": 0,
+      "hidden": 2304,
+      "inter": 1152
+     },
+     "rows": [
+      1,
+      256
+     ],
+     "config": 3
+    },
+    {
+     "key": {
+      "gate_up": 0,
+      "hidden": 2304,
+      "inter": 1152
+     },
+     "rows": [
+      257,
+      1048576
+     ],
+     "config": 4
+    }
+   ]
+  },
+  "fp4-tile": {
+   "configs": [
+    {
+     "STAGES": 3,
+     "TILES": 2,
+     "WM": 4,
+     "WN": 2
+    },
+    {
+     "STAGES": 2,
+     "TILES": 4,
+     "WM": 4,
+     "WN": 2
+    },
+    {
+     "STAGES": 3,
+     "TILES": 4,
+     "WM": 4,
+     "WN": 2
+    }
+   ],
+   "table": [
+    {
+     "key": {
+      "gate_up": 1,
+      "hidden": 2304,
+      "inter": 1152
+     },
+     "rows": [
+      1,
+      1048576
+     ],
+     "config": 1
+    },
+    {
+     "key": {
+      "gate_up": 0,
+      "hidden": 2304,
+      "inter": 1152
+     },
+     "rows": [
+      1,
+      2048
+     ],
+     "config": 2
+    },
+    {
+     "key": {
+      "gate_up": 0,
+      "hidden": 2304,
+      "inter": 1152
+     },
+     "rows": [
+      2049,
+      1048576
+     ],
+     "config": 1
+    }
+   ]
+  }
+ },
+ "source": "98b51340ff84fc3ad44442e61d41cc2cd7bf832cdac0764f703e225d16ab1c2a",
+ "device": "NVIDIA GeForce RTX 5090",
+ "capability": "12.0"
+}

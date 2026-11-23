@@ -1,0 +1,75 @@
+{
+  "exactness": {
+    "decode": "row-exact",
+    "prompt": "row-exact"
+  },
+  "kernel_tuning": "tuning",
+  "plugins": {
+    "base": {
+      "norms": "torch-norms"
+    },
+    "options": {
+      "inkling2-loop-model": {
+        "concurrency": 2,
+        "context": 200000,
+        "kv_margin": 1024,
+        "mtp": true,
+        "mtp_encode": "fp8",
+        "prefill_chunk": 1536,
+        "prompt_buckets": "256,1024,1536",
+        "span_seconds": 0.5,
+        "width": 7,
+        "width_policy": "rate",
+        "widths": "2,3,5,7"
+      },
+      "softmax-attention": {
+        "prompt_reader": "decode"
+      },
+      "topk-router": {
+        "renormalize": true,
+        "scaling": 8.0,
+        "score_before_selection": true,
+        "scoring": "sigmoid"
+      }
+    },
+    "use": {
+      "attention": "softmax-attention",
+      "drafter": "greedy-head-drafter",
+      "embeddings": "memory-table-rows",
+      "expert_source": "expert-tensors",
+      "experts": "grouped-experts",
+      "kv_cache": "attention-state",
+      "model": "inkling2-loop-model",
+      "norms": "fused-norms",
+      "placement": "device-placement",
+      "projections": "quantized-projections",
+      "recurrence": "sequential-recurrence",
+      "router": "topk-router",
+      "sampler": "token-sampling"
+    }
+  },
+  "prompt_activations": "stored",
+  "quality_mode": "speed",
+  "re_encoding": {
+    "plugins": [
+      "quantized-projections"
+    ],
+    "what": "16-bit target matrices other than the router's re-encoded at load to FP8 per channel (quantized-projections trunk and head auto in quality mode speed); the block drafter's matrices to FP8 (mtp_encode fp8)"
+  },
+  "recon": {
+    "chat_template": {
+      "name": "default",
+      "sha256": "53a9035f3255945704b5857657cfb00c1165090c0641c4f782a0cbf268cc16dc"
+    },
+    "sampling": {
+      "do_sample": true,
+      "temperature": 1.0
+    },
+    "stop_strings": [],
+    "stop_token_ids": [
+      200006
+    ],
+    "template_variables": {}
+  },
+  "vram_headroom_bytes": 268435456
+}
