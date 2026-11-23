@@ -1,0 +1,54 @@
+{
+  "schema": "crit-plugin-v1",
+  "id": "gemma4-attention",
+  "title": "Sliding-window rings and derived-key pages with blocked attention (Gemma 4 layout)",
+  "description": "The attention and kv_cache slots fused, for a model whose sliding-window layers and full-attention layers keep their KV apart. pool(..., window=W, ring=R) is a ring of R positions per sequence (R >= W + the longest row a step writes), FP8 E4M3 or BF16 keys and values, so a sliding layer's cache never grows with the context; pool(..., derive=...) is a paged pool of values only (value_dim = head_dim) whose keys the attention derives from each stored value row as rope(weight * value) at its position: a full-attention layer whose keys and values share one projection (Gemma 4's attention_k_eq_v: values the projection's weightless RMS norm, keys its weighted norm rotated), half its KV bytes. forward reads each row's sequence alone (a token's bits never depend on the rows beside it) through an online softmax over key blocks in FP32, causal and within the pool's window.",
+  "fills": [
+    "attention",
+    "kv_cache"
+  ],
+  "devices": [
+    "cuda"
+  ],
+  "options": {
+    "dtype": {
+      "type": "choice",
+      "default": "fp8",
+      "choices": [
+        "int4",
+        "fp8",
+        "bf16"
+      ],
+      "description": "the KV pages' precision: int4 (signed 4-bit codes in groups of 32 with an FP16 scale, 4.5 bits a value), fp8 (E4M3) or bf16"
+    },
+    "page": {
+      "type": "int",
+      "default": 256,
+      "min": 16,
+      "max": 4096
+    },
+    "block": {
+      "type": "int",
+      "default": 4096,
+      "min": 16,
+      "max": 65536,
+      "description": "keys one softmax block reads"
+    },
+    "max_splits": {
+      "type": "int",
+      "default": 256,
+      "min": 16,
+      "max": 1024,
+      "description": "the most splits a decode launch shares a row's positions over (the merge takes at most 1,024)"
+    },
+    "full_dtype": {
+      "type": "str",
+      "default": "",
+      "description": "the full-attention (derived-key) pools' values: int4, fp8 or bf16 (empty: dtype)"
+    }
+  },
+  "entry": "plugin.py:create",
+  "sources": {
+    "attn": "code"
+  }
+}

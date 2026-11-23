@@ -1,0 +1,52 @@
+{
+  "schema": "crit-plugin-v1",
+  "id": "gguf-experts",
+  "title": "Routed GeGLU experts over a GGUF's stored expert blocks",
+  "description": "The experts slot for a mixture of experts whose routed experts a GGUF stores as fused [experts][2 * inter][hidden] gate|up and [experts][hidden][inter] down tensors in its block formats (IQ3_S, IQ4_NL, IQ4_XS, Q8_0): a layer's experts stay as their stored rows on the device or in pinned host memory (load_layer, where the placement plan puts them); forward decodes only the experts a call routes to (gguf-projections' decoders, bit for bit gguf-py's), each in BF16, multiplies each expert's tokens padded to 8 rows (a decode row's bits its own whatever rows share the call) with FP32 accumulation, applies the activation's GLU (gelu_tanh by default: Gemma 4's GeGLU; silu for SwiGLU) and sums each token's routes in route order, FP32 out.",
+  "fills": [
+    "experts"
+  ],
+  "devices": [
+    "cuda"
+  ],
+  "options": {
+    "activation": {
+      "type": "choice",
+      "default": "gelu_tanh",
+      "choices": [
+        "gelu_tanh",
+        "silu"
+      ]
+    },
+    "group": {
+      "type": "int",
+      "default": 16,
+      "min": 1,
+      "max": 256,
+      "description": "experts decoded at once in a call that routes to more"
+    },
+    "prompt": {
+      "type": "choice",
+      "default": "stored",
+      "choices": [
+        "stored",
+        "fp8",
+        "bf16"
+      ],
+      "description": "prompt rows' activations: the stored GGUF formats' own (int8 units of 32 with an FP32 scale, the int8 tensor cores straight from the blocks), FP8 with row-wise scales, or BF16"
+    },
+    "decode": {
+      "type": "choice",
+      "default": "stored",
+      "choices": [
+        "stored",
+        "bf16"
+      ],
+      "description": "decode rows' activations: the stored GGUF formats' own (int8 units of 32 with an FP32 scale, integer dot products), or BF16 with every weight decoded to FP32"
+    }
+  },
+  "sources": {
+    "gguf": "../gguf-projections/code"
+  },
+  "entry": "plugin.py:create"
+}
