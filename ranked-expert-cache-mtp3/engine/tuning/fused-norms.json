@@ -1,0 +1,221 @@
+{
+ "schema": "crit-kernel-tuning-v1",
+ "kernel": "fused-norms",
+ "structures": {
+  "rope": {
+   "configs": [
+    {
+     "ELEMENTS": 4096,
+     "SPAN": 512
+    },
+    {
+     "ELEMENTS": 2048,
+     "SPAN": 256
+    }
+   ],
+   "table": [
+    {
+     "key": {
+      "D": 256
+     },
+     "rows": [
+      1,
+      1048576
+     ],
+     "config": 1
+    }
+   ]
+  },
+  "act-mul": {
+   "configs": [
+    {
+     "BLOCK": 1024,
+     "PDL": 0,
+     "WARPS": 4
+    },
+    {
+     "BLOCK": 256,
+     "PDL": 2,
+     "WARPS": 8
+    },
+    {
+     "BLOCK": 1024,
+     "PDL": 2,
+     "WARPS": 16
+    },
+    {
+     "BLOCK": 1024,
+     "PDL": 0,
+     "WARPS": 2
+    }
+   ],
+   "table": [
+    {
+     "key": {
+      "N": 640
+     },
+     "rows": [
+      1,
+      64
+     ],
+     "config": 1
+    },
+    {
+     "key": {
+      "N": 640
+     },
+     "rows": [
+      65,
+      512
+     ],
+     "config": 2
+    },
+    {
+     "key": {
+      "N": 640
+     },
+     "rows": [
+      513,
+      1048576
+     ],
+     "config": 3
+    }
+   ]
+  },
+  "stream-sum": {
+   "configs": [
+    {
+     "BLOCK": 1024,
+     "WARPS": 4
+    },
+    {
+     "BLOCK": 512,
+     "WARPS": 4
+    },
+    {
+     "BLOCK": 512,
+     "WARPS": 8
+    }
+   ],
+   "table": [
+    {
+     "key": {
+      "S": 4,
+      "D": 2560
+     },
+     "rows": [
+      1,
+      1
+     ],
+     "config": 1
+    },
+    {
+     "key": {
+      "S": 4,
+      "D": 2560
+     },
+     "rows": [
+      2,
+      8
+     ],
+     "config": 2
+    },
+    {
+     "key": {
+      "S": 4,
+      "D": 2560
+     },
+     "rows": [
+      9,
+      1048576
+     ],
+     "config": 1
+    }
+   ]
+  },
+  "stream-add": {
+   "configs": [
+    {
+     "BLOCK": 1024,
+     "WARPS": 4
+    },
+    {
+     "BLOCK": 256,
+     "WARPS": 8
+    },
+    {
+     "BLOCK": 2048,
+     "WARPS": 16
+    },
+    {
+     "BLOCK": 512,
+     "WARPS": 4
+    },
+    {
+     "BLOCK": 512,
+     "WARPS": 1
+    }
+   ],
+   "table": [
+    {
+     "key": {
+      "S": 4,
+      "D": 2560
+     },
+     "rows": [
+      1,
+      1
+     ],
+     "config": 1
+    },
+    {
+     "key": {
+      "S": 4,
+      "D": 2560
+     },
+     "rows": [
+      2,
+      8
+     ],
+     "config": 2
+    },
+    {
+     "key": {
+      "S": 4,
+      "D": 2560
+     },
+     "rows": [
+      9,
+      64
+     ],
+     "config": 3
+    },
+    {
+     "key": {
+      "S": 4,
+      "D": 2560
+     },
+     "rows": [
+      65,
+      512
+     ],
+     "config": 4
+    },
+    {
+     "key": {
+      "S": 4,
+      "D": 2560
+     },
+     "rows": [
+      513,
+      1048576
+     ],
+     "config": 3
+    }
+   ]
+  }
+ },
+ "source": "cefe7ac18c552757f4a27035b09362d9829f1144892738d077358bc73a619390",
+ "device": "NVIDIA GeForce RTX 5090",
+ "capability": "12.0"
+}

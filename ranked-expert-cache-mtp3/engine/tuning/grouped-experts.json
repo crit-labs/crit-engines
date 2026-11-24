@@ -1,0 +1,361 @@
+{
+ "schema": "crit-kernel-tuning-v1",
+ "kernel": "grouped-experts",
+ "structures": {
+  "decode": {
+   "configs": [
+    {
+     "DEPTH": 0,
+     "READ": 0,
+     "TILES": 1,
+     "WARPS": 4
+    },
+    {
+     "DEPTH": 0,
+     "READ": 1,
+     "TILES": 2,
+     "WARPS": 4
+    },
+    {
+     "DEPTH": 0,
+     "READ": 2,
+     "TILES": 2,
+     "WARPS": 8
+    },
+    {
+     "DEPTH": 0,
+     "READ": 0,
+     "TILES": 2,
+     "WARPS": 4
+    },
+    {
+     "DEPTH": 0,
+     "READ": 2,
+     "TILES": 2,
+     "WARPS": 4
+    },
+    {
+     "DEPTH": 1,
+     "READ": 0,
+     "TILES": 1,
+     "WARPS": 4
+    }
+   ],
+   "table": [
+    {
+     "key": {
+      "format": 0,
+      "a4": 0,
+      "gate_up": 1,
+      "hidden": 2560,
+      "inter": 640
+     },
+     "rows": [
+      1,
+      1
+     ],
+     "config": 1
+    },
+    {
+     "key": {
+      "format": 0,
+      "a4": 0,
+      "gate_up": 1,
+      "hidden": 2560,
+      "inter": 640
+     },
+     "rows": [
+      2,
+      4
+     ],
+     "config": 2
+    },
+    {
+     "key": {
+      "format": 0,
+      "a4": 0,
+      "gate_up": 1,
+      "hidden": 2560,
+      "inter": 640
+     },
+     "rows": [
+      5,
+      8
+     ],
+     "config": 3
+    },
+    {
+     "key": {
+      "format": 0,
+      "a4": 0,
+      "gate_up": 1,
+      "hidden": 2560,
+      "inter": 640
+     },
+     "rows": [
+      9,
+      1048576
+     ],
+     "config": 4
+    },
+    {
+     "key": {
+      "format": 0,
+      "a4": 0,
+      "gate_up": 0,
+      "hidden": 2560,
+      "inter": 640
+     },
+     "rows": [
+      1,
+      1
+     ],
+     "config": 1
+    },
+    {
+     "key": {
+      "format": 0,
+      "a4": 0,
+      "gate_up": 0,
+      "hidden": 2560,
+      "inter": 640
+     },
+     "rows": [
+      2,
+      4
+     ],
+     "config": 0
+    },
+    {
+     "key": {
+      "format": 0,
+      "a4": 0,
+      "gate_up": 0,
+      "hidden": 2560,
+      "inter": 640
+     },
+     "rows": [
+      5,
+      8
+     ],
+     "config": 1
+    },
+    {
+     "key": {
+      "format": 0,
+      "a4": 0,
+      "gate_up": 0,
+      "hidden": 2560,
+      "inter": 640
+     },
+     "rows": [
+      9,
+      1048576
+     ],
+     "config": 5
+    }
+   ]
+  },
+  "prompt": {
+   "configs": [
+    {
+     "CHUNK": 256,
+     "DEPTH": 0,
+     "TILES": 2,
+     "WARPS": 4
+    },
+    {
+     "CHUNK": 64,
+     "DEPTH": 1,
+     "TILES": 4,
+     "WARPS": 8
+    },
+    {
+     "CHUNK": 256,
+     "DEPTH": 0,
+     "TILES": 2,
+     "WARPS": 8
+    },
+    {
+     "CHUNK": 64,
+     "DEPTH": 1,
+     "TILES": 4,
+     "WARPS": 4
+    },
+    {
+     "CHUNK": 64,
+     "DEPTH": 1,
+     "TILES": 2,
+     "WARPS": 4
+    },
+    {
+     "CHUNK": 64,
+     "DEPTH": 1,
+     "TILES": 2,
+     "WARPS": 8
+    },
+    {
+     "CHUNK": 256,
+     "DEPTH": 1,
+     "TILES": 4,
+     "WARPS": 8
+    }
+   ],
+   "table": [
+    {
+     "key": {
+      "format": 0,
+      "a4": 0,
+      "gate_up": 1,
+      "hidden": 2560,
+      "inter": 640
+     },
+     "rows": [
+      1,
+      256
+     ],
+     "config": 1
+    },
+    {
+     "key": {
+      "format": 0,
+      "a4": 0,
+      "gate_up": 1,
+      "hidden": 2560,
+      "inter": 640
+     },
+     "rows": [
+      257,
+      1024
+     ],
+     "config": 2
+    },
+    {
+     "key": {
+      "format": 0,
+      "a4": 0,
+      "gate_up": 1,
+      "hidden": 2560,
+      "inter": 640
+     },
+     "rows": [
+      1025,
+      1048576
+     ],
+     "config": 3
+    },
+    {
+     "key": {
+      "format": 0,
+      "a4": 0,
+      "gate_up": 0,
+      "hidden": 2560,
+      "inter": 640
+     },
+     "rows": [
+      1,
+      256
+     ],
+     "config": 4
+    },
+    {
+     "key": {
+      "format": 0,
+      "a4": 0,
+      "gate_up": 0,
+      "hidden": 2560,
+      "inter": 640
+     },
+     "rows": [
+      257,
+      1024
+     ],
+     "config": 5
+    },
+    {
+     "key": {
+      "format": 0,
+      "a4": 0,
+      "gate_up": 0,
+      "hidden": 2560,
+      "inter": 640
+     },
+     "rows": [
+      1025,
+      1048576
+     ],
+     "config": 6
+    }
+   ]
+  },
+  "prompt-wide": {
+   "configs": [
+    {
+     "CHUNK": 128,
+     "DEPTH": 0,
+     "TILES": 1,
+     "WARPS": 4
+    },
+    {
+     "CHUNK": 128,
+     "DEPTH": 1,
+     "TILES": 2,
+     "WARPS": 8
+    },
+    {
+     "CHUNK": 128,
+     "DEPTH": 2,
+     "TILES": 2,
+     "WARPS": 8
+    }
+   ],
+   "table": [
+    {
+     "key": {
+      "format": 0,
+      "a4": 0,
+      "gate_up": 1,
+      "hidden": 2560,
+      "inter": 640
+     },
+     "rows": [
+      1,
+      1048576
+     ],
+     "config": 1
+    },
+    {
+     "key": {
+      "format": 0,
+      "a4": 0,
+      "gate_up": 0,
+      "hidden": 2560,
+      "inter": 640
+     },
+     "rows": [
+      1,
+      1024
+     ],
+     "config": 2
+    },
+    {
+     "key": {
+      "format": 0,
+      "a4": 0,
+      "gate_up": 0,
+      "hidden": 2560,
+      "inter": 640
+     },
+     "rows": [
+      1025,
+      1048576
+     ],
+     "config": 1
+    }
+   ]
+  }
+ },
+ "source": "18611ee3428c072219e8395a79f506aed513ea17ae22528f04f4611499d690e2",
+ "device": "NVIDIA GeForce RTX 5090",
+ "capability": "12.0"
+}

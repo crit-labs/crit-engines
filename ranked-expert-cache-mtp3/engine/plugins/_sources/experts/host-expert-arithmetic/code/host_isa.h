@@ -1,0 +1,18 @@
+// Run-time choice among a host path's scalar, AVX2 and AVX-512 files. The ISA files are compiled with their own flags
+// and built under one condition for every library that has them (crit_inference_isa_sources in
+// inference/CMakeLists.txt, which defines CRIT_HOST_ISA_FILES for those libraries), so supported() answers for all of
+// them: compiled into this build and reported by the CPU and the OS (cpuid, xgetbv).
+#pragma once
+
+namespace crit::techniques::host_isa {
+
+// portable: the compiler-vectorized path every CPU has (host_nvfp4.h).
+enum class Isa { scalar, portable, avx2, avx512 };
+const char* isa_name(Isa) noexcept;
+bool supported(Isa) noexcept;
+Isa best_isa() noexcept;
+// AVX-512 BW and VNNI beside AVX-512F (vpdpbusd), for integer paths that need them; false where the ISA files are not
+// built.
+bool avx512_vnni() noexcept;
+
+}  // namespace crit::techniques::host_isa
