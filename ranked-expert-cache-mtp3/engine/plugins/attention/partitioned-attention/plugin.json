@@ -1,0 +1,124 @@
+{
+  "schema": "crit-plugin-v1",
+  "id": "partitioned-attention",
+  "title": "Sequence-partitioned attention: interleaved ownership, partials and their stable merge",
+  "description": "partitioned-attention's ownership (position mod world) and reduction: each rank attends its own rows into a partial with its log normalizer, and the merge of the partials equals attention over the whole sequence. The host form of a long sequence split across devices. Its device form is the technique on one GPU: attention-state's device form with crit's split-KV reader for decode and verify windows (each row's keys split over KV partitions, piece i to partition i mod P, partials merged by their log-sum-exps, in captured rounds too), its log-sum-exps on request (lse) and merge() for partials from other devices. A captured prompt chunk (prompts:attention) reads the staged prompt table on the device, as softmax-attention's device form does.",
+  "fills": [
+    "attention"
+  ],
+  "needs": [
+    "kv:rows",
+    "kv:pages"
+  ],
+  "provides": [
+    "rounds:attention",
+    "attention:blocks",
+    "attention:tree",
+    "attention:lse",
+    "prompts:attention"
+  ],
+  "devices": [
+    "cuda",
+    "cpu"
+  ],
+  "reference": [
+    "softmax-attention"
+  ],
+  "test_with": [
+    "attention-state"
+  ],
+  "options": {
+    "world": {
+      "type": "int",
+      "default": 2,
+      "min": 1,
+      "max": 64,
+      "description": "Ranks of the host form's interleaved ownership (position mod world)"
+    },
+    "page_size": {
+      "type": "int",
+      "default": 256,
+      "min": 1,
+      "max": 65536,
+      "description": "Positions per local page of the host form's ranks"
+    },
+    "partitions": {
+      "type": "int",
+      "default": 0,
+      "min": 0,
+      "max": 1024,
+      "description": "KV partitions of the device form's split-KV reader (0: from the GPU's SM count, the KV heads and the page kind); a row's bits depend on it"
+    },
+    "piece": {
+      "type": "int",
+      "default": 0,
+      "min": 0,
+      "max": 128,
+      "description": "Positions per piece of the split-KV reader (0: the kernel's default from the head width and the page kind); a row's bits depend on it"
+    },
+    "kernels": {
+      "type": "choice",
+      "default": "auto",
+      "choices": [
+        "auto",
+        "torch"
+      ],
+      "description": "auto: crit's paged-kv-attention kernels where they load (every page kind, window and prompt rows; FlashInfer only with option flashinfer auto); torch: every row in torch"
+    },
+    "workspace_mib": {
+      "type": "int",
+      "default": 128,
+      "min": 1,
+      "max": 65536,
+      "description": "MiB of partials a launch of the split-KV reader may take from the engine's scratch (crit_plugins.memory: each launch takes what its rows need, nothing is held between launches): a launch reads as many rows as they hold"
+    },
+    "flashinfer": {
+      "type": "choice",
+      "default": "off",
+      "choices": [
+        "auto",
+        "off"
+      ],
+      "description": "off (the default): no library kernel, crit's kernels read every row; auto: FlashInfer's paged prefill for eager prompt rows of 16-bit and FP8 pages where it is installed, a yardstick to compare crit's kernels with, its workspaces allocated when the plugin is made"
+    },
+    "flashinfer_mib": {
+      "type": "int",
+      "default": 128,
+      "min": 16,
+      "max": 65536,
+      "description": "MiB of FlashInfer's scheduling workspace, allocated when the plugin is made where FlashInfer serves (memory() declares it with its wrappers' own workspaces)"
+    },
+    "prompt_reader": {
+      "type": "choice",
+      "default": "auto",
+      "choices": [
+        "auto",
+        "prefill",
+        "decode"
+      ],
+      "description": "auto (the default): the fastest reader that keeps the level the engine's configuration asks of its prompt rows (exactness, docs/PLUGINS.md#exactness): prefill where it asks repeatable or nothing, and where it asks row-exact and reader split's own prompt reader reads the pages (crit's kernel loaded, no FlashInfer); decode where it asks exact, and where it asks row-exact with reader flash or cuda, FlashInfer or torch; prefill: prompt rows through a prompt reader (FlashInfer's prefill or crit's), fastest, another reduction than decode rows' (a scored token may differ from the served one by more than 0.001 nats); decode: prompt rows (a step's and a captured chunk's) in the decode's reduction, the split-KV reader as window rows of up to 64 columns (each program folding its partitions as the merge does) or its torch fallback over the page tables: a scored token equals the same token served, bit for bit, over every page type (window rows through the split-KV reader too, no FlashInfer)"
+    },
+    "reader": {
+      "type": "choice",
+      "default": "auto",
+      "choices": [
+        "auto",
+        "split",
+        "flash",
+        "cuda"
+      ],
+      "description": "which of crit's paged-kv-attention structures read the pages where the kernel loads: auto (the default), cuda for each pool the CUDA flash tile takes (64-, 128- or 256-wide heads, keys and values of one width, BF16 queries, compute capability 8.0 or newer) and split for the others, prompt chunks through reader split's prompt reader (row-invariant; prompt_reader decode reads them on each pool's reader): on an RTX 5090 the CUDA tile decodes at 0.885x the split-KV reader's time (geometric mean of 92 cases, 1 to 32 rows of 1K to 64K positions over four cache geometries; the worst 1.18x, one row of 1K-4K positions) and reads exact prompt rows 1.3-3.4x faster; split: the split-KV launch (piece i of a row's positions to KV partition i mod P, partials merged in partition order) for window rows and crit's prompt reader for prompt chunks; flash: the flash structures (flash-window, flash-fused: a row's positions in contiguous splits of one chunk per pool, its columns times a KV head's query heads packed into tensor-core tiles, the splits merged in split order; a column's bits the same alone, in any window, in a step and in a captured round, another reduction than split's) and the flash prompt chunk (flash-prefill: a prompt token's bits follow its chunk's length); partitions and piece do not apply, block lists stay on the split launch; cuda: the same launches through the CUDA flash tile (cuda-window, cuda-fused, cuda-prefill: queries in shared memory, 16 rows a warp, each warp's online softmax in registers, one chunk and block per pool; a column's bits the same alone, in any window, in a step and in a round, another reduction than split's and flash's; its prompt chunk follows the chunk's length), compiled with nvcc for the GPU on first use"
+    }
+  },
+  "kernels": [
+    {
+      "name": "paged-kv-attention",
+      "fallback": "each row's partitions merged in a masked FP32 softmax over the pool's page tables in torch, prompt rows by torch's SDPA"
+    }
+  ],
+  "sources": {
+    "partitioned": "code",
+    "state": "../attention-state/code"
+  },
+  "entry": "plugin.py:create"
+}

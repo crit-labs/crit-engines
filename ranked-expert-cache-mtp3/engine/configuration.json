@@ -1,0 +1,87 @@
+{
+  "exactness": {
+    "decode": "row-exact",
+    "prompt": "row-exact"
+  },
+  "kernel_tuning": "tuning",
+  "plugins": {
+    "base": {
+      "expert_source": "expert-tensors",
+      "norms": "torch-norms",
+      "recurrence": "recurrent-state-recovery",
+      "verifier": "chain-verifier"
+    },
+    "options": {
+      "attention-state": {
+        "elastic": true
+      },
+      "device-placement": {
+        "off_device": "tables."
+      },
+      "expert-offload": {
+        "fill_blocks": 128,
+        "keep_routes": 6,
+        "misses": "auto",
+        "policy": "ranked",
+        "profile": "residency_profile.json"
+      },
+      "quantized-projections": {
+        "gemv": "mma",
+        "prompt_gemm": "tile"
+      },
+      "qwen4-exp-model": {
+        "mtp": true,
+        "prefill_chunk": 2048
+      },
+      "recurrent-state-recovery": {
+        "elastic": true
+      },
+      "sequential-recurrence": {
+        "elastic": true
+      },
+      "topk-router": {
+        "renormalize": true,
+        "score_before_selection": true
+      }
+    },
+    "use": {
+      "attention": "partitioned-attention",
+      "drafter": "greedy-head-drafter",
+      "embeddings": "lookup-table-rows",
+      "expert_source": "expert-tensors",
+      "experts": "expert-offload",
+      "kv_cache": "attention-state",
+      "model": "qwen4-exp-model",
+      "norms": "fused-norms",
+      "placement": "device-placement",
+      "projections": "quantized-projections",
+      "recurrence": "sequential-recurrence",
+      "router": "topk-router",
+      "sampler": "token-constraints",
+      "verifier": "chain-verifier"
+    }
+  },
+  "prompt_activations": "stored",
+  "quality_mode": "speed",
+  "recon": {
+    "chat_template": {
+      "name": "default",
+      "sha256": "c3cf9e34abf4f9e36c2d72165aa9c132d3e2a725b6c2586aaa3a8af9d7a81041"
+    },
+    "sampling": {
+      "do_sample": true,
+      "temperature": 1.0,
+      "top_k": 20,
+      "top_p": 0.95
+    },
+    "stop_strings": [],
+    "stop_token_ids": [
+      248046,
+      248044
+    ],
+    "template_variables": {
+      "enable_thinking": false
+    }
+  },
+  "vram_headroom_bytes": 268435456
+}

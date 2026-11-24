@@ -1,0 +1,26 @@
+{
+ "schema": "crit-kernel-tuning-v1",
+ "kernel": "expert-directory",
+ "structures": {
+  "fill": {
+   "configs": [
+    {}
+   ],
+   "table": [
+    {
+     "key": {
+      "bundle": 2764800
+     },
+     "rows": [
+      1,
+      4096
+     ],
+     "config": 0
+    }
+   ]
+  }
+ },
+ "source": "56ea862fd08a48ab7a1cae13a71befc6e3fa97fda1709435e0cf7e048d2d04e8",
+ "device": "NVIDIA GeForce RTX 5090",
+ "capability": "12.0"
+}
