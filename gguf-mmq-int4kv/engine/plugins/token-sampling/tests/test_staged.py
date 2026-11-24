@@ -1,5 +1,6 @@
 """token-sampling's staged device form draws what sample() draws, row for row, for every rule mixed in one step, and
 replays from a CUDA graph with new rules set between replays."""
+import importlib.util
 import random
 
 from crit_plugins.testing import PluginTestCase
@@ -13,6 +14,8 @@ class StagedSamplerTests(PluginTestCase):
     def setUp(self):
         if self.device() != "cuda":
             self.skipTest("the staged form runs on CUDA")
+        if importlib.util.find_spec("triton") is None:
+            self.skipTest("the staged form's kernels are Triton's, which this host does not have")
         self.torch = __import__("torch")
         self.sampler = self.assemble()["sampler"]
         rng = random.Random(7)

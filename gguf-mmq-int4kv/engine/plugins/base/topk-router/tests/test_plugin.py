@@ -1,7 +1,9 @@
 import math
 
-from crit_plugins.slots import CASES
+from crit_plugins.testing import cases_for
 from crit_plugins.testing import PluginTestCase
+
+CASES = cases_for(__file__)
 
 
 class TopKRouterTests(PluginTestCase):

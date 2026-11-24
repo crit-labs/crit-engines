@@ -7,13 +7,13 @@ penalties, temperature, top-k, top-p, min-p and Core's draw), and verifies specu
 drafts by rejection sampling, so sampled requests can draft inside a captured decode
 graph and still emit samples of the model's own distribution, with Core's
 log-probabilities when a request asks for them. This is the device path of Core's sampler
-([Core sampling](../../core/src/sampling/README.md)).
+([Core sampling](../../../core/src/sampling/README.md)).
 
 ## When to use it
 
 When generation samples inside the decode step (after or inside a captured graph), when
 sampled requests should speculate, or when a structured-output mask applies to device
-logits. Grammar masks ([Core's structured output](../../core/src/constraints/README.md))
+logits. Grammar masks ([Core's structured output](../../../core/src/constraints/README.md))
 go through `enqueue_mask` before selection. Keep the plain argmax path for greedy requests
 where bit identity with an existing greedy kernel matters.
 
@@ -22,7 +22,7 @@ where bit identity with an existing greedy kernel matters.
 **Rank order and the law.** Candidates rank by (value descending, id ascending). Values
 are the logits after Core's steps 2 to 5: `+bias` (a -inf bias bans), suppression of the
 `suppress_ids` while `position + column < min_tokens` (skipped on rows whose `Rows::yield` is set:
-Core's `suppression_yields`, a constraint mask that allows only suppressed tokens), repetition (`v / r` for positive,
+a constraint mask that allows only suppressed tokens), repetition (`v / r` for positive,
 `v * r` for negative values) for tokens in the prompt or the outputs, then
 `v -= frequency * n + presence` for tokens with `n > 0` outputs. The rules are Core's doubles
 (0.8 or 0.3 is not a float, and its float rounding would move a top-p boundary, or a draw near
@@ -30,7 +30,7 @@ one, by ~1e-8) and the steps run in IEEE double as Core runs them, without contr
 the full law then rounds each value to the nearest float, clamped to the finite range, so a value
 Core holds beyond the float range stays selectable. Column `c` of a verify or
 draft step counts its staged tokens (the drafts before it) as outputs, so each column has
-the law Core's `Sampler` would use with those tokens staged. Weights are
+the law of Core's rules with those tokens staged. Weights are
 `exp((v - max) / temperature)`; top-k keeps a rank prefix, top-p the shortest rank prefix
 whose weight reaches `top_p` of the top-k weight, min-p the weights `>= min_p`. The draw
 `u = uniform(seed, position + column, stream, purpose)` picks the first kept token whose
@@ -65,11 +65,26 @@ the top-p boundary and the draw (weights) are all the same search: walk the key'
 the cumulative crosses the target, then resolve the final key's ties in id order with a
 block-wide scan. Each sum is per-thread FP32 over a fixed stride, then FP64 over threads
 in a fixed order, so a row's result never depends on timing or on the other rows of the
-launch; `top_k = 0` is the whole vocabulary, as in Core.
+launch; `top_k = 0` is the whole vocabulary, as in Core. The tie scan visits only the
+1,024-id tiles that hold a token with the boundary key: a tile without one adds exact zeros
+and holds no hit, so skipping it keeps every sum and the pick.
+
+**The spread form.** The 1,024 threads of a row's law are virtual threads over 32 blocks of
+one warp each, launched cooperatively, so a row's passes run on 32 multiprocessors
+instead of one. A virtual thread reads the ids the one-block law's thread reads, in the
+same order, and its warp is that thread's warp, so every per-thread sum and shuffle tree is
+the same; only the cross-warp step moves: each warp writes its value to the row's slots in
+scratch (double-buffered), the row's blocks meet at a barrier (an arrival counter), and
+each block's first thread reduces the 32 values in the one-block law's order. Both forms
+give the same bits. `enqueue_sample` and `enqueue_verify` take the spread form where the
+device runs cooperative launches and the occupancy API says every block of the grid fits at
+once (a cooperative launch also refuses a grid that does not, rather than deadlocking);
+otherwise, when the launch fails, or with `CRIT_SAMPLING_ONE_BLOCK=1`, one block a row.
+`enqueue_select` keeps one block a row.
 
 **Speculative verification.** `enqueue_verify` computes the law of all `K + 1` verify
 columns in parallel (one block per column and request) and writes predictions for the
-[device greedy accept kernel](../device-speculative-round/README.md), which emits the
+[device greedy accept kernel](../../speculation/device-speculative-round/README.md), which emits the
 drafts up to the first column whose prediction differs, then that prediction:
 
 - *Greedy drafts* (deterministic, `q` one-hot): every column writes the target's own draw
@@ -78,7 +93,7 @@ drafts up to the first column whose prediction differs, then that prediction:
   a sample of `p` without `d`, its residual. The emitted text is therefore what plain
   sampled decoding emits with the same seed, token for token, whenever verify computes
   each column's logits as a one-token step does
-  ([column-invariant arithmetic](../device-speculative-round/README.md#column-invariant-arithmetic)).
+  ([column-invariant arithmetic](../../speculation/device-speculative-round/README.md#column-invariant-arithmetic)).
 - *Sampled drafts* (drawn from the drafter's processed law `q`): column `c < K`
   accepts with `u_accept * q(d) < p(d)` and writes `d`, otherwise a draw from
   `max(p - q, 0)` with `u_residual`; column `K` writes the bonus with `u_sample`, the round
@@ -92,7 +107,7 @@ drafts up to the first column whose prediction differs, then that prediction:
   law does not keep), such as a copied draft a drafter cleared the law of: the rejection
   rule's residual is the law of a draft drawn from `q`, which that one was not.
 - *Cut drafts* (a draft id outside the vocabulary, such as the -1 a drafter's
-  [confidence cut](../hidden-state-drafters/README.md) writes): the column is the target's own
+  [confidence cut](../../speculation/hidden-state-drafters/README.md) writes): the column is the target's own
   draw with `u_sample`, like the bonus column, whatever its `q` row still holds. No draft was
   drawn from that `q`, so the rejection rule's residual would be the wrong law; a round cut after
   `j` drafts emits what a width-`j` round would.
@@ -116,7 +131,7 @@ kept laws of at most 64 tokens), and rounds are at most 64 columns wide.
 **Token trees.** With `Rows::tree`, the columns are a tree's nodes: node `c` stages the
 tokens on its root-to-node path and draws at its depth's position. With greedy (top-k)
 children, verifying a tree is `enqueue_sample` over the nodes followed by a walk that
-moves to the child equal to each node's draw ([draft trees](../draft-trees/README.md)),
+moves to the child equal to each node's draw ([draft trees](../../speculation/draft-trees/README.md)),
 so a tree keeps the same law, and the same text as plain sampling, as a chain.
 
 **Why counter-based draws keep the law.** The token finally emitted at output position
@@ -139,7 +154,7 @@ resolves the tie group exactly as Core ranks it. `enqueue_sample` and `enqueue_v
 the same work (`Logprobs`): the stage blocks also write the raw lists, extra blocks of the law
 kernel rank them beside the law blocks, and the full-law kernel writes every row's chosen
 token's log-probability once the token is known. Rows masked by `enqueue_mask` report over the
-masked row; Core's constrained `Sampler` reports over the unmasked one. `enqueue_ranked_logprobs`
+masked row; Core's rules report over the unmasked one. `enqueue_ranked_logprobs`
 takes rows that are log-probabilities already (a torch engine's FP32 `log_softmax`, the
 arithmetic of its step and score paths) and reports each value as given, the alternatives
 ranked the same way, so a captured round reports the bits the engine's steps report.
@@ -172,8 +187,8 @@ its length and its address modulo 16 bytes, the same for every row of a vocabula
 over a token tree (`view.tree_depths`, draft-trees) predicts each node's own draw at
 `out_count + depth` through `Rows::tree`. A second `reserve` keeps the rules staged before, and the plugin's facts
 name the kernel the rounds run (`round_sampling`: `native` or `torch`). The launches are
-`sampling.cu`'s through [sampling_torch.cpp](code/sampling_torch.cpp), built at load through torch's extension builder
-(a name hashed from the sources); where it does not build, with the `rounds` option `torch`, and on the CPU the same
+crit's kernel [token-sampling](../../../../kernels/techniques/sampling/token-sampling/README.md) (`sampling.cu` and its torch ops, built for the device by crit's kernel
+build with the engine's tuning or its default knobs, declared in plugin.json's `kernels`); where it does not build, with the `rounds` option `torch`, and on the CPU the same
 rules run in torch over sorted rows in FP64 with dense laws (slower, exact up to cumulative sums in a parallel order).
 The tokens equal the host form's `predictions` for the same rows, drafts and laws wherever the fast path settles the
 row (greedy, `top_k <= 64`, or a kept set closing within the top 64); full-law rows keep their FP32 boundary caveat.
@@ -183,7 +198,8 @@ than the rejection rule.
 
 ## What the code supplies
 
-[sampling.h](code/sampling.h) / [sampling.cu](code/sampling.cu), linking `crit::core`:
+[sampling.h](../../../../kernels/techniques/sampling/token-sampling/sampling_cuda/sampling.h) / [sampling.cu](../../../../kernels/techniques/sampling/token-sampling/sampling_cuda/sampling.cu) (crit's kernel
+token-sampling), linking `crit::core`:
 
 | Interface | Supplies |
 | --- | --- |
@@ -196,18 +212,19 @@ than the rejection rule.
 | `enqueue_ranked_logprobs` | The same over rows that are log-probabilities already (a torch engine's `log_softmax`): the chosen tokens' values and the ranked alternatives as given (the rounds:sampler extension's) |
 | `enqueue_commit` | Counts and positions after publication, from a device-held emitted count |
 
-[sampling_torch.cpp](code/sampling_torch.cpp) binds the launches for torch tensors (host code), and
+The kernel's [torch ops](../../../../kernels/techniques/sampling/token-sampling/torch-ext/torch_binding.cpp) bind the launches for torch tensors (host code), and
 [device_rounds.py](code/device_rounds.py) is the rounds:sampler extension over them, with the torch law as its
 fallback.
 
 [sampling.py](code/sampling.py) mirrors the processing, law, draw and verification in FP64
-with Core's bit-identical draw. The host oracle is `crit::core::Sampler`.
+with Core's bit-identical draw. The fixtures' host oracle is
+[host_sampler.h](../../../../tests/inference/host_sampler.h).
 
 ## What the engine supplies
 
-One `Request` per sequence, filled from `crit::core::resolve_sampling` (merge duplicate
+One `Request` per sequence, filled from the request's resolved rules (merge duplicate
 bias ids, sort them), with `position` set to the committed output count and `counts` /
-`prompt_seen` built from `TokenHistory` at request start. Scratch of
+`prompt_seen` built from the prompt and the outputs at request start. Scratch of
 `scratch_floats(vocab, rows)` floats (or `select_scratch_bytes(vocab, rows)` bytes for
 `enqueue_select`), 8-byte aligned, target logits as FP32 rows (the verify step writes
 logits instead of argmax for sampled requests), and for sampled drafts the dense `q` rows
@@ -219,7 +236,7 @@ Forward: enqueue_commit(previous round's result tokens, control[commit_tokens])
          draft (greedy argmax, or enqueue_sample with DrawPurpose::draft and q rows or sparse laws)
          verify writing K + 1 target logit rows, then enqueue_verify -> predictions
                 (with Verify::logprobs -> the round's logprob rows, when RoundConfig::logprobs)
-Finish:  enqueue_greedy_accept, commit_state       (device-speculative-round, unchanged)
+Finish:  greedy accept, commit_state               (device-speculative-round, unchanged)
 ```
 
 ## Worked example
@@ -233,7 +250,7 @@ row = [2.0, 1.0, 2.0, -1.0, 0.5]
 assert s.select(row) == 0                  # tie between 0 and 2, lowest index wins
 assert [t for t, _ in s.nucleus(row, 0.7, top_p=0.9)] == [0, 2, 1]   # 0.446, 0.446, 0.107
 draws = [s.select(row, 0.7, 0.9, 0, seed=1, position=c) for c in range(8)]
-assert draws == [2, 2, 0, 2, 0, 0, 0, 2]   # crit::core::Sampler draws the same tokens
+assert draws == [2, 2, 0, 2, 0, 0, 0, 2]   # the fixtures' host oracle draws the same tokens
 
 flat = [0.0] * 100                         # top_k 0 keeps the whole vocabulary, not 64 candidates
 assert len(s.nucleus(flat, 1.0)) == 100
@@ -276,15 +293,15 @@ and NaN or +inf logits are not filtered (Core rejects them). Log-probabilities f
 draw added ~4 us on the same device and rows (one row, 20 alternatives: ~20 us against ~16
 us without; `enqueue_logprobs` after the draw ~11 us).
 
-[token_sampling_tests.cpp](../../tests/inference/token_sampling_tests.cpp) checks the
+[token_sampling_tests.cpp](../../../../tests/inference/token_sampling_tests.cpp) checks the
 selection path (ties, repeatability, Core's exact draws on the fast path and away from
 boundaries elsewhere, strided rows with their own rules in one launch, frequencies,
 masks) and the log-probabilities against `log_softmax` and `top_logprobs` on seven row
 shapes (moderate, peaked, flat, ties, masked, large and negative logits) with `n` up to 64,
 rows whose boundary candidates collapse to one float, rows independent of their launch, and
 the fused values equal to `enqueue_logprobs` bit for bit.
-[token_law_tests.cpp](../../tests/inference/token_law_tests.cpp) checks the law against
-`Sampler::distribution` with bias, suppression, penalties over staged columns, top-k,
+[token_law_tests.cpp](../../../../tests/inference/token_law_tests.cpp) checks the law against
+the host oracle's `Sampler::distribution` with bias, suppression, penalties over staged columns, top-k,
 top-p and min-p; Core's double rules at exact top-p boundaries and values beyond the float
 range; the fast path's draws equal to `Sampler::sample` on vocabularies of 7, 100, 12,288
 and 200,003 tokens; open rows settled by the fast kernels or the full law; a group of
@@ -295,5 +312,5 @@ equal to the target's own draw; sparse laws equal to the dense rows, and verify 
 against them equal to those against the dense rows on fast, open and full-law targets;
 first-token frequencies equal to the target law for greedy drafts and for sampled drafts
 with dense or sparse laws over 16,384 seeds; and device commits.
-[test_token_law.py](../../tests/test_token_law.py) checks the mirror. The timings above
+[test_token_law.py](../../../../tests/test_token_law.py) checks the mirror. The timings above
 illustrate one device; there is no output-quality claim.

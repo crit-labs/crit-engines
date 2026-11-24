@@ -1,7 +1,7 @@
 {
   "exactness": {
     "decode": "row-exact",
-    "prompt": "exact"
+    "prompt": "row-exact"
   },
   "plugins": {
     "base": {
@@ -54,6 +54,7 @@
       "sampler": "token-sampling"
     }
   },
+  "prompt_activations": "stored",
   "quality_mode": "speed",
   "recon": {
     "chat_template": {
@@ -75,5 +76,6 @@
     "template_variables": {
       "enable_thinking": false
     }
-  }
+  },
+  "vram_headroom_bytes": 1073741824
 }
