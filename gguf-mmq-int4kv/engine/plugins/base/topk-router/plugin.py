@@ -1,7 +1,7 @@
 """Expert routing in the router slot: heterogeneous-expert-dispatch's route (routing.py) under one Routing, and its
-device form, the same rule over a step's router logits (FP32, ties to the lower expert and group id): one launch of the
-registry kernel crit-labs/topk-routing (a warp per token row) where it loads and the rule has no group limit, else
-torch.
+device form, the same rule over a step's router logits (FP32, ties to the lower expert and group id): one launch of
+crit's kernel topk-routing (a warp per token row; built on this GPU, tuned or default knobs) where it builds and the
+rule has no group limit, else torch.
 
 The device form is capture-safe: no host synchronization, fixed shapes for a fixed token count, a bias moved to the
 device once, at its first (eager) call, and kept. A row with NaN logits (a captured round's junk positions) still

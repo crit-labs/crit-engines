@@ -2,7 +2,7 @@
   "schema": "crit-plugin-v1",
   "id": "topk-router",
   "title": "Top-k expert routing from one routing description (heterogeneous-expert-dispatch)",
-  "description": "heterogeneous-expert-dispatch's Routing and its host reference: softmax or sigmoid scores before or after selection, a per-expert correction bias that only changes the selection, group limits, renormalization and scaling, ties to the lower expert id. The reference a device routing kernel is checked against; its device form runs the same rule over a step's router logits, through the registry kernel crit-labs/topk-routing (one launch, a warp per token row) where it loads and the rule has no group limit, in torch otherwise; capture-safe (no host synchronization; a captured round's or prompt chunk's junk rows of NaN logits still pick valid distinct experts, with weights 0: rounds:router, prompts:router).",
+  "description": "heterogeneous-expert-dispatch's Routing and its host reference: softmax or sigmoid scores before or after selection, a per-expert correction bias that only changes the selection, group limits, renormalization and scaling, ties to the lower expert id. The reference a device routing kernel is checked against; its device form runs the same rule over a step's router logits, through crit's kernel topk-routing (one launch, a warp per token row; built on this GPU, tuned or default knobs) where it builds and the rule has no group limit, in torch otherwise; capture-safe (no host synchronization; a captured round's or prompt chunk's junk rows of NaN logits still pick valid distinct experts, with weights 0: rounds:router, prompts:router).",
   "fills": [
     "router"
   ],
@@ -54,7 +54,7 @@
     "kernel": {
       "type": "bool",
       "default": true,
-      "description": "select through the registry kernel crit-labs/topk-routing where it loads (rules without a group limit); false: torch"
+      "description": "select through crit's kernel topk-routing (built on this GPU, tuned or default knobs) where it builds (rules without a group limit); false: torch"
     }
   },
   "kernels": [
@@ -66,5 +66,27 @@
   "sources": {
     "dispatch": "../../_sources/heterogeneous-expert-dispatch/code"
   },
-  "entry": "plugin.py:create"
+  "entry": "plugin.py:create",
+  "defines": {
+    "slots": {
+      "router": {
+        "about": "expert routing: scores, top-k and the routing description experts read",
+        "host": {
+          "route": "route(logits, top, bias=None) -> [(expert ids, weights)]: one per token's router logits row"
+        },
+        "device": {
+          "select": "select(logits, top, bias=None) -> (ids, weights): each token's routed experts ([tokens][top] int64, in selection order) and their weights ([tokens][top] FP32) from its router logits row ([tokens][experts]), by the host form's rule"
+        },
+        "cases": "cases.py:router"
+      }
+    },
+    "facts": {
+      "rounds:router": {
+        "methods": {}
+      },
+      "prompts:router": {
+        "methods": {}
+      }
+    }
+  }
 }

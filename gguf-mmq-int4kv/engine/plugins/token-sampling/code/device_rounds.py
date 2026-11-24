@@ -24,8 +24,8 @@ so a draw within ~1e-5 of a cumulative boundary may differ from the FP64 host fo
 64 tokens has no sparse form, so it is verified by the target's own draw where the host form (with the law) would use
 the rejection rule: the same law, other tokens.
 
-On CUDA the arithmetic is token-sampling's sampling law (sampling.cu, with the binding sampling_torch.cpp), built at
-load through torch's extension builder (native()): greedy rows and 1 <= top_k <= 64 on its fast path (stage blocks of
+On CUDA the arithmetic is crit's kernel token-sampling (kernels/techniques/sampling/token-sampling: sampling.cu and its
+torch ops, built by crit's kernel build for the device, with the engine's tuning or its default knobs; native()): greedy rows and 1 <= top_k <= 64 on its fast path (stage blocks of
 4,096 logits keep their best top_k + 1 processed candidates, one law block per row merges them and runs Core's steps 7
 to 12 in FP64, the verify rule included), open rows settled there when top_p or min_p closes the kept set within the
 top 64 or the draw lands among them, every other row on a one-block full-vocabulary law (FP32 values and weights: a draw
@@ -45,8 +45,6 @@ same way whatever rows are beside it, by its length and its address modulo 16 by
 vocabulary that is a multiple of 4). The ranked alternatives are those values in Core's order (higher first, the lower
 id among equals): the CUDA sampler ranks the rows as given (enqueue_ranked_logprobs), the torch law by a stable sort.
 """
-import hashlib
-import os
 from pathlib import Path
 import warnings
 
@@ -60,6 +58,7 @@ ONE = 0x3F800000                                 # the bits of FP32 1.0
 KERNELS = ("native", "torch")                    # sampling.cu built at load, or the torch law
 
 _NATIVE = {}
+KERNEL = "token-sampling"   # crit's kernel of the sampling law (plugin.json "kernels")
 
 
 class Native:
@@ -114,52 +113,23 @@ class Native:
 
 
 def native(device):
-    """token-sampling's sampling law (sampling.cu with sampling_torch.cpp) built for `device`'s architecture through
-    torch's extension builder, once a process and cached across processes under a name hashed from the sources' paths
-    and contents (each engine's copy of the plugin builds its own); None where it does not build (no CUDA compiler, no
-    Core headers) or on a CPU device, and the torch law serves."""
+    """crit's kernel token-sampling (the sampling law, built for `device` by crit's kernel build with the engine's
+    tuning or its default knobs, crit_plugins.kernels.load_kernel; recorded in the engine's facts) as Native, once a
+    process; None on a CPU device or where it does not build here (no CUDA compiler, no crit_kernels: recorded as
+    the kernel's fallback with its reason), and the torch law serves."""
     device = torch.device(device)
     if device.type != "cuda":
         return None
-    major, minor = torch.cuda.get_device_capability(device)
-    arch = f"{major}.{minor}"   # no architecture-specific instructions: the plain target
-    if arch not in _NATIVE:
-        from torch.utils.cpp_extension import load
-        sources = [HERE / "sampling.cu", HERE / "sampling_torch.cpp"]
-        digest = hashlib.sha256()
-        for source in sources + [HERE / "sampling.h"]:
-            digest.update(str(source).encode() + source.read_bytes())
-        # The target as an explicit nvcc flag: torch's builder then adds none of its own (no TORCH_CUDA_ARCH_LIST read
-        # or written).
-        target = f"-gencode=arch=compute_{major}{minor},code=sm_{major}{minor}"
-        try:
-            core = _core_include()
-            if core is None:
-                raise FileNotFoundError("Core's headers (crit/sampling.h) were not found; set CRIT_CORE_INCLUDE")
-            module = load(name=f"crit_sampling_{arch.replace('.', '_')}_{digest.hexdigest()[:12]}",
-                          sources=[str(s) for s in sources], extra_include_paths=[str(HERE), str(core)],
-                          extra_cflags=["-O3", "-std=c++20"],
-                          extra_cuda_cflags=["-O3", "-std=c++20", "--expt-relaxed-constexpr", target], verbose=False)
-            _NATIVE[arch] = Native(module)
-        except Exception as error:   # no compiler, or headers that do not match: the torch law serves
-            warnings.warn(f"token-sampling: the sampling law did not build for {arch} ({error}); rounds sample with "
-                          "the torch law instead")
-            _NATIVE[arch] = None
-    return _NATIVE[arch]
-
-
-def _core_include():
-    """Core's public headers: CRIT_CORE_INCLUDE, else the crit checkout this plugin lies in (inference/... beside
-    core/include), else the crit_core package's checkout."""
-    found = os.environ.get("CRIT_CORE_INCLUDE")
-    candidates = [Path(found)] if found else []
-    candidates += [parent / "core" / "include" for parent in HERE.parents]
-    try:
-        import crit_core
-        candidates.append(Path(crit_core.__file__).resolve().parents[2] / "include")
-    except ImportError:
-        pass
-    return next((c for c in candidates if (c / "crit" / "sampling.h").is_file()), None)
+    key = str(device)
+    if key not in _NATIVE:
+        from crit_plugins.kernels import load_kernel, plugin_folder
+        # the plugin whose package imports this code: token-sampling, or token-constraints over it as a source
+        module = load_kernel(KERNEL, folder=plugin_folder(__name__, HERE.parent))
+        if module is None:
+            warnings.warn("token-sampling: crit's kernel token-sampling did not build here; rounds sample with the "
+                          "torch law instead")
+        _NATIVE[key] = Native(module) if module is not None else None
+    return _NATIVE[key]
 
 
 # --- Core's Philox draw in torch (int64 arithmetic, exact): the torch law's uniforms -------------------------------
@@ -275,9 +245,11 @@ class DraftLaws:
 
 class RoundState:
     """The sampler's buffers for rounds of up to `rows` rows at up to `widest` drafts over `vocab` logits: each slot's
-    staged rules and every scratch a round's launches read, allocated once."""
+    staged rules and the results a round's launches write, allocated once. What a launch only computes in (its sorted
+    rows, its partial sums) is scratch: every launch takes it from `scratch`, the engine's (crit_plugins.memory's
+    Scratch; one of the state's own without)."""
 
-    def __init__(self, rows, widest, vocab, device, logprobs=0, kernel="native"):
+    def __init__(self, rows, widest, vocab, device, logprobs=0, kernel="native", scratch=None):
         self.rows, self.widest, self.vocab, self.device = rows, widest, vocab, torch.device(device)
         self.top, self.kernel = int(logprobs), kernel
         if not 0 <= self.top <= MAX_TOP_K:
@@ -303,9 +275,13 @@ class RoundState:
             layout = self.native.layout()
             self.request_bytes, self.position_word = layout["request"], layout["position"] // 8
             self.requests = torch.zeros(rows * self.request_bytes, dtype=torch.uint8, **dev)
-            self.scratch = torch.zeros(self.native.scratch_bytes(vocab, rows * cols) // 4 + 2, dtype=torch.float32, **dev)
-            self.lp_scratch = torch.zeros(self.native.logprob_scratch_bytes(vocab, rows * cols, self.top) // 8 + 1,
-                                          dtype=torch.float64, **dev)
+            if scratch is None:
+                from crit_plugins.memory import of as memory_of
+                scratch = memory_of(self.device).scratch("token-sampling")
+            self._scratch = scratch
+            # A launch's scratch for the state's most logit rows: FP32 words, and FP64 words for the log-probabilities.
+            self.scratch_bytes = (self.native.scratch_bytes(vocab, rows * cols) // 4 + 2) * 4
+            self.lp_scratch_bytes = (self.native.logprob_scratch_bytes(vocab, rows * cols, self.top) // 8 + 1) * 8
             self.laws = DraftLaws(rows, widest, vocab, self.device, layout["sparse"] // 4)
             self.sparse_column = torch.zeros(rows, layout["sparse"] // 4, dtype=torch.int32, **dev)
             for slot in range(rows):
@@ -353,6 +329,16 @@ class RoundState:
         if self.native is not None:
             self._request(slot, rule)
 
+    @property
+    def scratch(self):
+        """A sampling launch's scratch: taken by each launch, nothing in it outlives one."""
+        return self._scratch.take(self.scratch_bytes).view(torch.float32)
+
+    @property
+    def lp_scratch(self):
+        """A log-probability launch's scratch, as `scratch`."""
+        return self._scratch.take(self.lp_scratch_bytes).view(torch.float64)
+
     def positions(self, view):
         """The draw position of each row's column 0 (view.out_count) into the staged requests, on the device."""
         if self.native is not None:
@@ -373,7 +359,7 @@ def _out_count(view):
 class RoundSampling:
     """The sampler's rounds:sampler extension over a RoundState; CoreSampler mixes it in."""
 
-    _round, kernel = None, "native"
+    _round, kernel, scratch = None, "native", None   # scratch: the engine's (the plugin's context.scratch)
 
     def __init__(self):
         self._staged = {}   # slot -> the params staged there, kept across a reserve() of other buffers
@@ -385,7 +371,7 @@ class RoundSampling:
         found = self._round
         if found is None or (found.rows, found.widest, found.vocab, found.device, found.top, found.kernel) != (
                 rows, widest, vocab, torch.device(device), int(logprobs), self.kernel):
-            self._round = RoundState(rows, widest, vocab, device, logprobs, self.kernel)
+            self._round = RoundState(rows, widest, vocab, device, logprobs, self.kernel, self.scratch)
             for slot, params in sorted(self._staged.items()):   # the rules staged before, in the new buffers
                 if slot < rows:
                     self._round.stage(slot, params)
