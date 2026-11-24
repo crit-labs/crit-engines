@@ -121,7 +121,7 @@ def route(logits, top, routing=Routing(), bias=None):
 
 
 def routing_from_config(moe, *, correction_bias=False, defaults=None):
-    """Map Core's MoeConfig (crit_core.model.config.MoeConfig) to a Routing.
+    """Map a config's MoeConfig (crit_models.config.MoeConfig) to a Routing.
 
     Each field in CONFIG_FIELDS comes from the config, else from `defaults` (the value
     the model's reference code assumes when config.json omits it, keyed by the config

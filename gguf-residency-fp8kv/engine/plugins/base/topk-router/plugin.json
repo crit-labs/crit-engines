@@ -66,5 +66,27 @@
   "sources": {
     "dispatch": "../../_sources/heterogeneous-expert-dispatch/code"
   },
-  "entry": "plugin.py:create"
+  "entry": "plugin.py:create",
+  "defines": {
+    "slots": {
+      "router": {
+        "about": "expert routing: scores, top-k and the routing description experts read",
+        "host": {
+          "route": "route(logits, top, bias=None) -> [(expert ids, weights)]: one per token's router logits row"
+        },
+        "device": {
+          "select": "select(logits, top, bias=None) -> (ids, weights): each token's routed experts ([tokens][top] int64, in selection order) and their weights ([tokens][top] FP32) from its router logits row ([tokens][experts]), by the host form's rule"
+        },
+        "cases": "cases.py:router"
+      }
+    },
+    "facts": {
+      "rounds:router": {
+        "methods": {}
+      },
+      "prompts:router": {
+        "methods": {}
+      }
+    }
+  }
 }

@@ -156,6 +156,10 @@ class KernelRoutes:
                 **({"rows": self._rows} if self.scratch is not None else {}))
         if arithmetic == "declared":      # the rows the kernel makes at an arithmetic's first call, made here
             ws.declared(self.layout)
+        elif arithmetic in ("fp4", "fp8"):   # the quantized operands' rows of the own-tensor-core arithmetics
+            getattr(ws, arithmetic)()
+        elif arithmetic in ("fp4-row", "fp4-row2"):   # and of FP4 at each route's own scale (one or two terms)
+            ws.fp4_rows({"fp4-row": 1, "fp4-row2": 2}[arithmetic])
         elif self.a4 and ws.xa is None:
             ws.xa = ws._rows("xa", ws.routes, ws.hidden, torch.bfloat16)
         if tokens * top in self._packed:   # the call's rows: its take of the scratch, as every call's
