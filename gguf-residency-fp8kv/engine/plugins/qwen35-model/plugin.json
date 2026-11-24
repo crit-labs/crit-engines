@@ -1,0 +1,109 @@
+{
+  "schema": "crit-plugin-v1",
+  "id": "qwen35-model",
+  "title": "Qwen3.5 / Qwen3.6 mixture-of-experts hybrid decoder (qwen3_5_moe_text) from a GGUF, over the device plugins",
+  "description": "Qwen3.5 MoE's text decoder (transformers' modeling_qwen3_5_moe, llama.cpp's qwen35moe graph): three Gated DeltaNet layers (16 key and 32 value heads of 128, a causal conv of 4, the gated delta rule through the recurrence slot, a gated RMS norm) for every gated full-attention layer (16 query and 2 KV heads of 256, query and key norms, RoPE theta 1e7 over the first 64 dims, the output times sigmoid of a per-head gate), each followed by 256 routed SwiGLU experts (softmax router, top 8, renormalized) beside a shared SwiGLU expert scaled by a sigmoid gate; untied head. Weights read from the GGUF as stored (gguf-projections, gguf-experts; FP32 matrices in FP32); the token embedding in host memory; routed experts in device slots by a residency profile, the rest in pinned host memory read over the link; KV in qwen35-attention's paged pools, recurrent state in qwen35-recurrence's slots; every step of many sequences one batch, each prompt chunk alone and decode rows 8 at a time, decode steps captured in CUDA graphs per row count. The model type (qwen3_5_moe_text) is checked when the plugin is made: crit 0.17.1 derives no model_type fact for a run whose model is a lone GGUF file, so the manifest names no needs.",
+  "fills": [
+    "model"
+  ],
+  "requires": [
+    "norms",
+    "router",
+    "experts",
+    "recurrence"
+  ],
+  "devices": [
+    "cuda"
+  ],
+  "options": {
+    "concurrency": {
+      "type": "int",
+      "default": 2,
+      "min": 2,
+      "max": 16
+    },
+    "prefill_chunk": {
+      "type": "int",
+      "default": 512,
+      "min": 16,
+      "max": 8192
+    },
+    "context": {
+      "type": "int",
+      "default": 8192,
+      "min": 1024,
+      "max": 262144,
+      "description": "positions served when the loader names no context"
+    },
+    "reserve_mib": {
+      "type": "int",
+      "default": 2304,
+      "min": 0,
+      "max": 16384,
+      "description": "device MiB left free after the routed experts' slots (the run's headroom, a prompt step's temporaries, graph pools)"
+    },
+    "expert_mib": {
+      "type": "int",
+      "default": 0,
+      "min": 0,
+      "max": 65536,
+      "description": "at most this many MiB of routed experts in device slots (0: whatever the reserve leaves)"
+    },
+    "profile": {
+      "type": "str",
+      "default": "",
+      "description": "a residency profile (JSON, per-layer route counts) beside the plugin: the most routed experts take the device slots"
+    },
+    "decode_graphs": {
+      "type": "bool",
+      "default": true,
+      "description": "capture the decode step per row count in CUDA graphs at load"
+    },
+    "adapt_every": {
+      "type": "int",
+      "default": 32,
+      "min": 0,
+      "max": 100000,
+      "description": "decode steps between expert residency adaptations (0: never)"
+    },
+    "lend_floor_tokens": {
+      "type": "int",
+      "default": 16384,
+      "min": 0,
+      "max": 262144,
+      "description": "KV positions never lent to host experts (the pool's pages above them hold lent expert copies until a sequence needs them)"
+    },
+    "step_budget_ms": {
+      "type": "int",
+      "default": 0,
+      "min": 0,
+      "max": 10000,
+      "description": "a prompt row computes at most the tokens its step's cost model keeps under this many ms (crit serve settles a cancel only between steps, within 1 s); 0: the whole grant"
+    },
+    "step_base_ms": {
+      "type": "int",
+      "default": 360,
+      "min": 0,
+      "max": 10000,
+      "description": "the cost model's fixed part of a prompt step (staging touched host experts, the dense layers' launch)"
+    },
+    "step_token_us": {
+      "type": "int",
+      "default": 660,
+      "min": 0,
+      "max": 100000,
+      "description": "the cost model's microseconds a prompt token"
+    },
+    "step_key_ps": {
+      "type": "int",
+      "default": 10500,
+      "min": 0,
+      "max": 1000000,
+      "description": "the cost model's picoseconds a prompt token per position it attends to (all full-attention layers)"
+    }
+  },
+  "sources": {
+    "gguf": "../gguf-projections/code"
+  },
+  "entry": "plugin.py:create"
+}

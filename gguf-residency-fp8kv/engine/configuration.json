@@ -1,0 +1,97 @@
+{
+  "exactness": {
+    "decode": "row-exact",
+    "prompt": "repeatable"
+  },
+  "plugins": {
+    "base": {
+      "norms": "torch-norms",
+      "router": "topk-router"
+    },
+    "options": {
+      "device-placement": {
+        "files": false,
+        "off_device": "experts.host.,tables."
+      },
+      "gguf-experts": {
+        "adapt_decay": 0.8,
+        "adapt_margin": 2.0,
+        "adapt_min": 3.0,
+        "adapt_swaps": 192,
+        "decode": "stored",
+        "prefetch_experts": 24,
+        "prompt": "stored",
+        "prompt_rows": 64,
+        "prompt_swaps": 256,
+        "tier_workers": 5,
+        "warm_calls": 48,
+        "warm_swaps": 96
+      },
+      "gguf-projections": {
+        "chunk_mib": 16,
+        "decode": "stored",
+        "gemv_rows": 64,
+        "prompt": "stored",
+        "q8_layout": "stored"
+      },
+      "qwen35-attention": {
+        "block": 1024,
+        "dtype": "fp8"
+      },
+      "qwen35-model": {
+        "adapt_every": 32,
+        "concurrency": 2,
+        "prefill_chunk": 768,
+        "profile": "residency-profile-chat.json",
+        "reserve_mib": 2100,
+        "step_budget_ms": 850,
+        "step_key_ps": 17000
+      },
+      "qwen35-router": {
+        "renormalize": true,
+        "score_before_selection": true,
+        "scoring": "softmax"
+      }
+    },
+    "use": {
+      "attention": "qwen35-attention",
+      "experts": "gguf-experts",
+      "kv_cache": "qwen35-attention",
+      "model": "qwen35-model",
+      "norms": "qwen35-norms",
+      "placement": "device-placement",
+      "projections": "gguf-projections",
+      "recurrence": "qwen35-recurrence",
+      "router": "qwen35-router",
+      "sampler": "token-sampling"
+    }
+  },
+  "prompt_activations": {
+    "IQ3_S": "stored",
+    "IQ4_XS": "stored",
+    "Q6_K": "fp8",
+    "Q8_0": "stored"
+  },
+  "quality_mode": "speed",
+  "recon": {
+    "chat_template": {
+      "name": "default",
+      "sha256": "55d4931433fe502b794226ee7f4d206a6bdd436ac9f80eb7d8ebb4c639f9ea0c"
+    },
+    "sampling": {
+      "do_sample": true,
+      "temperature": 1.0,
+      "top_k": 20,
+      "top_p": 0.95
+    },
+    "stop_strings": [],
+    "stop_token_ids": [
+      248046,
+      248044
+    ],
+    "template_variables": {
+      "enable_thinking": false
+    }
+  },
+  "vram_headroom_bytes": 1073741824
+}

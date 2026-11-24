@@ -1,0 +1,110 @@
+{
+  "schema": "crit-plugin-v1",
+  "id": "gguf-experts",
+  "title": "Routed SwiGLU experts over a GGUF's stored expert blocks, each read where it lives (device slot or pinned host memory)",
+  "description": "The experts slot for a mixture of experts whose routed experts a GGUF stores as [experts][inter][hidden] gate and up and [experts][hidden][inter] down tensors in its block formats (IQ3_S, IQ4_XS, Q6_K, Q8_0, IQ4_NL), as stored: load_layer puts the experts a residency plan names in device slots and the rest in pinned host memory, with one address table per matrix, so the kernels read every expert in place (host experts over the link, with no staging copy). Decode rows: every (token, route) pair through the gathered GEMV with the stored formats' int8 activation units (dp4a), silu(gate) * up, the down GEMV and each token's routes summed in route order (capture-safe). Prompt rows: routes sorted by expert on the device, each expert's routes through the int8 tensor-core kernel straight from its blocks (Q6_K down matrices decoded to BF16). Telemetry: expert_reads and expert_hits (routes whose expert sat on the device).",
+  "fills": [
+    "experts"
+  ],
+  "devices": [
+    "cuda"
+  ],
+  "options": {
+    "prompt": {
+      "type": "choice",
+      "default": "stored",
+      "choices": [
+        "stored"
+      ],
+      "description": "prompt rows' activations: the stored GGUF formats' own (int8 units of 32 with an FP32 scale, the int8 tensor cores straight from the blocks)"
+    },
+    "decode": {
+      "type": "choice",
+      "default": "stored",
+      "choices": [
+        "stored"
+      ],
+      "description": "decode rows' activations: the stored GGUF formats' own (int8 units of 32 with an FP32 scale, integer dot products)"
+    },
+    "cpu_tier": {
+      "type": "bool",
+      "default": true,
+      "description": "decode rows' routes to host experts computed on the CPU (code/expert_tier.cu) beside the device's routes, joined inside the captured step; false: the device reads them over the link"
+    },
+    "tier_workers": {
+      "type": "int",
+      "default": 6,
+      "min": 1,
+      "max": 64,
+      "description": "CPU threads the tier computes a layer's host routes on (the service thread included)"
+    },
+    "adapt_swaps": {
+      "type": "int",
+      "default": 8,
+      "min": 0,
+      "max": 256,
+      "description": "host experts a residency adaptation may swap onto the device (0: the residency profile's placement stays)"
+    },
+    "warm_swaps": {
+      "type": "int",
+      "default": 0,
+      "min": 0,
+      "max": 256,
+      "description": "a fresh engine's first warm_calls residency adaptations may swap up to this many host experts each (when more than adapt_swaps), so a newly loaded engine reaches its routes' placement within a request or two; values unchanged (a placement only)"
+    },
+    "adapt_min": {
+      "type": "float",
+      "default": 3.0,
+      "min": 0.0,
+      "max": 1000.0,
+      "description": "the decayed route score a host expert needs before it may swap onto the device"
+    },
+    "adapt_margin": {
+      "type": "float",
+      "default": 2.0,
+      "min": 0.0,
+      "max": 1000.0,
+      "description": "how much a host expert's score must exceed the device expert's it would replace"
+    },
+    "adapt_decay": {
+      "type": "float",
+      "default": 0.8,
+      "min": 0.0,
+      "max": 0.999,
+      "description": "share of the route scores each adaptation keeps before it adds the decode rows' new counts (match it to qwen35-model's adapt_every: a shorter period keeps more a call)"
+    },
+    "warm_calls": {
+      "type": "int",
+      "default": 0,
+      "min": 0,
+      "max": 100000,
+      "description": "residency adaptations after a load that use warm_swaps (0: none)"
+    },
+    "prefetch_experts": {
+      "type": "int",
+      "default": 0,
+      "min": 0,
+      "max": 256,
+      "description": "prompt steps of at least 128 tokens: at most this many of the next layer's host experts (host copies not lent) copied to the device on their own stream at the end of each layer, so the next layer's products read them there while the link overlaps its attention and dense work (0: off; two buffers of this many experts)"
+    },
+    "prompt_rows": {
+      "type": "int",
+      "default": 0,
+      "min": 0,
+      "max": 4096,
+      "description": "a prompt's routes join each layer's route counts as this many decode rows' worth (scaled by the prompt's tokens) when the prompt ends, the placement's first evidence of what the request will route to"
+    },
+    "prompt_swaps": {
+      "type": "int",
+      "default": 0,
+      "min": 0,
+      "max": 4096,
+      "description": "host experts the adaptation after a prompt's last chunk may swap onto the device, from its routes (prompt_rows), before the request's first decode step (0: off); values unchanged (a placement only)"
+    }
+  },
+  "sources": {
+    "gguf": "../gguf-projections/code",
+    "tier": "code"
+  },
+  "entry": "plugin.py:create"
+}
