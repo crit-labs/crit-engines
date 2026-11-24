@@ -1,0 +1,11 @@
+{
+  "schema": "crit-plugin-v1",
+  "id": "qwen35-recurrence",
+  "title": "Gated DeltaNet recurrence (Qwen3.5 linear attention) with per-sequence device state",
+  "description": "The recurrence slot for Qwen3.5's linear-attention layers: pool(layers, conv_channels, key_heads, value_heads, sequences) keeps each sequence's conv window (3 inputs) and delta-rule state ([value heads][128][128] FP32) a layer, in slots a sequence holds from open to close. forward(layer, mixed, conv_weight, g, beta, groups) runs the causal conv (kernel 4) with SiLU and the gated delta rule (l2-normed queries and keys, value head h reading key head h % key_heads, the GGUF's order) over groups of consecutive tokens of one sequence each: prompt chunks and decode rows alike, a sequence's state carried in place from step to step, every group alone (row invariant). CUDA kernels (code/gdn.cu): the conv a thread a channel, the scan a warp a value column with the state column in registers; a torch reference of the same arithmetic otherwise.",
+  "fills": ["recurrence"],
+  "devices": ["cuda"],
+  "options": {},
+  "sources": {"gdn": "code"},
+  "entry": "plugin.py:create"
+}

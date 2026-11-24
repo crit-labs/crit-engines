@@ -1,0 +1,60 @@
+{
+  "schema": "crit-plugin-v1",
+  "id": "gguf-projections",
+  "title": "GGUF block matrices (Q8_0, IQ4_NL, IQ4_XS, IQ3_S, Q6_K) multiplied on the device",
+  "description": "The projections slot over a GGUF's stored blocks: each matrix stays on the device in its stored GGUF format (format gguf:KIND, tensors {weight: uint8 [rows][row_bytes], cols}), decoded to BF16 a chunk of output rows at a time (code/gguf_blocks.py, bit for bit gguf-py's dequantize) and multiplied by torch's BF16 GEMM with FP32 accumulation; calls of up to 8 rows are padded to 8, so a decode row's bits are its own whatever rows share the call. Plain BF16 matrices (format bf16) too. Prompt rows (calls of more than 8 rows) multiply in FP8 E4M3 with row-wise scales on the activations and the decoded weight rows (prompt fp8, the default), or BF16; decode rows in BF16.",
+  "fills": [
+    "projections"
+  ],
+  "devices": [
+    "cuda"
+  ],
+  "options": {
+    "chunk_mib": {
+      "type": "int",
+      "default": 64,
+      "min": 4,
+      "max": 4096,
+      "description": "MiB of decoded BF16 rows a matmul holds at once"
+    },
+    "prompt": {
+      "type": "choice",
+      "default": "stored",
+      "choices": [
+        "stored",
+        "fp8",
+        "bf16"
+      ],
+      "description": "prompt rows' activations: the stored GGUF formats' own (int8 units of 32 with an FP32 scale, the int8 tensor cores straight from the blocks), FP8 with row-wise scales, or BF16"
+    },
+    "gemv_rows": {
+      "type": "int",
+      "default": 128,
+      "min": 8,
+      "max": 4096,
+      "description": "prompt calls of up to this many rows run as stored-block GEMV passes of 8 rows (BF16 activations); longer ones decode the matrix for the tensor cores"
+    },
+    "decode": {
+      "type": "choice",
+      "default": "stored",
+      "choices": [
+        "stored",
+        "bf16"
+      ],
+      "description": "decode rows' activations: the stored GGUF formats' own (int8 units of 32 with an FP32 scale, integer dot products), or BF16 with every weight decoded to FP32"
+    },
+    "q8_layout": {
+      "type": "choice",
+      "default": "stored",
+      "choices": [
+        "stored",
+        "aligned"
+      ],
+      "description": "Q8_0 matrices (but an embedding) as stored, or repacked at load into the same bytes in an aligned order (codes, then scales) for 16-byte loads; aligned takes stored decode and prompt activations"
+    }
+  },
+  "sources": {
+    "gguf": "code"
+  },
+  "entry": "plugin.py:create"
+}
